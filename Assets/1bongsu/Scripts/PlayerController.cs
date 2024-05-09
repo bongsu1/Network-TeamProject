@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : MonoBehaviourPun
 {
     [Header("Componet")]
-    [SerializeField] CharacterController characterController;
+    [SerializeField] Rigidbody rigid;
     [SerializeField] PlayerInput playerInput;
     [SerializeField] Animator animator;
     [Header("Stat")]
@@ -26,13 +26,17 @@ public class PlayerController : MonoBehaviourPun
 
     private void Update()
     {
-        Move();
         Turn();
+    }
+
+    private void FixedUpdate()
+    {
+        Move();
     }
 
     private void Move()
     {
-        characterController.Move(moveDir * moveSpeed * Time.deltaTime);
+        rigid.MovePosition(transform.position + moveDir * moveSpeed * Time.deltaTime);
     }
 
     private void Turn()
