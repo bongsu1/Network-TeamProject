@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviourPun
     [SerializeField] float moveSpeed;
 
     private Vector3 moveDir; // 입력받는 방향
+    private bool isWalking; // 애니메이션 작동 변수
 
     private void Awake()
     {
@@ -52,7 +53,19 @@ public class PlayerController : MonoBehaviourPun
     // 인풋시스템으로 움직이는 방향 입력 받기
     private void OnMove(InputValue value)
     {
+        if (isWalking != (value.Get<Vector2>() != Vector2.zero)) // 네트워크 최적화를 위해 달라질때만 호출
+        {
+            isWalking = value.Get<Vector2>() != Vector2.zero;
+            photonView.RPC("ChangeWalkingAnimation", RpcTarget.All, isWalking); // 애니메이션 작동
+        }
+
         moveDir.x = value.Get<Vector2>().x;
         moveDir.z = value.Get<Vector2>().y;
+    }
+
+    [PunRPC]
+    private void ChangeWalkingAnimation(bool isWalking, PhotonMessageInfo info)
+    {
+        animator.SetBool("IsWalking", isWalking);
     }
 }

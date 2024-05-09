@@ -1,3 +1,4 @@
+using Cinemachine;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
@@ -6,6 +7,7 @@ using UnityEngine;
 public class DebugSceneManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] string debugRoomName;
+    [SerializeField] CinemachineVirtualCamera playerFollowCamera;
 
     private void Start()
     {
@@ -34,6 +36,9 @@ public class DebugSceneManager : MonoBehaviourPunCallbacks
     }
     private void GameStart()
     {
-        PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
+        GameObject player = PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
+        playerFollowCamera.gameObject.SetActive(true);
+        playerFollowCamera.Follow = player.transform;
+        playerFollowCamera.LookAt = player.transform;
     }
 }
