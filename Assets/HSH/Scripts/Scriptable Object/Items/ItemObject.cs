@@ -9,7 +9,7 @@ public enum ItemType
     Equipment,
     Default
 }
-public enum Attribute
+public enum Attributes
 {
     Agility,
     Intellect,
@@ -20,9 +20,7 @@ public abstract class ItemObject : ScriptableObject
 {
     public int Id;
     public Sprite uiDisplay;
-    //public GameObject prefabs;
     public ItemType type;
-    //public Image itemImage;
     [TextArea(15, 20)]
     public string description;
     public ItemBuff[] buffs;
@@ -50,10 +48,11 @@ public class Item
         }
     }
 }
+
 [System.Serializable]
 public class ItemBuff
 {
-    public Attribute attribute;
+    public Attributes tribute;
     public int value;
     public int min;
     public int max;

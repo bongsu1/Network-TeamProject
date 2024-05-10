@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Id: 1
   uiDisplay: {fileID: 21300000, guid: 993cc82e980d641758dbe6aa2075ac03, type: 3}
-  prefabs: {fileID: 3063351224379053081, guid: 73659e391aa51454bb45fb69f02716c6, type: 3}
   type: 0
-  itemImage: {fileID: 0}
-  description: 
+  description: perch
+  buffs: []
   restoreHealthValue: 0
