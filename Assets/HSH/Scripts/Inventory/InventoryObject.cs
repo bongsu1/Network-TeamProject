@@ -30,8 +30,8 @@ public class InventoryObject : ScriptableObject
 [System.Serializable]
 public class InventorySlot
 {
-    public ItemObject item;
-    public int amount;
+    public ItemObject item; // 아이템 오브젝트
+    public int amount; // 아이템 갯수
     public InventorySlot(ItemObject _item, int _amount)
     {
         item = _item;
