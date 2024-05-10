@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1175e69e847d51345a858b8800559dde, type: 3}
   m_Name: chamdom
   m_EditorClassIdentifier: 
-  prefabs: {fileID: 0}
+  itemName: 
+  prefabs: {fileID: 3063351224379053081, guid: e24d9c3968a3d484eb1d9b3bd3593056, type: 3}
   type: 0
+  itemImage: {fileID: 0}
   description: chamdom. fish
   restoreHealthValue: 22

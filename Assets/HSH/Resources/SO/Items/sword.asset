@@ -9,11 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab501d4c81525d8438cf980ddce6c628, type: 3}
-  m_Name: Bone
+  m_Script: {fileID: 11500000, guid: e57f5c331153049479c0c9683a3e0893, type: 3}
+  m_Name: sword
   m_EditorClassIdentifier: 
   itemName: 
-  prefabs: {fileID: 3063351224379053081, guid: 72916b94923fdc74b864d0266719d3f1, type: 3}
-  type: 2
+  prefabs: {fileID: 3063351224379053081, guid: 0cdd349e9427b87479279825b6beefa1, type: 3}
+  type: 1
   itemImage: {fileID: 0}
-  description: Humans bone.
+  description: 
+  atkBonus: 0
+  defenceBonus: 0

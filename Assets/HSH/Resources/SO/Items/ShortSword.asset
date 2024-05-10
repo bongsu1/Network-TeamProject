@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e57f5c331153049479c0c9683a3e0893, type: 3}
   m_Name: ShortSword
   m_EditorClassIdentifier: 
-  prefabs: {fileID: 0}
+  itemName: 
+  prefabs: {fileID: 3063351224379053081, guid: 55bb3742e680edc4da0c9734cd3536f1, type: 3}
   type: 1
+  itemImage: {fileID: 0}
   description: ShortSword
   atkBonus: 12
   defenceBonus: 0
