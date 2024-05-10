@@ -30,11 +30,13 @@ public class Chat : MonoBehaviourPun
         if (isChatting)
         {
             playerInput.actions["Move"].Disable();  // 채팅입력중에는 움직이는 키 비활성
+            playerInput.actions["Interact"].Disable();  // 채팅입력중에는 움직이는 키 비활성
             chatInput.ActivateInputField();         // 인풋필드입력 활성화
         }
         else
         {
             playerInput.actions["Move"].Enable();
+            playerInput.actions["Interact"].Enable();
 
             if (chatInput.text == "")              // 채팅입력창이 비어 있으면 취소
                 return;

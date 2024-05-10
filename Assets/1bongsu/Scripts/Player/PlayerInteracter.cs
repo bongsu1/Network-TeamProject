@@ -12,8 +12,8 @@ public class PlayerInteracter : MonoBehaviour
         cosRange = Mathf.Cos(Mathf.Deg2Rad * interactAngle); // cos값을 얻기 위한 식
     }
 
-    Collider[] colliders;
-    [SerializeField] LayerMask interactableLayer;
+    Collider[] colliders = new Collider[20];
+    [SerializeField] LayerMask interactableLayer; // 필요하면 사용
     private void OnInteract()
     {
         int size = Physics.OverlapSphereNonAlloc(transform.position, interactRadius, colliders);
