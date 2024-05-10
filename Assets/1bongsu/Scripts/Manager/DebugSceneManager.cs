@@ -24,9 +24,11 @@ public class DebugSceneManager : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinOrCreateRoom(debugRoomName, options, typeLobby);
     }
 
+    [SerializeField] bool isStart;
     public override void OnJoinedRoom()
     {
-        StartCoroutine(GameStartDelay());
+        if (!isStart)
+            StartCoroutine(GameStartDelay());
     }
 
     IEnumerator GameStartDelay()

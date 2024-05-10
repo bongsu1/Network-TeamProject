@@ -6,15 +6,6 @@
             "id": "1830f6d1-f8f7-4bfd-8325-c7c02813af95",
             "actions": [
                 {
-                    "name": "Jump",
-                    "type": "Button",
-                    "id": "1b9e0ab4-4032-4898-b6df-61a774cea3f6",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Move",
                     "type": "Value",
                     "id": "1c0eb401-df82-44db-a988-71c4a5f069f0",
@@ -31,20 +22,18 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Interact",
+                    "type": "Button",
+                    "id": "3d2add10-eafb-409c-aa34-265cb43222ca",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "f25b45b6-9542-43c6-92c7-ea54e82b3a75",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "2D Vector",
                     "id": "e771dce9-fe56-4316-8f73-d73e7d550c14",
@@ -108,6 +97,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Chat",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7aafcfab-a3b3-4a96-b95f-959e4d79727a",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
