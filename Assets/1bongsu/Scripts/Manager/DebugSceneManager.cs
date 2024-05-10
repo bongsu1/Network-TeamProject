@@ -19,7 +19,7 @@ public class DebugSceneManager : MonoBehaviourPunCallbacks
     {
         RoomOptions options = new RoomOptions();
         options.MaxPlayers = 8;
-        TypedLobby typeLobby = new TypedLobby("Debug", LobbyType.Default); 
+        TypedLobby typeLobby = new TypedLobby("Debug", LobbyType.Default);
 
         PhotonNetwork.JoinOrCreateRoom(debugRoomName, options, typeLobby);
     }
