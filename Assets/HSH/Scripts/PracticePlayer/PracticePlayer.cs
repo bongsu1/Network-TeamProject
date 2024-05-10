@@ -15,6 +15,17 @@ public class PracticePlayer : MonoBehaviour
             Destroy(other.gameObject);
         }
     }
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.I))
+        {
+            inventory.Save();
+        }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            inventory.Load();
+        }
+    }
     private void OnApplicationQuit()
     {
         inventory.Container.Clear();
