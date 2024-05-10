@@ -3966,7 +3966,6 @@ MonoBehaviour:
   loginButton: {fileID: 1541917475}
   signUpButton: {fileID: 728537405}
   resetPassButton: {fileID: 1445319518}
-  inputFieldTabMrg: {fileID: 1120796282}
   selectCheck: 1
 --- !u!1 &1060917508
 GameObject:
@@ -4351,50 +4350,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1065260206}
   m_CullTransparentMesh: 1
---- !u!1 &1120796280
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1120796281}
-  - component: {fileID: 1120796282}
-  m_Layer: 0
-  m_Name: inputFieldTabManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1120796281
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1120796280}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 253.504, y: 592.6748, z: -3.583808}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1120796282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1120796280}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4594175fbb99a648b868f832ecfd31d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1122799111
 GameObject:
   m_ObjectHideFlags: 0
@@ -6795,7 +6750,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   panelController: {fileID: 980167734}
   emailInputField: {fileID: 135116851}
-  inputFieldTabMrg: {fileID: 0}
   closeButton: {fileID: 1220465116}
   sendButton: {fileID: 2069648617}
 --- !u!114 &1901906681
@@ -7421,7 +7375,6 @@ MonoBehaviour:
   emailInputField: {fileID: 426674588}
   passInputField: {fileID: 1065260208}
   confirmInputField: {fileID: 1996785009}
-  inputFieldTabMrg: {fileID: 0}
   cancelButton: {fileID: 1987742887}
   signUpButton: {fileID: 944756653}
 --- !u!1 &1996785007
@@ -8128,4 +8081,3 @@ SceneRoots:
   - {fileID: 980167733}
   - {fileID: 1800173054}
   - {fileID: 659799163}
-  - {fileID: 1120796281}

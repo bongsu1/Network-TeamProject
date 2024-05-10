@@ -25,12 +25,10 @@ public class InputFieldTabManager
 
         if (idx >= 0 && idx < list.Count)
         {
-            Debug.Log($"1{idx}");
             list[idx].Select(); //Select
         }
         else
         {
-            Debug.Log($"2{idx}");
             list[0].Select();
         }
       

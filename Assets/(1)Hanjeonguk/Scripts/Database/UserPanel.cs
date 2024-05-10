@@ -1,9 +1,6 @@
 using Firebase.Database;
 using Firebase.Extensions;
-using Photon.Pun.Demo.Cockpit;
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,7 +15,7 @@ public class UserPanel : MonoBehaviour
 
     private void Awake()
     {
-        nickNameChangeButton.onClick.AddListener(ChangeNickName); 
+        nickNameChangeButton.onClick.AddListener(ChangeNickName);
     }
 
     private void Start()
@@ -61,6 +58,8 @@ public class UserPanel : MonoBehaviour
     public void ChangeNickName() //닉네임만 변경하기
     {
         string nickName = nickNameInputField.text;
+
+        Debug.Log(nickName);
 
         FirebaseManager.DB
             .GetReference("UserData")

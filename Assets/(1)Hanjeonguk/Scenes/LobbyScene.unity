@@ -123,50 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &13968391
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 13968393}
-  - component: {fileID: 13968392}
-  m_Layer: 0
-  m_Name: inputFieldTabManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &13968392
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 13968391}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4594175fbb99a648b868f832ecfd31d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &13968393
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 13968391}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 253.504, y: 592.6748, z: -3.583808}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &52809436
 GameObject:
   m_ObjectHideFlags: 0
@@ -1019,7 +975,6 @@ MonoBehaviour:
   createRoomConfirmButton: {fileID: 1065247888}
   roomNameInputField: {fileID: 1702533041}
   maxPlayerInputField: {fileID: 502180558}
-  inputFieldTabMrg: {fileID: 0}
 --- !u!1 &203977700
 GameObject:
   m_ObjectHideFlags: 0
@@ -5940,7 +5895,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nickNameInputField: {fileID: 578722547}
-  inputFieldTabMrg: {fileID: 0}
   quickStartButton: {fileID: 1517467103}
   lobbyButton: {fileID: 1295120544}
   optionButton: {fileID: 339401129}
@@ -9358,4 +9312,3 @@ SceneRoots:
   - {fileID: 1421130120}
   - {fileID: 1512910273}
   - {fileID: 1654776410}
-  - {fileID: 13968393}
