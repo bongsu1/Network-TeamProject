@@ -26,7 +26,7 @@ public class DebugSceneManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        //StartCoroutine(GameStartDelay());
+        StartCoroutine(GameStartDelay());
     }
 
     IEnumerator GameStartDelay()

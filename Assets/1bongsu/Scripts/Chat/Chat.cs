@@ -2,12 +2,14 @@ using Photon.Pun;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class Chat : MonoBehaviourPun
 {
     [SerializeField] PlayerInput playerInput;
     [Header("Chat UI")]
     [SerializeField] ChatUI chatUI;
+    [SerializeField] Image chattingImage; // 채팅중에 띄우는 이미지
 
     private TMP_InputField chatInput;
     private bool isChatting;           // 채팅중이면 true
@@ -20,16 +22,18 @@ public class Chat : MonoBehaviourPun
     private void OnChat(InputValue value)
     {
         isChatting = !isChatting;
+
+        chatInput.gameObject.SetActive(isChatting);
+        photonView.RPC("InChatting", RpcTarget.Others, isChatting); // 채팅중에는 상대방들에게 알리는 이미지 띄우기
         if (isChatting)
         {
             playerInput.actions["Move"].Disable();  // 채팅입력중에는 움직이는 키 비활성
-            chatInput.gameObject.SetActive(true);
             chatInput.ActivateInputField();         // 인풋필드입력 활성화
         }
         else
         {
             playerInput.actions["Move"].Enable();
-            chatInput.gameObject.SetActive(false);
+
             if (chatInput.text == "")              // 채팅입력창이 비어 있으면 취소
                 return;
 
@@ -54,5 +58,15 @@ public class Chat : MonoBehaviourPun
     private void SendChat(string chat)
     {
         chatUI.SendChat(chat);
+        chattingImage.transform.SetAsLastSibling();
+
+    }
+
+    [PunRPC]
+    private void InChatting(bool isChatting)
+    {
+        chattingImage.gameObject.SetActive(isChatting);
+        if (isChatting)
+            chattingImage.transform.SetAsLastSibling();
     }
 }

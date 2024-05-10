@@ -42,6 +42,7 @@ MonoBehaviour:
   - ChangeWalkingAnimation
   - ChatFilter
   - SendChat
+  - InChatting
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
