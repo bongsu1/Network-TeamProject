@@ -25,7 +25,6 @@ public class ChatBubble : MonoBehaviour
         {
             StopCoroutine(chatActiveRoutine);
             chatActiveRoutine = null;
-            queue.Dequeue();
         }
         stack.Push(this); // 비활성화 되면 스택으로 돌아감
         chatText.text = "";
@@ -37,6 +36,7 @@ public class ChatBubble : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         chatActiveRoutine = null;
+        queue.Dequeue();
         gameObject.SetActive(false);
     }
 }

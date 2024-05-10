@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public class ChatUI : BillboardUI
 {
@@ -11,19 +10,24 @@ public class ChatUI : BillboardUI
         base.Awake();
 
         chatBubblesPool = new Stack<ChatBubble>();
-        foreach (ChatBubble chatBubble in GetComponentsInChildren<ChatBubble>())
+        foreach (ChatBubble chatBubble in GetComponentsInChildren<ChatBubble>(true))
         {
             chatBubblesPool.Push(chatBubble);
             chatBubble.Stack = chatBubblesPool;
         }
         chatLog = new Queue<ChatBubble>();
-        Debug.Log(chatBubblesPool.Count);
     }
 
+    /// <summary>
+    /// "chat"에 채팅에 보낼 메시지 입력,
+    /// 채팅에 "chat"을 띄워줌
+    /// </summary>
+    /// <param name="chat"></param>
     public void SendChat(string chat)
     {
         ChatBubble chatBubble = chatBubblesPool.Pop();
         chatBubble.ChatText.text = chat;
+        chatBubble.transform.SetAsLastSibling();      // 자식들중에 제일 마지막으로 보낸다 // 최신채팅은 아래쪽에 배치 
         chatBubble.gameObject.SetActive(true);
 
         chatBubble.Queue = chatLog;
@@ -31,7 +35,6 @@ public class ChatUI : BillboardUI
         if (chatLog.Count > 5)
         {
             ChatBubble oldChatBubble = chatLog.Dequeue();
-            chatBubblesPool.Push(oldChatBubble);
             oldChatBubble.gameObject.SetActive(false);
         }
     }

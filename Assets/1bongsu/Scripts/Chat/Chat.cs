@@ -22,21 +22,19 @@ public class Chat : MonoBehaviourPun
         isChatting = !isChatting;
         if (isChatting)
         {
-            playerInput.actions["Move"].Disable();
+            playerInput.actions["Move"].Disable();  // 채팅입력중에는 움직이는 키 비활성
             chatInput.gameObject.SetActive(true);
-            chatInput.ActivateInputField();
+            chatInput.ActivateInputField();         // 인풋필드입력 활성화
         }
         else
         {
             playerInput.actions["Move"].Enable();
-            SendChat(chatInput.text);
-            chatInput.text = "";
             chatInput.gameObject.SetActive(false);
-        }
-    }
+            if (chatInput.text == "")              // 채팅입력창이 비어 있으면 취소
+                return;
 
-    private void SendChat(string chat)
-    {
-        chatUI.SendChat(chat);
+            chatUI.SendChat(chatInput.text);
+            chatInput.text = "";
+        }
     }
 }
