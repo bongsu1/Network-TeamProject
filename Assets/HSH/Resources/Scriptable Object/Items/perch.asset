@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1175e69e847d51345a858b8800559dde, type: 3}
-  m_Name: ssal
+  m_Name: perch
   m_EditorClassIdentifier: 
-  itemName: 
-  prefabs: {fileID: 3063351224379053081, guid: b4ffea77e67cc484aa8303a61a66b306, type: 3}
+  Id: 1
+  uiDisplay: {fileID: 21300000, guid: 993cc82e980d641758dbe6aa2075ac03, type: 3}
+  prefabs: {fileID: 3063351224379053081, guid: 73659e391aa51454bb45fb69f02716c6, type: 3}
   type: 0
   itemImage: {fileID: 0}
   description: 
