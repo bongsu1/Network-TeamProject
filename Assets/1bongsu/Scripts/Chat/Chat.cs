@@ -1,8 +1,6 @@
 using Photon.Pun;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -32,6 +30,7 @@ public class Chat : MonoBehaviourPun
             playerInput.actions["Move"].Disable();  // 채팅입력중에는 움직이는 키 비활성
             playerInput.actions["Interact"].Disable();  // 채팅입력중에는 움직이는 키 비활성
             chatInput.ActivateInputField();         // 인풋필드입력 활성화
+            chatInput.transform.SetAsLastSibling();
         }
         else
         {
@@ -63,7 +62,6 @@ public class Chat : MonoBehaviourPun
     {
         chatUI.SendChat(chat);
         chattingImage.transform.SetAsLastSibling();
-
     }
 
     [PunRPC]

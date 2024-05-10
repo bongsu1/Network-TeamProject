@@ -32,7 +32,7 @@ public class ChatUI : BillboardUI
 
         chatBubble.Queue = chatLog;
         chatLog.Enqueue(chatBubble);
-        if (chatLog.Count > 5)
+        if (chatLog.Count > 4)
         {
             ChatBubble oldChatBubble = chatLog.Dequeue();
             oldChatBubble.gameObject.SetActive(false);

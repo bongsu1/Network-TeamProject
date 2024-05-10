@@ -36,7 +36,7 @@ public class PlayerInteracter : MonoBehaviour
         }
     }
 
-    // test..
+    // Debug test..
     private enum Select { All, Right, Left, Down, Up }
     [Header("Gizmos")]
     [SerializeField] Select select;
