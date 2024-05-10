@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class LoginPanel : MonoBehaviour
@@ -17,11 +18,30 @@ public class LoginPanel : MonoBehaviour
     [SerializeField] Button signUpButton;
     [SerializeField] Button resetPassButton;
 
+    [SerializeField] InputFieldTabManager inputFieldTabMrg;
+
+    [SerializeField] bool selectCheck;
+
     private void Awake()
     {
         signUpButton.onClick.AddListener(SignUp);
         loginButton.onClick.AddListener(Login);
         resetPassButton.onClick.AddListener(ResetPass);
+
+        inputFieldTabMrg = new InputFieldTabManager();
+        inputFieldTabMrg.Add(emailInputField);
+        inputFieldTabMrg.Add(passInputField);
+    }
+
+    private void OnEnable()
+    {
+        inputFieldTabMrg.SetFocus();
+        Debug.Log("123123");
+    }
+
+    private void Update()
+    {
+        inputFieldTabMrg.CheckFocus();
     }
 
     public void Login()

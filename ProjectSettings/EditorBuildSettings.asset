@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/(1)Hanjeonguk/Scenes/LobbyScene.unity
     guid: 681477c61e723ca45bb0e31954878172
+  - enabled: 1
+    path: Assets/(1)Hanjeonguk/Scenes/GameScene.unity
+    guid: 2a45892550ee0754c9a92c45ea1392c8
   m_configObjects: {}
