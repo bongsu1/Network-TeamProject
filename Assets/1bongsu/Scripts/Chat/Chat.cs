@@ -40,8 +40,12 @@ public class Chat : MonoBehaviourPun
             if (chatInput.text == "")              // 채팅입력창이 비어 있으면 취소
                 return;
 
+            // IME때문에 한글입력이 완료되지 않았다고 판단되어 마지막 글자가 인풋필드에 입력되지 않는다
+            string chat = chatInput.textComponent.text;
+
             // 비속어 필터를 사용하기 위해 마스터에게만 송신
-            photonView.RPC("ChatFilter", RpcTarget.MasterClient, chatInput.text);
+            photonView.RPC("ChatFilter", RpcTarget.MasterClient, chat);
+
             chatInput.text = "";
         }
     }
