@@ -17,7 +17,6 @@ public class PlayerInteracter : MonoBehaviour
     private void OnInteract()
     {
         int size = Physics.OverlapSphereNonAlloc(transform.position, interactRadius, colliders);
-        Debug.Log($"걸리는 수 {size}");
         if (size > 0)
         {
             foreach (Collider collider in colliders)
