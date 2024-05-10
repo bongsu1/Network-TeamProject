@@ -26,7 +26,6 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
 //    }
     public void AddItem(Item _item, int _amount)
     {
-        
         for (int i = 0; i < Container.Items.Count; i++)
         {
             if (Container.Items[i].item/*.Id*/ == _item/*.Id*/) // 요 아이디를 풀면 아이템 1종류당 한칸으로 합쳐지고 이대로 두면 합쳐지지 않고 분리됨. 화살이랑 총알에만 합쳐지게 적용할 수 없나
@@ -34,10 +33,8 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
                 Container.Items[i].AddAmount(_amount);
                 return;
             }
-        }
-        
+        }   
         Container.Items.Add(new InventorySlot(_item.Id, _item,_amount));
-        
     }
 
     [ContextMenu("Save")]
