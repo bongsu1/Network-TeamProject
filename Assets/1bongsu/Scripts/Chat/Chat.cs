@@ -33,8 +33,26 @@ public class Chat : MonoBehaviourPun
             if (chatInput.text == "")              // 채팅입력창이 비어 있으면 취소
                 return;
 
-            chatUI.SendChat(chatInput.text);
+            // 비속어 필터를 사용하기 위해 마스터에게만 송신
+            photonView.RPC("ChatFilter", RpcTarget.MasterClient, chatInput.text);
             chatInput.text = "";
         }
+    }
+
+    [PunRPC]
+    private void ChatFilter(string chat)
+    {
+        // 비속어가 있다면 거르고 채팅 보내지 않기 or 별표시
+        // ex)
+        if (chat == "aaaa")
+            chat = "xxxx";
+
+        photonView.RPC("SendChat", RpcTarget.AllViaServer, chat);
+    }
+
+    [PunRPC]
+    private void SendChat(string chat)
+    {
+        chatUI.SendChat(chat);
     }
 }
