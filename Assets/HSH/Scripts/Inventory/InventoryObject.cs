@@ -161,6 +161,7 @@ public class Inventory
 [System.Serializable]
 public class InventorySlot
 {
+    public UserInterface parent;
     public int ID = -1;
     public Item item; // 아이템
     public int amount; // 아이템 갯수
