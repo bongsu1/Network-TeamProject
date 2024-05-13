@@ -1,6 +1,9 @@
 using Photon.Pun;
+using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
@@ -13,6 +16,8 @@ public class Chat : MonoBehaviourPun
 
     private TMP_InputField chatInput;
     private bool isChatting;           // 채팅중이면 true
+
+    public UnityEvent OnGreeting;
 
     private void Start()
     {
@@ -48,6 +53,29 @@ public class Chat : MonoBehaviourPun
 
             chatInput.text = "";
         }
+    }
+
+    // 인사
+    private void OnGreet()
+    {
+        playerInput.actions["Greet"].Disable(); // 인사가 끝날때 까지 다시 누르지 못하게
+        playerInput.actions["Move"].Disable(); // 인사가 끝날때 까지 움직이지 못하게
+
+        photonView.RPC("Greeting", RpcTarget.AllViaServer, DebugDataManager.Instance.UserData.nickName);
+        StartCoroutine(GreetingRoutine());
+    }
+    IEnumerator GreetingRoutine()
+    {
+        yield return new WaitForSeconds(2f);
+        playerInput.actions["Greet"].Enable();
+        playerInput.actions["Move"].Enable();
+    }
+
+    [PunRPC]
+    private void Greeting(string nickName, PhotonMessageInfo info)
+    {
+        OnGreeting?.Invoke(); // 이벤트로 플레이어의 애니메이션 동작을 트리거
+        chatUI.SendChat(nickName, false);
     }
 
     [PunRPC]

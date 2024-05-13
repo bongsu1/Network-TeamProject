@@ -2553,6 +2553,7 @@ MonoBehaviour:
   rigid: {fileID: 1524540820062207284}
   playerInput: {fileID: 7189477708088748030}
   animator: {fileID: 4799428294282849405}
+  chat: {fileID: 3247907341977281220}
   moveSpeed: 2
 --- !u!114 &3993961363844435469
 MonoBehaviour:
@@ -2625,6 +2626,9 @@ MonoBehaviour:
   playerInput: {fileID: 7189477708088748030}
   chatUI: {fileID: 4919827270468223313}
   chattingImage: {fileID: 2641079763878880599}
+  OnGreeting:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &4279729692808712590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2656,7 +2660,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthUI: {fileID: 810323563465821716, guid: ae95e4bd28072f547be03323042004c2, type: 3}
-  isUseHealth: 1
 --- !u!1 &2346678421641941762
 GameObject:
   m_ObjectHideFlags: 0

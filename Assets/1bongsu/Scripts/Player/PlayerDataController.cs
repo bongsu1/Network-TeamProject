@@ -17,13 +17,9 @@ public class PlayerDataController : MonoBehaviourPun
             Destroy(this);
     }
 
-    // test..
-    [SerializeField] bool isUseHealth;
     private void Update()
     {
-        if (isUseHealth)
-            UseHealth();
-
+        UseHealth();
         PositionUpdate(transform.position);
     }
 
@@ -48,6 +44,7 @@ public class PlayerDataController : MonoBehaviourPun
             DebugDataManager.Instance.UserData.health = 90;
     }
 
+    // 데미지 받는 함수
     public void TakeDamage(int damage)
     {
         DebugDataManager.Instance.UserData.health -= damage;

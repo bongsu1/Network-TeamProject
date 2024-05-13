@@ -1,5 +1,6 @@
 using Firebase.Database;
 using Firebase.Extensions;
+using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 
@@ -60,7 +61,7 @@ public class DebugDataManager : MonoBehaviour
                 }
 
                 DataSnapshot snapshot = task.Result;
-                if (snapshot.Exists) // 
+                if (snapshot.Exists)
                 {
                     string json = snapshot.GetRawJsonValue();
                     userData = JsonUtility.FromJson<Test.UserData>(json);
@@ -118,7 +119,6 @@ public class DebugDataManager : MonoBehaviour
                     return;
                 }
 
-                Debug.Log("svae success");
             });
     }
 }

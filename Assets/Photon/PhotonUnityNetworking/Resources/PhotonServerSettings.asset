@@ -43,6 +43,7 @@ MonoBehaviour:
   - ChatFilter
   - SendChat
   - InChatting
+  - Greeting
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
