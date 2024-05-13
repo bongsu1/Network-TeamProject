@@ -34,6 +34,10 @@ public class DebugSceneManager : MonoBehaviourPunCallbacks
     IEnumerator GameStartDelay()
     {
         yield return new WaitForSeconds(1f);
+        /*// test..
+        DebugDataManager.Instance.Login();
+        yield return new WaitUntil(() => DebugDataManager.Instance.UserData != null);
+        // test end*/
         GameStart();
     }
     private void GameStart()
