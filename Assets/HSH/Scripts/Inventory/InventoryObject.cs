@@ -28,19 +28,57 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
     {
         if ( _item.buffs.Length > 0)
         {
-            Container.Items.Add(new InventorySlot(_item.Id, _item, _amount));
+            SetEmptySlot(_item, _amount );
             return;
         }
-        for (int i = 0; i < Container.Items.Count; i++)
+        for (int i = 0; i < Container.Items.Length; i++)
         {
             if (Container.Items[i].item/*.Id*/ == _item/*.Id*/) // 요 아이디를 풀면 아이템 1종류당 한칸으로 합쳐지고 이대로 두면 합쳐지지 않고 분리됨. 화살이랑 총알에만 합쳐지게 적용할 수 없나
             {
                 Container.Items[i].AddAmount(_amount);
                 return;
             }
-        }   
-        Container.Items.Add(new InventorySlot(_item.Id, _item,_amount));
+        }
+        SetEmptySlot(_item, _amount);
+
+
+
+        //if ( _item.buffs.Length > 0)
+        //{
+        //    Container.Items.Add(new InventorySlot(_item.Id, _item, _amount));
+        //    return;
+        //}
+        //for (int i = 0; i < Container.Items.Count; i++)
+        //{
+        //    if (Container.Items[i].item/*.Id*/ == _item/*.Id*/) // 요 아이디를 풀면 아이템 1종류당 한칸으로 합쳐지고 이대로 두면 합쳐지지 않고 분리됨. 화살이랑 총알에만 합쳐지게 적용할 수 없나
+        //    {
+        //        Container.Items[i].AddAmount(_amount);
+        //        return;
+        //    }
+        //}   
+        //Container.Items.Add(new InventorySlot(_item.Id, _item,_amount));
     }
+    public InventorySlot SetEmptySlot(Item _item, int _amount) // 처음에 빈 슬롯 세팅
+    {
+        for (int i = 0;i < Container.Items.Length;i++)
+        {
+            if (Container.Items[i].ID <= -1)
+            {
+                Container.Items[i].UpdateSlot(_item.Id, _item, _amount);
+                return Container.Items[i];
+            }
+        }
+        // 인벤이 가득 찼을 떄의 스크립트 필요?
+        return null;
+    }
+
+    public void MoveItem(InventorySlot item1, InventorySlot item2) // 아이템 두개 위치 교환
+    {
+        InventorySlot temp = new InventorySlot(item2.ID, item2.item, item2.amount);
+        item2.UpdateSlot(item1.ID, item1.item, item1.amount);
+        item1.UpdateSlot(temp.ID,temp.item, temp.amount);
+    }
+
 
     [ContextMenu("Save")]
     public void Save()
@@ -95,16 +133,29 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
 [System.Serializable]
 public class Inventory
 {
-    public List<InventorySlot> Items = new List<InventorySlot>();
+    public InventorySlot[] Items = new InventorySlot[24];
 }
 
 [System.Serializable]
 public class InventorySlot
 {
-    public int ID;
+    public int ID = -1;
     public Item item; // 아이템
     public int amount; // 아이템 갯수
+
+    public InventorySlot()
+    {
+        ID = -1;
+        item = null;
+        amount = 0;
+    }
     public InventorySlot(int _id, Item _item, int _amount)
+    {
+        ID = _id;
+        item = _item;
+        amount = _amount;
+    }
+    public void UpdateSlot(int _id, Item _item, int _amount)
     {
         ID = _id;
         item = _item;
