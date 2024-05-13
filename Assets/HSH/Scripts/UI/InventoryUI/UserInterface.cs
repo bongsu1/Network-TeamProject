@@ -29,9 +29,9 @@ public abstract class UserInterface : MonoBehaviour
     {
         for (int i = 0; i < inventory.Container.Items.Length; i++)
         {
-            Debug.Log(inventory);
-            Debug.Log(inventory.Container);
-            Debug.Log(inventory.Container.Items[i]);
+            Debug.Log($"01. {inventory}");
+            Debug.Log($"02. {inventory.Container}");
+            Debug.Log($"03. {inventory.Container.Items[i]}");
             
             inventory.Container.Items[i].parent = this;
         }
@@ -115,7 +115,7 @@ public abstract class UserInterface : MonoBehaviour
     //여기부터
     public void OnEnter(GameObject obj)
     {
-        practicePlayer.mouseItem.hoverobj = obj;
+        practicePlayer.mouseItem.hoverObj = obj;
         if (itemsDisplayed.ContainsKey(obj))
         {
             practicePlayer.mouseItem.hoverItem = itemsDisplayed[obj];
@@ -124,7 +124,7 @@ public abstract class UserInterface : MonoBehaviour
 
     public void OnExit(GameObject obj)
     {
-        practicePlayer.mouseItem.hoverobj = null;
+        practicePlayer.mouseItem.hoverObj = null;
         practicePlayer.mouseItem.hoverItem = null;
 
     }
@@ -146,16 +146,25 @@ public abstract class UserInterface : MonoBehaviour
     }
     public void OnDragEnd(GameObject obj)
     {
-        if (practicePlayer.mouseItem.hoverobj)
+        var itemOnMouse = practicePlayer.mouseItem;
+        var mouseHoverItem = itemOnMouse.hoverItem;
+        var mouseHoverObj = itemOnMouse.hoverObj;
+        var GetItemObject = inventory.database.GetItem;
+
+        if (mouseHoverObj)
         {
-            inventory.MoveItem(itemsDisplayed[obj], practicePlayer.mouseItem.hoverItem.parent.itemsDisplayed[practicePlayer.mouseItem.hoverobj]); // 아이템 슬롯 이동
+            if (mouseHoverItem.CanPlaceInSlot(GetItemObject[itemsDisplayed[obj].ID]))
+            {
+                inventory.MoveItem(itemsDisplayed[obj], practicePlayer.mouseItem.hoverItem.parent.itemsDisplayed[practicePlayer.mouseItem.hoverObj]); // 아이템 슬롯 이동
+            }
+            
         }
         else
         {
-            inventory.RemoveItem(itemsDisplayed[obj].item); // 아이템 드래그해서 드롭시 파괴.
+            //inventory.RemoveItem(itemsDisplayed[obj].item); // 아이템 드래그해서 드롭시 파괴.
         }
         Destroy(practicePlayer.mouseItem.obj);
-        practicePlayer.mouseItem.item = null;
+        itemOnMouse.item = null;
     }
     public void OnDrag(GameObject obj)
     {
@@ -176,5 +185,5 @@ public class MouseItem
     public GameObject obj;
     public InventorySlot item;
     public InventorySlot hoverItem;
-    public GameObject hoverobj;
+    public GameObject hoverObj;
 }
