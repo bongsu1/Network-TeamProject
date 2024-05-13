@@ -1,3 +1,4 @@
+using ExitGames.Client.Photon;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,8 @@ public class Turret : MonoBehaviour
     [SerializeField] LayerMask layerMask = 0;
     [SerializeField] float spinSpeed;
     [SerializeField] float fireRate = 0f;
+
+    [SerializeField] ObjectPool pool;
     float currentFireRate;
 
     Transform Target = null;
@@ -56,17 +59,22 @@ public class Turret : MonoBehaviour
         else //플레이어가 범위 내에 들어왔을 때
         {
             //Debug.Log("발사");
-            Vector3 dir = Target.position - transform.position; 
+            Vector3 dir = Target.position - transform.position; //타겟과 터렛의 위치를 뺀 값
             Quaternion lookRotation = Quaternion.LookRotation(dir);
-            //Debug.Log(lookRotation);
             Vector3 euler = Quaternion.RotateTowards(GunBody.rotation, lookRotation, spinSpeed * Time.deltaTime).eulerAngles;
             GunBody.rotation = Quaternion.Euler(0, euler.y, 0);
 
-            //Quaternion fireRotation = Quaternion.Euler(0, lookRotation.eulerAngles.y, 0);   
-            //if(Quaternion.Angle(GunBody.rotation, fireRotation) < 5f)
+            //if(GunBody.rotation == lookRotation)
+            {
+                Debug.Log("발사");
+                PooledObject instance = pool.GetPool(transform.forward,Quaternion.identity);
+            }
+
+            //Quaternion fireRotation = Quaternion.Euler(0, lookRotation.eulerAngles.y, 0); //총 발사
+            //if (Quaternion.Angle(GunBody.rotation, fireRotation) < 5f)
             //{
             //    currentFireRate -= Time.deltaTime;
-            //    if(currentFireRate <= 0)
+            //    if (currentFireRate <= 0)
             //    {
             //        currentFireRate = fireRate;
             //        Debug.Log("발사");
