@@ -28,6 +28,7 @@ public class PracticePlayer : MonoBehaviour
     }
     private void OnApplicationQuit()
     {
+        Debug.Log("set slot");
         inventory.Container.Items = new InventorySlot[24];
     }
 }
