@@ -34,15 +34,15 @@ public class DebugSceneManager : MonoBehaviourPunCallbacks
     IEnumerator GameStartDelay()
     {
         yield return new WaitForSeconds(1f);
-        /*// test..
+        // test..
         DebugDataManager.Instance.Login();
         yield return new WaitUntil(() => DebugDataManager.Instance.UserData != null);
-        // test end*/
+        // test end
         GameStart();
     }
     private void GameStart()
     {
-        GameObject player = PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
+        GameObject player = PhotonNetwork.Instantiate("Player", DebugDataManager.Instance.UserData.position, Quaternion.identity);
         playerFollowCamera.gameObject.SetActive(true);
         playerFollowCamera.Follow = player.transform;
         playerFollowCamera.LookAt = player.transform;

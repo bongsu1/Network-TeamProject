@@ -1,11 +1,11 @@
 using Photon.Pun;
 using UnityEngine;
 
-public class PlayerHealth : MonoBehaviourPun
+public class PlayerDataController : MonoBehaviourPun
 {
     // 체력 겸 스태미나 역할
     // 공격당했을 때 소모 // 시간이 흐르거나 행동을 할 때 소모 // 모닥불 근처에 있으면 회복
-
+    [Header("Health")]
     [SerializeField] HealthUI healthUI;
 
     private void OnEnable()
@@ -23,6 +23,8 @@ public class PlayerHealth : MonoBehaviourPun
     {
         if (isUseHealth)
             UseHealth();
+
+        PositionUpdate(transform.position);
     }
 
     // 체력 지속 소모
@@ -49,6 +51,12 @@ public class PlayerHealth : MonoBehaviourPun
     public void TakeDamage(int damage)
     {
         DebugDataManager.Instance.UserData.health -= damage;
+    }
+
+    // 플레이어 위치 데이터 저장
+    private void PositionUpdate(Vector3 position)
+    {
+        DebugDataManager.Instance.UserData.position = position;
     }
 
     // test.. 
