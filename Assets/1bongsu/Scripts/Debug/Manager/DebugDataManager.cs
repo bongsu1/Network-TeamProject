@@ -38,7 +38,7 @@ public class DebugDataManager : MonoBehaviour
             }
 
             Load();
-            StartSaveRoutine();
+            //StartSaveRoutine(); 자동저장 루틴
         });
     }
 
