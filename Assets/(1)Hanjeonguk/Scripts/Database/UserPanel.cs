@@ -11,11 +11,18 @@ public class UserPanel : MonoBehaviour
     [SerializeField] TMP_InputField nickNameInputField;
     [SerializeField] Button nickNameChangeButton;
 
+    [SerializeField] GameObject infoPanel;
+   
+    [SerializeField] Button closeButton;
+   
+
     private UserData userData;
 
     private void Awake()
     {
         nickNameChangeButton.onClick.AddListener(ChangeNickName);
+        closeButton.onClick.AddListener(CloseInfoPanel);
+
     }
 
     private void Start()
@@ -51,6 +58,8 @@ public class UserPanel : MonoBehaviour
                 {
                     userData = new UserData();
                     nickNameText.text = userData.nickName;
+
+                    FirebaseManager.Instance.DataSave(userData);
                 }
             });
     }
@@ -59,30 +68,68 @@ public class UserPanel : MonoBehaviour
     {
         string nickName = nickNameInputField.text;
 
-        Debug.Log(nickName);
 
-        FirebaseManager.DB
-            .GetReference("UserData")
-            .Child(FirebaseManager.Auth.CurrentUser.UserId)
-            .Child("nickName")
-            .SetValueAsync(nickName)
-            .ContinueWithOnMainThread(task =>
-            {
-                if (task.IsCanceled)
-                {
-                    Debug.Log("닉네임 재설정 취소");
-                    return;
-                }
-                else if (task.IsFaulted)
-                {
-                    Debug.Log($"닉네임 재설정 오류");
-                    return;
-                }
+        FirebaseManager.DB // 중복 닉네임 체크 
+        .GetReference("UserData")
+        .OrderByChild("nickName")
+        .GetValueAsync()
+        .ContinueWithOnMainThread(task =>
+         {
+             if (task.IsCanceled)
+             {
+                 Debug.Log("닉네임 재설정 취소");
+                 return;
+             }
+             else if (task.IsFaulted)
+             {
+                 Debug.Log($"닉네임 재설정 오류");
+                 return;
+             }
 
-                nickNameText.text = nickName;
-                Debug.Log($"닉네임 재설정 완료");
-            });
+             DataSnapshot dataSnapshot = task.Result;
 
-        PhotonNetwork.LocalPlayer.NickName = nickNameInputField.text;
+             foreach (DataSnapshot child in dataSnapshot.Children)
+             {
+                 string userName = (string)child.Child("nickName").Value;
+
+                 if (userName == nickName) 
+                 {
+                     Debug.Log("이미 존재하는 닉네임 입니다.");
+                     infoPanel.SetActive(true);
+                     return;
+                 }
+             }
+
+             FirebaseManager.DB // 닉네임 변경
+              .GetReference("UserData")
+              .Child(FirebaseManager.Auth.CurrentUser.UserId)
+              .Child("nickName")
+              .SetValueAsync(nickName)
+              .ContinueWithOnMainThread(task =>
+             {
+                 if (task.IsCanceled)
+                 {
+                     Debug.Log("닉네임 재설정 취소");
+                     return;
+                 }
+                 else if (task.IsFaulted)
+                 {
+                     Debug.Log($"닉네임 재설정 오류");
+                     return;
+                 }
+
+                 nickNameText.text = nickName;
+                 Debug.Log($"닉네임 재설정 완료");
+             });
+
+             PhotonNetwork.LocalPlayer.NickName = nickNameInputField.text;
+         });
     }
+
+    public void CloseInfoPanel()
+    {
+        infoPanel.SetActive(false);
+    }
+
+
 }

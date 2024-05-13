@@ -1,6 +1,7 @@
 using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
+using Firebase.Extensions;
 using UnityEngine;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
 
@@ -18,14 +19,20 @@ public class FirebaseManager : MonoBehaviour
     private static FirebaseDatabase db;
     public static FirebaseDatabase DB { get { return db; } }
 
+    private static FirebaseUser user;
+    public static FirebaseUser User { get { return user; } }
+
     private static bool isValid;
     public static bool IsValid { get { return isValid; } }
+
 
     private void Awake()
     {
         CreateInstance();
+     
         CheckDependency();
     }
+
 
     private void CreateInstance()
     {
@@ -51,6 +58,8 @@ public class FirebaseManager : MonoBehaviour
 
             Debug.Log("Firebase Check and FixDependencies success");
             isValid = true;
+
+
         }
         else
         {
@@ -62,4 +71,15 @@ public class FirebaseManager : MonoBehaviour
             db = null;
         }
     }
+
+    public void DataSave(UserData userData)
+    {
+        string json = JsonUtility.ToJson(userData);
+
+        FirebaseManager.DB
+            .GetReference("UserData")
+            .Child(FirebaseManager.Auth.CurrentUser.UserId)
+            .SetRawJsonValueAsync(json);
+    }
+
 }
