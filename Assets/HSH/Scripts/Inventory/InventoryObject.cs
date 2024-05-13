@@ -58,7 +58,8 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
         //}   
         //Container.Items.Add(new InventorySlot(_item.Id, _item,_amount));
     }
-    public InventorySlot SetEmptySlot(Item _item, int _amount) // 처음에 빈 슬롯 세팅
+    // 처음에 빈 슬롯 세팅
+    public InventorySlot SetEmptySlot(Item _item, int _amount) 
     {
         for (int i = 0;i < Container.Items.Length;i++)
         {
@@ -75,14 +76,24 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
         // 인벤이 가득 찼을 떄의 스크립트 필요?
         return null;
     }
-
-    public void MoveItem(InventorySlot item1, InventorySlot item2) // 아이템 두개 위치 교환
+    // 아이템 두개 위치 교환
+    public void MoveItem(InventorySlot item1, InventorySlot item2) 
     {
         InventorySlot temp = new InventorySlot(item2.ID, item2.item, item2.amount);
         item2.UpdateSlot(item1.ID, item1.item, item1.amount);
         item1.UpdateSlot(temp.ID,temp.item, temp.amount);
     }
-
+    // 아이템 제거
+    public void RemoveItem(Item _item) 
+    {
+        for (int i = 0; i < Container.Items.Length; i++)
+        {
+            if (Container.Items[i].item == _item)
+            {
+                Container.Items[i].UpdateSlot(-1, null, 0);
+            }
+        }
+    }
 
     [ContextMenu("Save")]
     public void Save()

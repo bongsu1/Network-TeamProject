@@ -157,7 +157,7 @@ public class DisplayInventory : MonoBehaviour
         }
         else
         {
-
+            inventory.RemoveItem(itemsDisplayed[obj].item); // 아이템 드래그해서 드롭시 파괴.
         }
         Destroy(mouseItem.obj);
         mouseItem.item = null;
