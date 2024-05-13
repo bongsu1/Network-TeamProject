@@ -120,7 +120,7 @@ public class DisplayInventory : MonoBehaviour
     //여기부터
     public void OnEnter(GameObject obj)
     {
-        mouseItem.hoverobj = obj;
+        mouseItem.hoverObj = obj;
         if(itemsDisplayed.ContainsKey(obj))
         {
             mouseItem.hoverItem = itemsDisplayed[obj];
@@ -129,7 +129,7 @@ public class DisplayInventory : MonoBehaviour
 
     public void OnExit(GameObject obj)
     {
-        mouseItem.hoverobj = null;
+        mouseItem.hoverObj = null;
         mouseItem.hoverItem = null;
 
     }
@@ -151,9 +151,9 @@ public class DisplayInventory : MonoBehaviour
     }
     public void OnDragEnd(GameObject obj)
     {
-        if(mouseItem.hoverobj)
+        if(mouseItem.hoverObj)
         {
-            inventory.MoveItem(itemsDisplayed[obj], itemsDisplayed[mouseItem.hoverobj]); // 아이템 슬롯 이동
+            inventory.MoveItem(itemsDisplayed[obj], itemsDisplayed[mouseItem.hoverObj]); // 아이템 슬롯 이동
         }
         else
         {
