@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e57f5c331153049479c0c9683a3e0893, type: 3}
   m_Name: SMG
   m_EditorClassIdentifier: 
-  Id: 0
+  Id: 4
   uiDisplay: {fileID: 21300000, guid: f7ea29b8c710a4860850e0f22153eeff, type: 3}
   type: 1
   description: SMG

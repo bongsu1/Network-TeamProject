@@ -26,19 +26,22 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
 //    }
     public void AddItem(Item _item, int _amount)
     {
+        Debug.Log(_item.Id + "add item");
         if ( _item.buffs.Length > 0)
         {
             SetEmptySlot(_item, _amount );
             return;
         }
-        for (int i = 0; i < Container.Items.Length; i++)
-        {
-            if (Container.Items[i].item/*.Id*/ == _item/*.Id*/) // 요 아이디를 풀면 아이템 1종류당 한칸으로 합쳐지고 이대로 두면 합쳐지지 않고 분리됨. 화살이랑 총알에만 합쳐지게 적용할 수 없나
-            {
-                Container.Items[i].AddAmount(_amount);
-                return;
-            }
-        }
+        //for (int i = 0; i < Container.Items.Length; i++)
+        //{
+        //    Debug.Log(Container.Items[i].item.Id + "checking item");
+        //    if (Container.Items[i].ID/*item/*.Id*/ == _item.Id) // 요 아이디를 풀면 아이템 1종류당 한칸으로 합쳐지고 이대로 두면 합쳐지지 않고 분리됨. 화살이랑 총알에만 합쳐지게 적용할 수 없나
+        //    {
+        //        Debug.Log(_item.Id + "add amount");
+        //        Container.Items[i].AddAmount(_amount);
+        //        return;
+        //    }
+        //}
         SetEmptySlot(_item, _amount);
 
 
@@ -62,6 +65,10 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
     {
         for (int i = 0;i < Container.Items.Length;i++)
         {
+            //Debug.Log("set");
+            //Debug.Log($"1.{Container}");
+            //Debug.Log($"2.{Container.Items.Length}");
+            //Debug.Log($"3.{Container.Items[0]}");
             if (Container.Items[i].ID <= -1)
             {
                 Container.Items[i].UpdateSlot(_item.Id, _item, _amount);

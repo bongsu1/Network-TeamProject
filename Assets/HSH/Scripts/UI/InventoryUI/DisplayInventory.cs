@@ -20,6 +20,7 @@ public class DisplayInventory : MonoBehaviour
     public int X_SPACE_BETWEEN_ITEM;
     public int NUMBER_OF_COLUMN;
     public int Y_SPACE_BETWEEN_ITEMS;
+
     Dictionary<GameObject, InventorySlot> itemsDisplayed = new Dictionary<GameObject, InventorySlot>();
 
     private void Start()
@@ -69,18 +70,22 @@ public class DisplayInventory : MonoBehaviour
     {
         foreach (KeyValuePair<GameObject, InventorySlot> _slot in itemsDisplayed)
         {
-            if(_slot.Value.ID >= 0)
-            {
-                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = inventory.database.GetItem[_slot.Value.item.Id].uiDisplay;
-                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 1);
-                _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = _slot.Value.amount ==1 ? "" : _slot.Value.amount.ToString("n0");
-            }
-            else
-            {
-                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = null;
-                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 0);
-                _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = "";
-            }
+            Debug.Log($"1. {_slot}");
+            Debug.Log($"2. {_slot.Value}");
+            Debug.Log($"3. {_slot.Value.ID}");
+            Debug.Log($"위 버그는 유니티 엔진 내에서 플레이어 인벤토리 인스펙터창을 고정하고 재실행하면 해결됨");
+            if (_slot.Value.ID >= 0)
+             {
+                 _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = inventory.database.GetItem[_slot.Value.item.Id].uiDisplay;
+                 _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 1);
+                 _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = _slot.Value.amount == 1 ? "" : _slot.Value.amount.ToString("n0");
+             }
+             else
+             {
+                 _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = null;
+                 _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 0);
+                 _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = "";
+             }
         }
     }
     //public void UpdateDisplay()
@@ -136,7 +141,7 @@ public class DisplayInventory : MonoBehaviour
         if (itemsDisplayed[obj].ID >= 0)
         {
             var img = mouseObject.AddComponent<Image>();
-            img.sprite = inventory.database.GetItem[itemsDisplayed[obj].ID].uiDisplay;
+            img.sprite = inventory.database.GetItem[itemsDisplayed[obj].ID].uiDisplay; // 여기서 드래그시작할때 아이템 일러가 같이 움직이게 하는데
             img.raycastTarget = false;
         }
         mouseItem.obj = mouseObject;
