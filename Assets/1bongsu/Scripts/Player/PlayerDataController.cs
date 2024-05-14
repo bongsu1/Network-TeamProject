@@ -10,11 +10,19 @@ public class PlayerDataController : MonoBehaviourPun
 
     private void OnEnable()
     {
-        // 내것이 아니면 UI도 생성하지 않고 삭제
-        if (photonView.IsMine)
-            healthUI = Instantiate(healthUI);
+        // test..
+        if (DebugDataManager.Instance != null)
+        {
+            // 내것이 아니면 UI도 생성하지 않고 삭제
+            if (photonView.IsMine)
+                healthUI = Instantiate(healthUI);
+            else
+                Destroy(this);
+        }
         else
+        {
             Destroy(this);
+        }
     }
 
     private void Update()
