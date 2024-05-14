@@ -23,4 +23,5 @@ public class ItemDatabaseObject : ScriptableObject, ISerializationCallbackReceiv
     {
         GetItem = new Dictionary<int, ItemObject>();
     }
+    // 보던거 22분부터 이어서
 }
