@@ -1,9 +1,9 @@
-using Photon.Pun.UtilityScripts;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DynamicInterface : UserInterface
+public class StorageInterface : UserInterface
 {
     public GameObject inventoryPrefab;
 
@@ -13,11 +13,9 @@ public class DynamicInterface : UserInterface
     public int X_SPACE_BETWEEN_ITEM;
     public int NUMBER_OF_COLUMN;
     public int Y_SPACE_BETWEEN_ITEMS;
-
-
     public override void CreateSlots()
     {
-        Debug.Log("dynamic createslots");
+        Debug.Log("Storage createslots");
         slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
         for (int i = 0; i < inventory.Container.Items.Length; i++)
         {
@@ -32,10 +30,6 @@ public class DynamicInterface : UserInterface
 
             slotsOnInterface.Add(obj, inventory.Container.Items[i]);
         }
-    }
-    public void OnClickpointer()
-    {
-        Debug.Log("");
     }
     public Vector3 GetPositon(int i) // 인벤토리 슬롯 위치 잡는 부분
     {

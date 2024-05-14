@@ -20,12 +20,13 @@ public enum Attributes
 }
 public abstract class ItemObject : ScriptableObject
 {
-    public int Id;
+    //public int Id;
     public Sprite uiDisplay;
     public ItemType type;
     [TextArea(15, 20)]
     public string description;
-    public ItemBuff[] buffs;
+    //public ItemBuff[] buffs;
+    public Item data = new Item();
 
     public Item CreateItem()
     {
@@ -38,7 +39,7 @@ public abstract class ItemObject : ScriptableObject
 public class Item
 {
     public string Name;
-    public int Id;
+    public int Id = -1;
     public ItemBuff[] buffs;
     public Item()
     {

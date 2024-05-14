@@ -20,7 +20,7 @@ public abstract class UserInterface : MonoBehaviour
     //public int NUMBER_OF_COLUMN;
     //public int Y_SPACE_BETWEEN_ITEMS;
 
-    public Dictionary<GameObject, InventorySlot> itemsDisplayed = new Dictionary<GameObject, InventorySlot>();
+    public Dictionary<GameObject, InventorySlot> slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
 
     private void Start()
     {
@@ -55,17 +55,17 @@ public abstract class UserInterface : MonoBehaviour
     //    itemsDisplayed.Add(slot, obj);
     //}
     //}
-    public void UpdateSlots()
+    public void UpdateSlots() // 슬롯 이미지를 여기서 바꿈
     {
-        foreach (KeyValuePair<GameObject, InventorySlot> _slot in itemsDisplayed)
+        foreach (KeyValuePair<GameObject, InventorySlot> _slot in slotsOnInterface)
         {
             Debug.Log($"1. {_slot}");
             Debug.Log($"2. {_slot.Value}");
-            Debug.Log($"3. {_slot.Value.ID}");
+            Debug.Log($"3. {_slot.Value.item.Id}");
             Debug.Log($"위 버그는 유니티 엔진 내에서 플레이어 인벤토리 인스펙터창을 고정하고 재실행하면 해결됨");
-            if (_slot.Value.ID >= 0)
+            if (_slot.Value.item.Id >= 0)
             {
-                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = inventory.database.GetItem[_slot.Value.item.Id].uiDisplay;
+                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = _slot.Value.ItemObject.uiDisplay;//inventory.database.GetItem[_slot.Value.item.Id].uiDisplay;
                 _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 1);
                 _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = _slot.Value.amount == 1 ? "" : _slot.Value.amount.ToString("n0");
             }
@@ -110,29 +110,22 @@ public abstract class UserInterface : MonoBehaviour
     //여기부터
     public void OnEnter(GameObject obj)
     {
-        Debug.Log($"우째서{obj}");
-        practicePlayer.mouseItem.hoverObj = obj;
-        if (itemsDisplayed.ContainsKey(obj))
-        {
-            practicePlayer.mouseItem.hoverItem = itemsDisplayed[obj];
-        }
+        MouseData.slotHoveredOver = obj;
     }
 
-    public void OnExit(GameObject obj)
+    public void OnExit(GameObject obj) // 마우스가 위치를 벗어나면 null 값으로 초기화 해주는 부분
     {
-        Debug.Log("여긴 역할을 이해 못하겠다");
-        practicePlayer.mouseItem.hoverObj = null;
-        practicePlayer.mouseItem.hoverItem = null;
+        MouseData.slotHoveredOver = null;
 
     }
     // 실수로 파괴되는 일 없도록
     public void OnEnterInterface(GameObject obj)
     {
-        practicePlayer.mouseItem.ui = obj.GetComponent<UserInterface>();
+        MouseData.interfaceMouseIsOver = obj.GetComponent<UserInterface>();
     }
     public void OnExitInterface(GameObject obj)
     {
-        practicePlayer.mouseItem.ui = null;
+        MouseData.interfaceMouseIsOver = null;
     }
     // 이 위 두개 수식 추가, 각 인벤토리에 event trigger 추가
     public void OnDragStart(GameObject obj)
@@ -141,47 +134,60 @@ public abstract class UserInterface : MonoBehaviour
         var rt = mouseObject.AddComponent<RectTransform>();
         rt.sizeDelta = new Vector2(50, 50);
         mouseObject.transform.SetParent(transform.parent);
-        if (itemsDisplayed[obj].ID >= 0)
+        if (slotsOnInterface[obj].item.Id >= 0)
         {
             var img = mouseObject.AddComponent<Image>();
-            img.sprite = inventory.database.GetItem[itemsDisplayed[obj].ID].uiDisplay; // 여기서 드래그시작할때 아이템 일러가 같이 움직이게 하는데
+            img.sprite = slotsOnInterface[obj].ItemObject.uiDisplay;//inventory.database.GetItem[SlotsOnInterface[obj].item.Id].uiDisplay; // 여기서 드래그시작할때 아이템 일러가 같이 움직이게 하는데
             img.raycastTarget = false;
         }
-        practicePlayer.mouseItem.obj = mouseObject;
-        practicePlayer.mouseItem.item = itemsDisplayed[obj];
+        MouseData.tempItemBeingDragged = mouseObject;
 
     }
     public void OnDragEnd(GameObject obj)
     {
-        var itemOnMouse = practicePlayer.mouseItem;
-        var mouseHoverItem = itemOnMouse.hoverItem;
-        var mouseHoverObj = itemOnMouse.hoverObj;
-        var GetItemObject = inventory.database.GetItem;
+        Destroy(MouseData.tempItemBeingDragged);
+        if(MouseData.interfaceMouseIsOver == null)
+        {
+            slotsOnInterface[obj].RemoveItem();
+            return;
+        }
+        if(MouseData.slotHoveredOver)
+        {
+            InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver];
+            //inventory.SwapItems
+        }
+        //var itemOnMouse = practicePlayer.mouseItem;
+        //var mouseHoverItem = itemOnMouse.hoverItem;
+        //var mouseHoverObj = itemOnMouse.hoverObj;
+        //var GetItemObject = inventory.database.GetItem;
 
-        if (itemOnMouse.ui != null)
-        {
-            if (mouseHoverObj)
-            {
-                if (mouseHoverItem.CanPlaceInSlot(GetItemObject[itemsDisplayed[obj].ID]) && (mouseHoverItem.item.Id <= -1 ||
-                    (mouseHoverItem.item.Id >= 0) && itemsDisplayed[obj].CanPlaceInSlot(GetItemObject[mouseHoverItem.item.Id]))) // 뒷조건 추가해서 실수로 파괴되는 일 없도록
-                {
-                    inventory.MoveItem(itemsDisplayed[obj], mouseHoverItem.parent.itemsDisplayed[itemOnMouse.hoverObj]); // 아이템 슬롯 이동
-                }
-            }
-        }
-        else
-        {
-            inventory.RemoveItem(itemsDisplayed[obj].item); // 아이템 드래그해서 드롭시 파괴.
-        }
-        Destroy(practicePlayer.mouseItem.obj);
-        itemOnMouse.item = null;
+
+
+        //Debug.Log(itemOnMouse.hoverItem.ID);
+        //if (itemOnMouse.ui != null)
+        //{
+        //    if (mouseHoverObj)
+        //    {
+        //        if (mouseHoverItem.CanPlaceInSlot(GetItemObject[itemsDisplayed[obj].ID]) && (mouseHoverItem.item.Id <= -1 ||
+        //            (mouseHoverItem.item.Id >= 0) && itemsDisplayed[obj].CanPlaceInSlot(GetItemObject[mouseHoverItem.item.Id]))) // 뒷조건 추가해서 실수로 파괴되는 일 없도록
+        //        {
+        //            inventory.MoveItem(itemsDisplayed[obj], mouseHoverItem.parent.itemsDisplayed[itemOnMouse.hoverObj]); // 아이템 슬롯 이동
+        //        }
+        //    }
+        //}
+        //else
+        //{
+        //    inventory.RemoveItem(itemsDisplayed[obj].item); // 아이템 드래그해서 드롭시 파괴.
+        //}
+        //Destroy(practicePlayer.mouseItem.obj);
+        //itemOnMouse.item = null;
     }
     public void OnDrag(GameObject obj)
     {
         Debug.Log("Ondrag 는 작동하나");
-        if (practicePlayer.mouseItem.obj != null)
+        if (MouseData.tempItemBeingDragged != null)
         {
-            practicePlayer.mouseItem.obj.GetComponent<RectTransform>().position = Input.mousePosition;
+            MouseData.tempItemBeingDragged.GetComponent<RectTransform>().position = Input.mousePosition;
         }
     }
     // 여기까지 아이템 드래그앤 드랍
@@ -191,11 +197,11 @@ public abstract class UserInterface : MonoBehaviour
     //}
 
 }
-public class MouseItem
+public static class MouseData
 {
-    public UserInterface ui;
-    public GameObject obj;
-    public InventorySlot item;
-    public InventorySlot hoverItem;
-    public GameObject hoverObj;
+    public static UserInterface interfaceMouseIsOver;
+    public static GameObject tempItemBeingDragged;
+    //public static InventorySlot item;
+    //public static InventorySlot hoverItem;
+    public static GameObject slotHoveredOver;
 }
