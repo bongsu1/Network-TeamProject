@@ -2,7 +2,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class YDJ_PlayerController : MonoBehaviourPun
+public class YDJ_PlayerController : MonoBehaviourPun, IDamageble
 {
     [Header("Componet")]
     [SerializeField] Rigidbody rigid;
@@ -10,6 +10,7 @@ public class YDJ_PlayerController : MonoBehaviourPun
     [SerializeField] Animator animator;
     [Header("Stat")]
     [SerializeField] float moveSpeed;
+    [SerializeField] int hp;
 
     private Vector3 moveDir; // 입력받는 방향
     private bool isWalking; // 애니메이션 작동 변수
@@ -71,5 +72,19 @@ public class YDJ_PlayerController : MonoBehaviourPun
     private void ChangeWalkingAnimation(bool isWalking, PhotonMessageInfo info)
     {
         animator.SetBool("IsWalking", isWalking);
+    }
+
+    private void PlayerDied()
+    {
+
+        Destroy(gameObject);
+
+    }
+
+    public void Damaged(int Damage)
+    {
+        hp -= Damage;
+        if (hp <= 0)
+            PlayerDied();
     }
 }
