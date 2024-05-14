@@ -1,12 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-using UnityEngine.EventSystems;
+using UnityEngine;
 using UnityEngine.Events;
-using Unity.VisualScripting;
-using UnityEngine.Experimental.AI;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 public class DisplayInventory : MonoBehaviour
 {
     public MouseItem mouseItem = new MouseItem();
@@ -75,17 +72,17 @@ public class DisplayInventory : MonoBehaviour
             Debug.Log($"3. {_slot.Value.ID}");
             Debug.Log($"위 버그는 유니티 엔진 내에서 플레이어 인벤토리 인스펙터창을 고정하고 재실행하면 해결됨");
             if (_slot.Value.ID >= 0)
-             {
-                 _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = inventory.database.GetItem[_slot.Value.item.Id].uiDisplay;
-                 _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 1);
-                 _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = _slot.Value.amount == 1 ? "" : _slot.Value.amount.ToString("n0");
-             }
-             else
-             {
-                 _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = null;
-                 _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 0);
-                 _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = "";
-             }
+            {
+                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = inventory.database.GetItem[_slot.Value.item.Id].uiDisplay;
+                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 1);
+                _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = _slot.Value.amount == 1 ? "" : _slot.Value.amount.ToString("n0");
+            }
+            else
+            {
+                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = null;
+                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 0);
+                _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = "";
+            }
         }
     }
     //public void UpdateDisplay()
@@ -104,7 +101,7 @@ public class DisplayInventory : MonoBehaviour
     //            obj.transform.GetChild(0).GetComponentInChildren<Image>().sprite = inventory.database.GetItem[slot.item.Id].uiDisplay;
     //            obj.GetComponent<RectTransform>().localPosition = GetPositon(i);
     //            obj.GetComponentInChildren<TextMeshProUGUI>().text = slot.amount.ToString("n0");
-                
+
     //            itemsDisplayed.Add(slot, obj);
     //        }
     //    }
@@ -121,7 +118,7 @@ public class DisplayInventory : MonoBehaviour
     public void OnEnter(GameObject obj)
     {
         mouseItem.hoverObj = obj;
-        if(itemsDisplayed.ContainsKey(obj))
+        if (itemsDisplayed.ContainsKey(obj))
         {
             mouseItem.hoverItem = itemsDisplayed[obj];
         }
@@ -151,7 +148,7 @@ public class DisplayInventory : MonoBehaviour
     }
     public void OnDragEnd(GameObject obj)
     {
-        if(mouseItem.hoverObj)
+        if (mouseItem.hoverObj)
         {
             inventory.MoveItem(itemsDisplayed[obj], itemsDisplayed[mouseItem.hoverObj]); // 아이템 슬롯 이동
         }
@@ -164,7 +161,7 @@ public class DisplayInventory : MonoBehaviour
     }
     public void OnDrag(GameObject obj)
     {
-        if(mouseItem.obj != null)
+        if (mouseItem.obj != null)
         {
             mouseItem.obj.GetComponent<RectTransform>().position = Input.mousePosition;
         }

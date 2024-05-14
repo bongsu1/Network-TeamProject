@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -6,18 +5,11 @@ using UnityEngine.EventSystems;
 public class StaticInterface : UserInterface
 {
     public GameObject[] slots;
-    private void Start()
-    {
-        
-    }
-    private void Update()
-    {
-        
-    }
     public override void CreateSlots()
     {
-        itemsDisplayed = new Dictionary<GameObject, InventorySlot> ();
-        for(int i = 0; i < inventory.Container.Items.Length; i++)
+        Debug.Log("static createslots");
+        itemsDisplayed = new Dictionary<GameObject, InventorySlot>();
+        for (int i = 0; i < inventory.Container.Items.Length; i++)
         {
             var obj = slots[i];
 

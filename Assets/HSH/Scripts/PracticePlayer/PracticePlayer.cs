@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PracticePlayer : MonoBehaviour
 {
     public InventoryObject inventory;
+    public InventoryObject EquipInventory;
 
     public MouseItem mouseItem = new MouseItem(); // 이게 여기 옮겨지면 편해지는건?
     public void OnTriggerEnter(Collider other)
@@ -18,7 +17,7 @@ public class PracticePlayer : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(KeyCode.I))
         {
             inventory.Save();
         }
@@ -27,7 +26,7 @@ public class PracticePlayer : MonoBehaviour
             inventory.Load();
         }
     }
-    private void OnDisable ()
+    private void OnDisable()
     {
         Debug.Log("set slot");
         inventory.Container.Items = new InventorySlot[24];

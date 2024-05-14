@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1175e69e847d51345a858b8800559dde, type: 3}
-  m_Name: Trout
+  m_Name: 005 Trout
   m_EditorClassIdentifier: 
   Id: 5
   uiDisplay: {fileID: 21300000, guid: ed3bb203543484b18a73a5e478ab66d8, type: 3}

@@ -1,19 +1,16 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-using UnityEngine.EventSystems;
+using UnityEngine;
 using UnityEngine.Events;
-using Unity.VisualScripting;
-using UnityEngine.Experimental.AI;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 public abstract class UserInterface : MonoBehaviour
 {
     //public MouseItem mouseItem = new MouseItem();
 
     public PracticePlayer practicePlayer;
 
-    public GameObject inventoryPrefab;
+    //public GameObject inventoryPrefab;
     public InventoryObject inventory;
 
     //public int X_START;
@@ -29,13 +26,11 @@ public abstract class UserInterface : MonoBehaviour
     {
         for (int i = 0; i < inventory.Container.Items.Length; i++)
         {
-            Debug.Log($"01. {inventory}");
-            Debug.Log($"02. {inventory.Container}");
-            Debug.Log($"03. {inventory.Container.Items[i]}");
-            
             inventory.Container.Items[i].parent = this;
         }
         CreateSlots();
+        AddEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterInterface(gameObject); });
+        AddEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitInterface(gameObject); });
         //CreateDisplay();
     }
     private void Update()
@@ -82,7 +77,7 @@ public abstract class UserInterface : MonoBehaviour
             }
         }
     }
-    
+
     //public void UpdateDisplay()
     //{
     //    for (int i = 0; i < inventory.Container.Items.Count; i++)
@@ -115,6 +110,7 @@ public abstract class UserInterface : MonoBehaviour
     //여기부터
     public void OnEnter(GameObject obj)
     {
+        Debug.Log($"우째서{obj}");
         practicePlayer.mouseItem.hoverObj = obj;
         if (itemsDisplayed.ContainsKey(obj))
         {
@@ -124,10 +120,21 @@ public abstract class UserInterface : MonoBehaviour
 
     public void OnExit(GameObject obj)
     {
+        Debug.Log("여긴 역할을 이해 못하겠다");
         practicePlayer.mouseItem.hoverObj = null;
         practicePlayer.mouseItem.hoverItem = null;
 
     }
+    // 실수로 파괴되는 일 없도록
+    public void OnEnterInterface(GameObject obj)
+    {
+        practicePlayer.mouseItem.ui = obj.GetComponent<UserInterface>();
+    }
+    public void OnExitInterface(GameObject obj)
+    {
+        practicePlayer.mouseItem.ui = null;
+    }
+    // 이 위 두개 수식 추가, 각 인벤토리에 event trigger 추가
     public void OnDragStart(GameObject obj)
     {
         var mouseObject = new GameObject();
@@ -151,23 +158,27 @@ public abstract class UserInterface : MonoBehaviour
         var mouseHoverObj = itemOnMouse.hoverObj;
         var GetItemObject = inventory.database.GetItem;
 
-        if (mouseHoverObj)
+        if (itemOnMouse.ui != null)
         {
-            if (mouseHoverItem.CanPlaceInSlot(GetItemObject[itemsDisplayed[obj].ID]))
+            if (mouseHoverObj)
             {
-                inventory.MoveItem(itemsDisplayed[obj], practicePlayer.mouseItem.hoverItem.parent.itemsDisplayed[practicePlayer.mouseItem.hoverObj]); // 아이템 슬롯 이동
+                if (mouseHoverItem.CanPlaceInSlot(GetItemObject[itemsDisplayed[obj].ID]) && (mouseHoverItem.item.Id <= -1 ||
+                    (mouseHoverItem.item.Id >= 0) && itemsDisplayed[obj].CanPlaceInSlot(GetItemObject[mouseHoverItem.item.Id]))) // 뒷조건 추가해서 실수로 파괴되는 일 없도록
+                {
+                    inventory.MoveItem(itemsDisplayed[obj], mouseHoverItem.parent.itemsDisplayed[itemOnMouse.hoverObj]); // 아이템 슬롯 이동
+                }
             }
-            
         }
         else
         {
-            //inventory.RemoveItem(itemsDisplayed[obj].item); // 아이템 드래그해서 드롭시 파괴.
+            inventory.RemoveItem(itemsDisplayed[obj].item); // 아이템 드래그해서 드롭시 파괴.
         }
         Destroy(practicePlayer.mouseItem.obj);
         itemOnMouse.item = null;
     }
     public void OnDrag(GameObject obj)
     {
+        Debug.Log("Ondrag 는 작동하나");
         if (practicePlayer.mouseItem.obj != null)
         {
             practicePlayer.mouseItem.obj.GetComponent<RectTransform>().position = Input.mousePosition;
@@ -182,6 +193,7 @@ public abstract class UserInterface : MonoBehaviour
 }
 public class MouseItem
 {
+    public UserInterface ui;
     public GameObject obj;
     public InventorySlot item;
     public InventorySlot hoverItem;
