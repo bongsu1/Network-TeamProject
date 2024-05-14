@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1175e69e847d51345a858b8800559dde, type: 3}
-  m_Name: perch
+  m_Script: {fileID: 11500000, guid: e57f5c331153049479c0c9683a3e0893, type: 3}
+  m_Name: 004 SMG
   m_EditorClassIdentifier: 
-  Id: 1
-  uiDisplay: {fileID: 21300000, guid: 993cc82e980d641758dbe6aa2075ac03, type: 3}
-  type: 0
-  description: perch
+  Id: 4
+  uiDisplay: {fileID: 21300000, guid: f7ea29b8c710a4860850e0f22153eeff, type: 3}
+  type: 2
+  description: SMG
   buffs: []
-  restoreHealthValue: 0
+  defenceBonus: 0

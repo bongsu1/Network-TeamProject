@@ -1,12 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public enum ItemType
 {
     Food,
-    Equipment,
+    Helmet,
+    Weapon,
+    Shield,
+    Boots,
+    Chest,
+    Tool,
     Default
 }
 public enum Attributes
@@ -27,6 +29,7 @@ public abstract class ItemObject : ScriptableObject
 
     public Item CreateItem()
     {
+        Debug.Log("CreateItem");
         Item newItem = new Item(this);
         return newItem;
     }
@@ -37,6 +40,11 @@ public class Item
     public string Name;
     public int Id;
     public ItemBuff[] buffs;
+    public Item()
+    {
+        Name = "";
+        Id = -1;
+    }
     public Item(ItemObject itemobject)
     {
         Name = itemobject.name;
@@ -61,7 +69,7 @@ public class ItemBuff
     public int max;
     public ItemBuff(int _min, int _max)
     {
-        min = _min; 
+        min = _min;
         max = _max;
         GenerateValue();
     }

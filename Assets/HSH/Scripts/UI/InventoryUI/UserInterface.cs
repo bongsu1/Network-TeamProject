@@ -4,25 +4,33 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-public class DisplayInventory : MonoBehaviour
+public abstract class UserInterface : MonoBehaviour
 {
-    public MouseItem mouseItem = new MouseItem();
+    //public MouseItem mouseItem = new MouseItem();
 
-    public GameObject inventoryPrefab;
+    public PracticePlayer practicePlayer;
+
+    //public GameObject inventoryPrefab;
     public InventoryObject inventory;
 
-    public int X_START;
-    public int Y_START;
+    //public int X_START;
+    //public int Y_START;
 
-    public int X_SPACE_BETWEEN_ITEM;
-    public int NUMBER_OF_COLUMN;
-    public int Y_SPACE_BETWEEN_ITEMS;
+    //public int X_SPACE_BETWEEN_ITEM;
+    //public int NUMBER_OF_COLUMN;
+    //public int Y_SPACE_BETWEEN_ITEMS;
 
-    Dictionary<GameObject, InventorySlot> itemsDisplayed = new Dictionary<GameObject, InventorySlot>();
+    public Dictionary<GameObject, InventorySlot> itemsDisplayed = new Dictionary<GameObject, InventorySlot>();
 
     private void Start()
     {
+        for (int i = 0; i < inventory.Container.Items.Length; i++)
+        {
+            inventory.Container.Items[i].parent = this;
+        }
         CreateSlots();
+        AddEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterInterface(gameObject); });
+        AddEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitInterface(gameObject); });
         //CreateDisplay();
     }
     private void Update()
@@ -30,23 +38,7 @@ public class DisplayInventory : MonoBehaviour
         UpdateSlots();
         //UpdateDisplay();
     }
-    public void CreateSlots()
-    {
-        itemsDisplayed = new Dictionary<GameObject, InventorySlot>();
-        for (int i = 0; i < inventory.Container.Items.Length; i++)
-        {
-            var obj = Instantiate(inventoryPrefab, Vector3.zero, Quaternion.identity, transform);
-            obj.GetComponent<RectTransform>().localPosition = GetPositon(i);
-
-            AddEvent(obj, EventTriggerType.PointerEnter, delegate { OnEnter(obj); });
-            AddEvent(obj, EventTriggerType.PointerExit, delegate { OnExit(obj); });
-            AddEvent(obj, EventTriggerType.BeginDrag, delegate { OnDragStart(obj); });
-            AddEvent(obj, EventTriggerType.EndDrag, delegate { OnDragEnd(obj); });
-            AddEvent(obj, EventTriggerType.Drag, delegate { OnDrag(obj); });
-
-            itemsDisplayed.Add(obj, inventory.Container.Items[i]);
-        }
-    }
+    public abstract void CreateSlots();
 
     //public void CreateDisplay()
     //{
@@ -85,6 +77,7 @@ public class DisplayInventory : MonoBehaviour
             }
         }
     }
+
     //public void UpdateDisplay()
     //{
     //    for (int i = 0; i < inventory.Container.Items.Count; i++)
@@ -106,7 +99,7 @@ public class DisplayInventory : MonoBehaviour
     //        }
     //    }
     //}
-    private void AddEvent(GameObject obj, EventTriggerType type, UnityAction<BaseEventData> action)
+    protected void AddEvent(GameObject obj, EventTriggerType type, UnityAction<BaseEventData> action)
     {
         EventTrigger trigger = obj.GetComponent<EventTrigger>();
         var eventTrigger = new EventTrigger.Entry();
@@ -117,19 +110,31 @@ public class DisplayInventory : MonoBehaviour
     //여기부터
     public void OnEnter(GameObject obj)
     {
-        mouseItem.hoverObj = obj;
+        Debug.Log($"우째서{obj}");
+        practicePlayer.mouseItem.hoverObj = obj;
         if (itemsDisplayed.ContainsKey(obj))
         {
-            mouseItem.hoverItem = itemsDisplayed[obj];
+            practicePlayer.mouseItem.hoverItem = itemsDisplayed[obj];
         }
     }
 
     public void OnExit(GameObject obj)
     {
-        mouseItem.hoverObj = null;
-        mouseItem.hoverItem = null;
+        Debug.Log("여긴 역할을 이해 못하겠다");
+        practicePlayer.mouseItem.hoverObj = null;
+        practicePlayer.mouseItem.hoverItem = null;
 
     }
+    // 실수로 파괴되는 일 없도록
+    public void OnEnterInterface(GameObject obj)
+    {
+        practicePlayer.mouseItem.ui = obj.GetComponent<UserInterface>();
+    }
+    public void OnExitInterface(GameObject obj)
+    {
+        practicePlayer.mouseItem.ui = null;
+    }
+    // 이 위 두개 수식 추가, 각 인벤토리에 event trigger 추가
     public void OnDragStart(GameObject obj)
     {
         var mouseObject = new GameObject();
@@ -142,41 +147,55 @@ public class DisplayInventory : MonoBehaviour
             img.sprite = inventory.database.GetItem[itemsDisplayed[obj].ID].uiDisplay; // 여기서 드래그시작할때 아이템 일러가 같이 움직이게 하는데
             img.raycastTarget = false;
         }
-        mouseItem.obj = mouseObject;
-        mouseItem.item = itemsDisplayed[obj];
+        practicePlayer.mouseItem.obj = mouseObject;
+        practicePlayer.mouseItem.item = itemsDisplayed[obj];
 
     }
     public void OnDragEnd(GameObject obj)
     {
-        if (mouseItem.hoverObj)
+        var itemOnMouse = practicePlayer.mouseItem;
+        var mouseHoverItem = itemOnMouse.hoverItem;
+        var mouseHoverObj = itemOnMouse.hoverObj;
+        var GetItemObject = inventory.database.GetItem;
+
+        if (itemOnMouse.ui != null)
         {
-            inventory.MoveItem(itemsDisplayed[obj], itemsDisplayed[mouseItem.hoverObj]); // 아이템 슬롯 이동
+            if (mouseHoverObj)
+            {
+                if (mouseHoverItem.CanPlaceInSlot(GetItemObject[itemsDisplayed[obj].ID]) && (mouseHoverItem.item.Id <= -1 ||
+                    (mouseHoverItem.item.Id >= 0) && itemsDisplayed[obj].CanPlaceInSlot(GetItemObject[mouseHoverItem.item.Id]))) // 뒷조건 추가해서 실수로 파괴되는 일 없도록
+                {
+                    inventory.MoveItem(itemsDisplayed[obj], mouseHoverItem.parent.itemsDisplayed[itemOnMouse.hoverObj]); // 아이템 슬롯 이동
+                }
+            }
         }
         else
         {
             inventory.RemoveItem(itemsDisplayed[obj].item); // 아이템 드래그해서 드롭시 파괴.
         }
-        Destroy(mouseItem.obj);
-        mouseItem.item = null;
+        Destroy(practicePlayer.mouseItem.obj);
+        itemOnMouse.item = null;
     }
     public void OnDrag(GameObject obj)
     {
-        if (mouseItem.obj != null)
+        Debug.Log("Ondrag 는 작동하나");
+        if (practicePlayer.mouseItem.obj != null)
         {
-            mouseItem.obj.GetComponent<RectTransform>().position = Input.mousePosition;
+            practicePlayer.mouseItem.obj.GetComponent<RectTransform>().position = Input.mousePosition;
         }
     }
     // 여기까지 아이템 드래그앤 드랍
-    public Vector3 GetPositon(int i) // 인벤토리 슬롯 위치 잡는 부분
-    {
-        return new Vector3(X_START + (X_SPACE_BETWEEN_ITEM * (i % NUMBER_OF_COLUMN)), Y_START + (-Y_SPACE_BETWEEN_ITEMS * (i / NUMBER_OF_COLUMN)), 0f);
-    }
+    //public Vector3 GetPositon(int i) // 인벤토리 슬롯 위치 잡는 부분
+    //{
+    //    return new Vector3(X_START + (X_SPACE_BETWEEN_ITEM * (i % NUMBER_OF_COLUMN)), Y_START + (-Y_SPACE_BETWEEN_ITEMS * (i / NUMBER_OF_COLUMN)), 0f);
+    //}
 
 }
-//public class MouseItem
-//{
-//    public GameObject obj;
-//    public InventorySlot item;
-//    public InventorySlot hoverItem;
-//    public GameObject hoverobj;
-//}
+public class MouseItem
+{
+    public UserInterface ui;
+    public GameObject obj;
+    public InventorySlot item;
+    public InventorySlot hoverItem;
+    public GameObject hoverObj;
+}
