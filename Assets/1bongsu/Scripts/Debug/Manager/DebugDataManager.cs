@@ -11,9 +11,11 @@ public class DebugDataManager : MonoBehaviour
     [SerializeField] string email;
     [SerializeField] string pass;
 
-    [Header("player Data")]
-    private Test.UserData userData;
-    public Test.UserData UserData { get { return userData; } }
+    private UserData userData;
+    public UserData UserData { get { return userData; } }
+
+    private RoomData roomData;
+    public RoomData RoomData { get { return roomData; } }
 
     private static DebugDataManager instance;
     public static DebugDataManager Instance { get { return instance; } }
@@ -45,18 +47,21 @@ public class DebugDataManager : MonoBehaviour
 
     private void Load()
     {
-        FirebaseManager.DB.GetReference($"UserData/{FirebaseManager.Auth.CurrentUser.UserId}")
+        string roomName = PhotonNetwork.CurrentRoom.Name;
+        string userID = FirebaseManager.Auth.CurrentUser.UserId;
+        #region userData
+        FirebaseManager.DB.GetReference($"UserData/{userID}")
             .GetValueAsync()
             .ContinueWithOnMainThread(task =>
             {
                 if (task.IsCanceled)
                 {
-                    Debug.Log($"Get Userdata canceled");
+                    Debug.Log($"Get UserData canceled");
                     return;
                 }
                 else if (task.IsFaulted)
                 {
-                    Debug.Log($"Get Userdata failed : {task.Exception.Message}");
+                    Debug.Log($"Get UserData failed : {task.Exception.Message}");
                     return;
                 }
 
@@ -64,13 +69,44 @@ public class DebugDataManager : MonoBehaviour
                 if (snapshot.Exists)
                 {
                     string json = snapshot.GetRawJsonValue();
-                    userData = JsonUtility.FromJson<Test.UserData>(json);
+                    userData = JsonUtility.FromJson<UserData>(json);
                 }
                 else
                 {
-                    userData = new Test.UserData();
+                    // test..
+                    userData = new UserData("번개", true);
+                    FirebaseManager.Instance.DataSave(userData);
                 }
             });
+        #endregion
+        #region roomData
+        FirebaseManager.DB.GetReference($"RoomData/{roomName}/{userID}")
+            .GetValueAsync()
+            .ContinueWithOnMainThread(task =>
+            {
+                if (task.IsCanceled)
+                {
+                    Debug.Log($"Get RoomData canceled");
+                    return;
+                }
+                else if (task.IsFaulted)
+                {
+                    Debug.Log($"Get RoomData failed : {task.Exception.Message}");
+                    return;
+                }
+
+                DataSnapshot snapshot = task.Result;
+                if (snapshot.Exists)
+                {
+                    string json = snapshot.GetRawJsonValue();
+                    roomData = JsonUtility.FromJson<RoomData>(json);
+                }
+                else
+                {
+                    roomData = new RoomData(roomName);
+                }
+            });
+        #endregion
     }
 
     [ContextMenu("Logout")]
@@ -90,35 +126,22 @@ public class DebugDataManager : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(10f);
-            Save();
+            SaveRoomData();
         }
     }
     private void StopSaveRoutine()
     {
-        Save();
+        SaveRoomData();
         StopCoroutine(saveRoutine);
     }
 
     [ContextMenu("Save")]
-    public void Save()
+    public void SaveRoomData()
     {
-        string json = JsonUtility.ToJson(userData);
+        string json = JsonUtility.ToJson(roomData);
+        string roomName = PhotonNetwork.CurrentRoom.Name;
+        string userID = FirebaseManager.Auth.CurrentUser.UserId;
 
-        FirebaseManager.DB.GetReference($"UserData/{FirebaseManager.Auth.CurrentUser.UserId}")
-            .SetRawJsonValueAsync(json)
-            .ContinueWithOnMainThread(task =>
-            {
-                if (task.IsCanceled)
-                {
-                    Debug.Log($"Set Userdata canceled");
-                    return;
-                }
-                else if (task.IsFaulted)
-                {
-                    Debug.Log($"Set Userdata failed : {task.Exception.Message}");
-                    return;
-                }
-
-            });
+        FirebaseManager.DB.GetReference($"RoomData/{roomName}/{userID}").SetRawJsonValueAsync(json);
     }
 }

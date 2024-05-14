@@ -2660,6 +2660,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthUI: {fileID: 810323563465821716, guid: ae95e4bd28072f547be03323042004c2, type: 3}
+  playerController: {fileID: 0}
+  OnChangeHealth:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2346678421641941762
 GameObject:
   m_ObjectHideFlags: 0
