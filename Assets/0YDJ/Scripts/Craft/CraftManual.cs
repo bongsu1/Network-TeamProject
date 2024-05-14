@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 
@@ -9,7 +10,7 @@ public class Craft
     public GameObject go_PreviewPrefab; // 미리 보기 프리팹
 }
 
-public class CraftManual : MonoBehaviour
+public class CraftManual : MonoBehaviourPun
 {
     //public static CraftManual instance;
 
@@ -37,13 +38,7 @@ public class CraftManual : MonoBehaviour
 
     [SerializeField] float range;
 
-    //private void Awake()
-    //{
-    //    if(CraftManual.instance == null)
-    //    {
-    //        CraftManual.instance = this;
-    //    }
-    //}
+
 
     private void PointerPosition()
     {
@@ -52,7 +47,6 @@ public class CraftManual : MonoBehaviour
         {
             Pointer = hitInfo.point;
             Pointer.y = hitInfo.transform.position.y + hitInfo.transform.up.y;
-            //Debug.Log($"Pointer.y : {Pointer.y}");
         }
     }
 
@@ -107,13 +101,21 @@ public class CraftManual : MonoBehaviour
         if (isPreviewActivated && go_Preview.GetComponent<PreviewObject>().isBuildable())
         {
             //Instantiate(go_Prefab, Pointer, Quaternion.identity);
-            Instantiate(go_Prefab, Pointer, go_Preview.transform.rotation);
+            photonView.RPC("CreateCraftObject", RpcTarget.All); // OthersBuffered를 사용하면 나중에 서버에 들어온 사람도 서버에 쌓인 데이터를 받을 수 있다
+            //Instantiate(go_Prefab, Pointer, go_Preview.transform.rotation);
             Destroy(go_Preview);
             isActivated = false;
             isPreviewActivated = false;
             go_Preview = null;
             go_Prefab = null;
         }
+    }
+
+    [PunRPC]
+    private void CreateCraftObject()
+    {
+        Debug.Log("CreateCraftObject");
+        PhotonNetwork.InstantiateRoomObject("Brick", Pointer, go_Preview.transform.rotation);
     }
 
     private void Window()
