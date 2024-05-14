@@ -34,6 +34,7 @@ public class Chat : MonoBehaviourPun
         {
             playerInput.actions["Move"].Disable();  // 채팅입력중에는 움직이는 키 비활성
             playerInput.actions["Interact"].Disable();  // 채팅입력중에는 움직이는 키 비활성
+            playerInput.actions["Greet"].Disable();  // 채팅입력중에는 인사 키 비활성
             chatInput.ActivateInputField();         // 인풋필드입력 활성화
             chatInput.transform.SetAsLastSibling();
         }
@@ -41,8 +42,10 @@ public class Chat : MonoBehaviourPun
         {
             playerInput.actions["Move"].Enable();
             playerInput.actions["Interact"].Enable();
+            playerInput.actions["Greet"].Enable();
 
-            if (chatInput.text == "")              // 채팅입력창이 비어 있으면 취소
+            int empty = chatInput.textComponent.text.Trim().Length; // 입력필드가 활성화 되면 비어있어도 하나가 남는다? 이유 모름
+            if (empty <= 1) // 채팅입력창이 비어 있으면 취소
                 return;
 
             // IME때문에 한글입력이 완료되지 않았다고 판단되어 마지막 글자가 인풋필드에 입력되지 않는다
