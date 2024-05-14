@@ -1,5 +1,6 @@
 using Photon.Pun;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviourPun
@@ -15,6 +16,9 @@ public class PlayerController : MonoBehaviourPun
 
     private Vector3 moveDir; // 입력받는 방향
     private bool isWalking; // 애니메이션 작동 변수
+    public bool IsWalking { get { return isWalking; } set { isWalking = value; OnChangeWalking?.Invoke(value); } }
+
+    public UnityEvent<bool> OnChangeWalking;
 
     private void Awake()
     {
@@ -63,7 +67,7 @@ public class PlayerController : MonoBehaviourPun
     {
         if (isWalking != (value.Get<Vector2>() != Vector2.zero)) // 네트워크 최적화를 위해 달라질때만 호출
         {
-            isWalking = value.Get<Vector2>() != Vector2.zero;
+            IsWalking = value.Get<Vector2>() != Vector2.zero;
             photonView.RPC("ChangeWalkingAnimation", RpcTarget.All, isWalking); // 애니메이션 작동
         }
 

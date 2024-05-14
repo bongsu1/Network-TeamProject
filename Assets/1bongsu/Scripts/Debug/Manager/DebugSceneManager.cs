@@ -38,14 +38,14 @@ public class DebugSceneManager : MonoBehaviourPunCallbacks
         if (DebugDataManager.Instance != null)
         {
             DebugDataManager.Instance.Login();
-            yield return new WaitUntil(() => DebugDataManager.Instance.UserData != null);
+            yield return new WaitUntil(() => DebugDataManager.Instance.RoomData != null);
         }
         GameStart();
     }
     private void GameStart()
     {
         // test..
-        Vector3 spawnPosition = DebugDataManager.Instance == null ? Vector3.zero : DebugDataManager.Instance.UserData.position;
+        Vector3 spawnPosition = DebugDataManager.Instance == null ? Vector3.zero : DebugDataManager.Instance.RoomData.position;
 
         GameObject player = PhotonNetwork.Instantiate("Player", spawnPosition, Quaternion.identity);
         playerFollowCamera.gameObject.SetActive(true);
