@@ -74,6 +74,9 @@ public class YDJ_PlayerController : MonoBehaviourPun, IDamageble
         animator.SetBool("IsWalking", isWalking);
     }
 
+
+
+    // 다정
     private void PlayerDied()
     {
 
