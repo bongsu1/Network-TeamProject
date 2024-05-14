@@ -3966,6 +3966,7 @@ MonoBehaviour:
   loginButton: {fileID: 1541917475}
   signUpButton: {fileID: 728537405}
   resetPassButton: {fileID: 1445319518}
+  selectCheck: 1
 --- !u!1 &1060917508
 GameObject:
   m_ObjectHideFlags: 0

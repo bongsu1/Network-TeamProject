@@ -11,12 +11,16 @@ public class LobbyPanel : MonoBehaviour
     [SerializeField] RectTransform roomContent;
     [SerializeField] RoomEntry roomEntryPrefab;
     [SerializeField] GameObject createRoomPanel;
+
     [SerializeField] Button createRoomButton;
     [SerializeField] Button createRoomCloseButton;
     [SerializeField] Button LeaveButton;
     [SerializeField] Button createRoomConfirmButton;
+
     [SerializeField] TMP_InputField roomNameInputField;
     [SerializeField] TMP_InputField maxPlayerInputField;
+
+    [SerializeField] InputFieldTabManager inputFieldTabMrg;
 
     private Dictionary<string, RoomEntry> roomDictionary;
 
@@ -27,6 +31,18 @@ public class LobbyPanel : MonoBehaviour
         createRoomButton.onClick.AddListener(CreateRoomPanel);
         createRoomCloseButton.onClick.AddListener(CreateRoomPanelClose);
         createRoomConfirmButton.onClick.AddListener(CreateRoomConfirm);
+
+        inputFieldTabMrg = new InputFieldTabManager();
+        inputFieldTabMrg.Add(roomNameInputField);
+        inputFieldTabMrg.Add(maxPlayerInputField);
+    }
+    private void Start()
+    {
+        inputFieldTabMrg.SetFocus();
+    }
+    private void Update()
+    {
+        inputFieldTabMrg.CheckFocus();
     }
 
     private void OnDisable()

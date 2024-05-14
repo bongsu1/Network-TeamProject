@@ -13,6 +13,8 @@ public class SignInUpPanel : MonoBehaviour
     [SerializeField] TMP_InputField passInputField;
     [SerializeField] TMP_InputField confirmInputField;
 
+    [SerializeField] InputFieldTabManager inputFieldTabMrg;
+
     [SerializeField] Button cancelButton;
     [SerializeField] Button signUpButton;
 
@@ -20,6 +22,20 @@ public class SignInUpPanel : MonoBehaviour
     {
         cancelButton.onClick.AddListener(Cancel);
         signUpButton.onClick.AddListener(SignUp);
+
+        inputFieldTabMrg = new InputFieldTabManager();
+        inputFieldTabMrg.Add(emailInputField);
+        inputFieldTabMrg.Add(passInputField);
+        inputFieldTabMrg.Add(confirmInputField);
+    }
+    private void Start()
+    {
+        inputFieldTabMrg.SetFocus();
+    }
+
+    private void Update()
+    {
+        inputFieldTabMrg.CheckFocus();
     }
 
     public void SignUp()

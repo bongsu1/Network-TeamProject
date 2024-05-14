@@ -11,6 +11,8 @@ public class ResetPassPanel : MonoBehaviour
 
     [SerializeField] TMP_InputField emailInputField;
 
+    [SerializeField] InputFieldTabManager inputFieldTabMrg;
+
     [SerializeField] Button closeButton;
     [SerializeField] Button sendButton;
 
@@ -18,6 +20,14 @@ public class ResetPassPanel : MonoBehaviour
     {
         closeButton.onClick.AddListener(Close);
         sendButton.onClick.AddListener(SendReset);
+
+        inputFieldTabMrg = new InputFieldTabManager();
+
+        inputFieldTabMrg.Add(emailInputField);
+    }
+    private void Start()
+    {
+        inputFieldTabMrg.SetFocus();
     }
 
     private void SendReset()
