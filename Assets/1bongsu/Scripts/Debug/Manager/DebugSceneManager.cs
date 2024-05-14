@@ -24,21 +24,30 @@ public class DebugSceneManager : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinOrCreateRoom(debugRoomName, options, typeLobby);
     }
 
-    [SerializeField] bool isStart;
+    [SerializeField] bool isDebug;
     public override void OnJoinedRoom()
     {
-        if (!isStart)
+        if (!isDebug)
             StartCoroutine(GameStartDelay());
     }
 
     IEnumerator GameStartDelay()
     {
         yield return new WaitForSeconds(1f);
+        // test..
+        if (DebugDataManager.Instance != null)
+        {
+            DebugDataManager.Instance.Login();
+            yield return new WaitUntil(() => DebugDataManager.Instance.UserData != null);
+        }
         GameStart();
     }
     private void GameStart()
     {
-        GameObject player = PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
+        // test..
+        Vector3 spawnPosition = DebugDataManager.Instance == null ? Vector3.zero : DebugDataManager.Instance.UserData.position;
+
+        GameObject player = PhotonNetwork.Instantiate("Player", spawnPosition, Quaternion.identity);
         playerFollowCamera.gameObject.SetActive(true);
         playerFollowCamera.Follow = player.transform;
         playerFollowCamera.LookAt = player.transform;

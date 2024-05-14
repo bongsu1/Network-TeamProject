@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviourPun
     [SerializeField] Rigidbody rigid;
     [SerializeField] PlayerInput playerInput;
     [SerializeField] Animator animator;
+    [Header("Chat")]
+    [SerializeField] Chat chat;
     [Header("Stat")]
     [SerializeField] float moveSpeed;
 
@@ -22,6 +24,8 @@ public class PlayerController : MonoBehaviourPun
             // 플레이어인풋 삭제
             Destroy(playerInput);
         }
+
+        chat.OnGreeting.AddListener(Greeting); // 인사트리거를 이벤트로 받는다
     }
 
     private void Update()
@@ -65,6 +69,11 @@ public class PlayerController : MonoBehaviourPun
 
         moveDir.x = value.Get<Vector2>().x;
         moveDir.z = value.Get<Vector2>().y;
+    }
+
+    private void Greeting()
+    {
+        animator.Play("Greeting");
     }
 
     [PunRPC]
