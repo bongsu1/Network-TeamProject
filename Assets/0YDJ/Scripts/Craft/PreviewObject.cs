@@ -1,12 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
-using UnityEditor.PackageManager;
 using UnityEngine;
-using UnityEngine.SocialPlatforms;
-using UnityEngine.UIElements;
 
 public class PreviewObject : MonoBehaviour
 {
@@ -42,9 +35,8 @@ public class PreviewObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log($"colliderList.Count : {colliderList.Count}");
+        //Debug.Log($"colliderList.Count : {colliderList.Count}");
         ChangeColor();
-        //Debug.Log($"colliderList : {colliderList.}");
     }
 
     private void ChangeColor()
@@ -57,7 +49,7 @@ public class PreviewObject : MonoBehaviour
 
     private void SetColor(Material mat)
     {
-         newMaterials.material = mat;
+        newMaterials.material = mat;
     }
 
 
@@ -75,29 +67,28 @@ public class PreviewObject : MonoBehaviour
             Collider[] colliders = Physics.OverlapBox(transform.position, Vel);
             foreach (Collider collider in colliders)
             {
-                Debug.Log(collider.ToString());
                 if (collider.gameObject.layer == 30)
                 {
                     if (!colliderList.Contains(other))
                     {
-                        Debug.Log("오버랩에 닿아서 지을 수 없다");
+                        //Debug.Log("오버랩에 닿아서 지을 수 없다");
                         colliderList.Add(other);
                     }
                     return;
                 }
 
-                Debug.Log("아래 블럭이 있어서 지을 수 있다");
+                //Debug.Log("아래 블럭이 있어서 지을 수 있다");
                 colliderList.Remove(other);
-                
+
             }
         }
 
-        if(other.gameObject.layer != layerGround && other.gameObject.layer != 30) //그라운드 레이어 외에는 콜리더 리스트에 추가
+        if (other.gameObject.layer != layerGround && other.gameObject.layer != 30) //그라운드 레이어 외에는 콜리더 리스트에 추가
         {
 
             if (!colliderList.Contains(other)) //이미 리스트에 똑같은 other물질이라면 더이상 추가 안하기
             {
-                Debug.Log("Obstacle 감지, 리스트 Add");
+                //Debug.Log("Obstacle 감지, 리스트 Add");
                 colliderList.Add(other);
             }
         }
