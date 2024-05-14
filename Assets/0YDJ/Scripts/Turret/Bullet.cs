@@ -1,4 +1,3 @@
-using Unity.XR.Oculus.Input;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -30,7 +29,7 @@ public class Bullet : MonoBehaviour
         if (other.gameObject.layer == 3) // 플레이어 레이어에 닿았다
         {
             IDamageble damageble = other.gameObject.GetComponent<IDamageble>(); // 데미지 인터페이스 받아오기
-            if (damageble != null ) // 데미지 인터페이스가 있다면 데미지 함수 실행
+            if (damageble != null) // 데미지 인터페이스가 있다면 데미지 함수 실행
             {
                 damageble.Damaged(1);
             }

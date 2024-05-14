@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -94,7 +92,7 @@ public class CraftManual : MonoBehaviour
         {
             go_Preview.transform.Rotate(0, -2f, 0);
         }
-        else if(Input.GetKey(KeyCode.R))
+        else if (Input.GetKey(KeyCode.R))
         {
             go_Preview.transform.Rotate(0, 2f, 0);
         }
