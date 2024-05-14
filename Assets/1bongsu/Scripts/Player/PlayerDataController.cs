@@ -23,7 +23,11 @@ public class PlayerDataController : MonoBehaviourPun
             if (photonView.IsMine)
             {
                 healthUI = Instantiate(healthUI);
-                OnChangeHealth.AddListener(healthUI.UpdateHealthBar); // 생성하자 마자 이벤트에 추가
+                OnChangeHealth.AddListener(healthUI.UpdateHealthBar);                // 생성하자 마자 이벤트에 추가
+                healthUI.UpdateHealthBar(DebugDataManager.Instance.RoomData.health); // 시작했을때 체력과 UI동기화
+
+                playerController.OnChangeWalking.AddListener(StartHealthConsumptionRoutine);
+                playerController.OnChangeWalking.AddListener(StopHealthConsumptionRoutine);
             }
             else
                 Destroy(this);
@@ -32,6 +36,17 @@ public class PlayerDataController : MonoBehaviourPun
         {
             Destroy(this);
         }
+    }
+
+    private void OnDisable()
+    {
+        if (!photonView.IsMine)
+            return;
+
+        OnChangeHealth.RemoveListener(healthUI.UpdateHealthBar);
+
+        playerController.OnChangeWalking.RemoveListener(StartHealthConsumptionRoutine);
+        playerController.OnChangeWalking.RemoveListener(StopHealthConsumptionRoutine);
     }
 
     private void Update()
@@ -52,21 +67,39 @@ public class PlayerDataController : MonoBehaviourPun
     }
     #region HealthConsumptionRoutine
     Coroutine healthConsumptionRoutine;
+    float amountTime = 0; // 단타로 움직이게 되면 체력 소모를 안하게 되므로 남은 시간 계산후 다음에 적용
+    float startTime;
     IEnumerator HealthConsumptionRoutine()
     {
         while (true)
         {
+            yield return new WaitForSeconds(5f - amountTime);
             HealthConsumption();
-            yield return new WaitForSeconds(5f);
+            amountTime = 0;
         }
     }
-    public void StartHealthConsumptionRoutine()
+    public void StartHealthConsumptionRoutine(bool isWalking)
     {
+        if (!isWalking)
+            return;
+
+        if (healthConsumptionRoutine != null)
+            return;
+
+        startTime = Time.time;
         healthConsumptionRoutine = StartCoroutine(HealthConsumptionRoutine());
     }
-    public void StopHealthConsumptionRoutine()
+    public void StopHealthConsumptionRoutine(bool isWalking)
     {
+        if (isWalking)
+            return;
+
+        if (healthConsumptionRoutine == null)
+            return;
+
+        amountTime = (amountTime + Time.time - startTime) % 5f;
         StopCoroutine(healthConsumptionRoutine);
+        healthConsumptionRoutine = null;
     }
     #endregion
 
