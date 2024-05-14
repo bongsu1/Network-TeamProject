@@ -1,18 +1,22 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class DynamicInterface : UserInterface
 {
+    public GameObject inventoryPrefab;
+
     public int X_START;
     public int Y_START;
 
     public int X_SPACE_BETWEEN_ITEM;
     public int NUMBER_OF_COLUMN;
     public int Y_SPACE_BETWEEN_ITEMS;
+
+
     public override void CreateSlots()
     {
+        Debug.Log("dynamic createslots");
         itemsDisplayed = new Dictionary<GameObject, InventorySlot>();
         for (int i = 0; i < inventory.Container.Items.Length; i++)
         {

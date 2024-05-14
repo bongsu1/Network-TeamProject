@@ -1,13 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
-using UnityEditor;
-using JetBrains.Annotations;
 using System.Runtime.Serialization;
-using UnityEngine.UIElements;
+using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/Inventory")]
 public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceiver*/
@@ -17,19 +11,19 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
     public Inventory Container;
 
 
-//    private void OnEnable()
-//    {
-//#if UNITY_EDITOR
-//        database = (ItemDatabaseObject)AssetDatabase.LoadAssetAtPath("Assets/HSH/Scriptable Objects/Items/Data base/Database.asset", typeof(ItemDatabaseObject));
-//#else 
-//        database = Resources.Load<ItemDatabaseObject>("Database");
-//#endif
-//    }
+    //    private void OnEnable()
+    //    {
+    //#if UNITY_EDITOR
+    //        database = (ItemDatabaseObject)AssetDatabase.LoadAssetAtPath("Assets/HSH/Scriptable Objects/Items/Data base/Database.asset", typeof(ItemDatabaseObject));
+    //#else 
+    //        database = Resources.Load<ItemDatabaseObject>("Database");
+    //#endif
+    //    }
     public void AddItem(Item _item, int _amount)
     {
-        if ( _item.buffs.Length > 0)
+        if (_item.buffs.Length > 0)
         {
-            SetEmptySlot(_item, _amount );
+            SetEmptySlot(_item, _amount);
             return;
         }
         for (int i = 0; i < Container.Items.Length; i++) // 같은 아이템끼리 합치는 부분
@@ -60,9 +54,9 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
         //Container.Items.Add(new InventorySlot(_item.Id, _item,_amount));
     }
     // 처음에 빈 슬롯 세팅
-    public InventorySlot SetEmptySlot(Item _item, int _amount) 
+    public InventorySlot SetEmptySlot(Item _item, int _amount)
     {
-        for (int i = 0;i < Container.Items.Length;i++)
+        for (int i = 0; i < Container.Items.Length; i++)
         {
             //Debug.Log("set");
             //Debug.Log($"1.{Container}");
@@ -78,14 +72,14 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
         return null;
     }
     // 아이템 두개 위치 교환
-    public void MoveItem(InventorySlot item1, InventorySlot item2) 
+    public void MoveItem(InventorySlot item1, InventorySlot item2)
     {
         InventorySlot temp = new InventorySlot(item2.ID, item2.item, item2.amount);
         item2.UpdateSlot(item1.ID, item1.item, item1.amount);
-        item1.UpdateSlot(temp.ID,temp.item, temp.amount);
+        item1.UpdateSlot(temp.ID, temp.item, temp.amount);
     }
     // 아이템 제거
-    public void RemoveItem(Item _item) 
+    public void RemoveItem(Item _item)
     {
         for (int i = 0; i < Container.Items.Length; i++)
         {
@@ -114,7 +108,7 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
     [ContextMenu("Load")]
     public void Load()
     {
-        if(File.Exists(string.Concat(Application.persistentDataPath, savePath)))
+        if (File.Exists(string.Concat(Application.persistentDataPath, savePath)))
         {
             Debug.Log("inven Load");
             //BinaryFormatter bf = new BinaryFormatter();
@@ -125,7 +119,7 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
             IFormatter formatter = new BinaryFormatter();
             Stream stream = new FileStream(string.Concat(Application.persistentDataPath, savePath), FileMode.Open, FileAccess.Read);
             Inventory newContainer = (Inventory)formatter.Deserialize(stream);
-            for(int i = 0; i < Container.Items.Length; i++)
+            for (int i = 0; i < Container.Items.Length; i++)
             {
                 Container.Items[i].UpdateSlot(newContainer.Items[i].ID, newContainer.Items[i].item, newContainer.Items[i].amount);
             }
@@ -137,7 +131,7 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
     [ContextMenu("Clear")]
     public void Clear()
     {
-        Container = new Inventory();
+        Container.Clear();
     }
     //public void OnAfterDeserialize()
     //{
@@ -149,13 +143,20 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
 
     //public void OnBeforeSerialize()
     //{
-        
+
     //}
 }
 [System.Serializable]
 public class Inventory
 {
     public InventorySlot[] Items = new InventorySlot[24];
+    public void Clear()
+    {
+        for (int i = 0; i < Items.Length; i++)
+        {
+            Items[i].UpdateSlot(-1, new Item(), 0);
+        }
+    }
 }
 
 [System.Serializable]
@@ -191,11 +192,11 @@ public class InventorySlot
     }
     public bool CanPlaceInSlot(ItemObject _item)
     {
-        if (AllowedItems.Length <=0)
+        if (AllowedItems.Length <= 0)
         {
             return true;
         }
-        for(int i = 0; i < AllowedItems.Length; i++)
+        for (int i = 0; i < AllowedItems.Length; i++)
         {
             if (_item.type == AllowedItems[i])
                 return true;
