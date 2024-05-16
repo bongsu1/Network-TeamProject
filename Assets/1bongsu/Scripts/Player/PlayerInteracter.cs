@@ -14,6 +14,7 @@ public class PlayerInteracter : MonoBehaviour
 
     Collider[] colliders = new Collider[20];
     [SerializeField] LayerMask interactableLayer; // 필요하면 사용
+    // InputSystem - Button
     private void OnInteract()
     {
         int size = Physics.OverlapSphereNonAlloc(transform.position, interactRadius, colliders);

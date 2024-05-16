@@ -62,7 +62,7 @@ public class PlayerController : MonoBehaviourPun
         transform.LookAt(nextDir);
     }
 
-    // 인풋시스템으로 움직이는 방향 입력 받기
+    // InputSystem - Value : Vector2
     private void OnMove(InputValue value)
     {
         if (isWalking != (value.Get<Vector2>() != Vector2.zero)) // 네트워크 최적화를 위해 달라질때만 호출

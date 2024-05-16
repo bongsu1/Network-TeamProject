@@ -97,7 +97,7 @@ public class PlayerDataController : MonoBehaviourPun
         if (healthConsumptionRoutine == null)
             return;
 
-        amountTime = (amountTime + Time.time - startTime) % 5f;
+        amountTime = (amountTime + Time.time - startTime) % 5f; // 5초마다 체력이 까이기 때문에 5로 나머지를 구한다
         StopCoroutine(healthConsumptionRoutine);
         healthConsumptionRoutine = null;
     }
