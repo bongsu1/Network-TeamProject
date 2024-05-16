@@ -100,10 +100,7 @@ public class CraftManual : MonoBehaviourPun
     {
         if (isPreviewActivated && go_Preview.GetComponent<PreviewObject>().isBuildable())
         {
-            //Instantiate(go_Prefab, Pointer, Quaternion.identity);
-            Debug.Log(go_Prefab.name);
             photonView.RPC("CreateCraftObject", RpcTarget.MasterClient, go_Prefab.name, Pointer, go_Preview.transform.rotation); // OthersBuffered를 사용하면 나중에 서버에 들어온 사람도 서버에 쌓인 데이터를 받을 수 있다
-            //PhotonNetwork.InstantiateRoomObject("Brick", Pointer, go_Preview.transform.rotation);
             Instantiate(go_Prefab, Pointer, go_Preview.transform.rotation);
             Destroy(go_Preview);
             isActivated = false;
@@ -116,9 +113,6 @@ public class CraftManual : MonoBehaviourPun
     [PunRPC]
     private void CreateCraftObject(string name, Vector3 pointer, Quaternion rotation)
     {
-        Debug.Log("CreateCraftObject");
-        //PhotonNetwork.InstantiateRoomObject("Brick", Pointer, go_Preview.transform.rotation);
-
         PhotonNetwork.InstantiateRoomObject(name, pointer, rotation);
     }
 
