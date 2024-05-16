@@ -131,14 +131,7 @@ public abstract class UserInterface : MonoBehaviour
     // 이 위 두개 수식 추가, 각 인벤토리에 event trigger 추가
     public void OnDragStart(GameObject obj)
     {
-        //if (slotsOnInterface[obj].item.Id <= 0)
-        //{
-        //    return;
-        //}
-        
-        
         MouseData.tempItemBeingDragged = CreateTempItem(obj);
-
     }
     public GameObject CreateTempItem(GameObject obj)
     {
@@ -234,7 +227,7 @@ public static class ExtentionMethods // 이렇게 나눌 이유가 있나?
             Debug.Log($"1. {_slot}");
             Debug.Log($"2. {_slot.Value}");
             Debug.Log($"3. {_slot.Value.item.Id}");
-            Debug.Log($"위 버그는 유니티 엔진 내에서 플레이어 인벤토리 인스펙터창을 고정하고 재실행하면 해결됨");
+            Debug.Log($"위 버그는 유니티 엔진 내에서 플레이어 인벤토리 인스펙터창을 고정하고 재실행하면 해결됨, updateSlotDisplay");
             if (_slot.Value.item.Id >= 0)
             {
                 _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = _slot.Value.ItemObject.uiDisplay;//inventory.database.GetItem[_slot.Value.item.Id].uiDisplay;
