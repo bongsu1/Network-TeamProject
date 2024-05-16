@@ -1221,6 +1221,7 @@ GameObject:
   - component: {fileID: 594780847812124559}
   - component: {fileID: 8498886160375507291}
   - component: {fileID: 1106679927361118596}
+  - component: {fileID: 6881030617849381073}
   - component: {fileID: 3144206080337125979}
   - component: {fileID: 2678309927093680016}
   - component: {fileID: 215744322693532847}
@@ -1233,7 +1234,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1961848134863748692
 Transform:
   m_ObjectHideFlags: 0
@@ -1250,6 +1251,7 @@ Transform:
   - {fileID: 2909340483370743311}
   - {fileID: 7534830894920605016}
   - {fileID: 3094971579262041221}
+  - {fileID: 5739767692657697529}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &594780847812124559
@@ -1319,6 +1321,26 @@ MonoBehaviour:
   animator: {fileID: 8141699987366925586}
   moveSpeed: 3
   hp: 3
+--- !u!114 &6881030617849381073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1116685426384931948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eba06823d4e102843b2a2132059c2072, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 8141699987366925586}
+  muzzlePoint: {fileID: 1727898653379964049}
+  fireCoolTime: 0.1
+  range: 4
+  spinSpeed: 3
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!114 &3144206080337125979
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2102,6 +2124,37 @@ Transform:
   m_Children:
   - {fileID: 8122790156304183069}
   m_Father: {fileID: 6327331136978364682}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1727898653379964049
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5739767692657697529}
+  m_Layer: 3
+  m_Name: MuzzlePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5739767692657697529
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1727898653379964049}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.52900004, z: 0.711}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1961848134863748692}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1732290955337045748
 GameObject:
@@ -2924,7 +2977,7 @@ Animator:
   m_GameObject: {fileID: 2618918296699242330}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 193a954f66f3cf943bceaccec7ce331e, type: 3}
-  m_Controller: {fileID: 9100000, guid: e51f5ca10187df249b248a26201cd295, type: 2}
+  m_Controller: {fileID: 9100000, guid: c6c2b8c4ee8c8c94993a136489ac9749, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
