@@ -8,7 +8,7 @@ public class LoadingScene : MonoBehaviourPunCallbacks
     [SerializeField] GameObject gameLodingScene;
     [SerializeField] TMP_Text text;
     [SerializeField] string[] loadingMessages;
-    [SerializeField] Transform image;
+    [SerializeField] RectTransform image;
     [SerializeField] float moveSpeed ;
 
     private static LoadingScene instance;
@@ -18,8 +18,10 @@ public class LoadingScene : MonoBehaviourPunCallbacks
         CreateInstance();
     }
 
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
+
         StartCoroutine(TextRoutine());
         StartCoroutine(ImageRoutine());
     }
@@ -67,25 +69,22 @@ public class LoadingScene : MonoBehaviourPunCallbacks
 
     IEnumerator ImageRoutine()
     {
-        float startY = image.position.y; // 초기 Y 값
+        float startY = image.anchoredPosition.y; // 초기 Y 값
         float direction = 1f; // 이동 방향
 
         while (true)
         {
-
             // 새로운 Y 위치
-            float newY = image.position.y + Time.deltaTime * moveSpeed * direction;
+            float newY = image.anchoredPosition.y + Time.deltaTime * moveSpeed * direction;
 
             //  이동 방향 반전
-            if (newY >= startY || newY <= startY - 30f)
+            if (newY >= startY || newY <= startY -30f)
             {
                 direction *= -1f;
             }
 
             // 이미지의 위치 변경
-            image.position = new Vector3(image.position.x, newY, image.position.z);
-
-            Debug.Log(image.position);
+            image.anchoredPosition = new Vector2(image.anchoredPosition.x, newY);
 
             yield return null; 
         }

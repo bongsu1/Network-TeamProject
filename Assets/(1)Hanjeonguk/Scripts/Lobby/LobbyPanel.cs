@@ -55,7 +55,7 @@ public class LobbyPanel : MonoBehaviour
         roomDictionary.Clear();
     }
 
-    public void CreateRoomConfirm()
+    public void CreateRoomConfirm() //방 생성
     {
         string roomName = roomNameInputField.text; //방 이름 설정
         if (roomName == "") //이름이 비어있을 때

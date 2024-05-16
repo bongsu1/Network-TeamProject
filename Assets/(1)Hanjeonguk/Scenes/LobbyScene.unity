@@ -1178,7 +1178,7 @@ RectTransform:
   m_Father: {fileID: 870658704}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.9998302}
+  m_AnchorMax: {x: 1, y: 0.9999634}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2123,7 +2123,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 157370988}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9998302
+  m_Size: 0.9999634
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8374,8 +8374,8 @@ RectTransform:
   m_GameObject: {fileID: 1111256473}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.09, y: 0.09, z: 0.09}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 0.07, y: 0.09, z: 0.09}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2119990232988251907}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10967,7 +10967,6 @@ MonoBehaviour:
   menuPanel: {fileID: 1231984393}
   lobbyPanel: {fileID: 203472653}
   optionPanel: {fileID: 987291032}
-  loadingScene: {fileID: 1365266718}
 --- !u!1 &1423119887
 GameObject:
   m_ObjectHideFlags: 0
@@ -12751,7 +12750,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000022679058}
+  m_AnchoredPosition: {x: 0, y: 0.000081410755}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1746556933
@@ -15627,7 +15626,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5054537323665351372
 RectTransform:
   m_ObjectHideFlags: 0

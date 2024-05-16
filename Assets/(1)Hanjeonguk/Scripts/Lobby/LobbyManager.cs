@@ -10,16 +10,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [SerializeField] MenuPanel menuPanel;
     [SerializeField] LobbyPanel lobbyPanel;
     [SerializeField] OptionPanel optionPanel;
-    [SerializeField] LoadingScene loadingScene;
 
     private void Start()
     {
         SetActivePanel(Panel.Menu);
     }
-    public override void OnJoinedRoom()
-    {
-        loadingScene.GameSceneLoading();
-    }
+ 
     public override void OnJoinedLobby()
     {
         SetActivePanel(Panel.Lobby);
