@@ -14,14 +14,12 @@ public class ItemDatabaseObject : ScriptableObject, ISerializationCallbackReceiv
 
         for (int i = 0; i < Items.Length; i++)
         {
-            Items[i].Id = i;
+            Items[i].data.Id = i;
             GetItem.Add(i, Items[i]);
         }
     }
-    //뭐야
     public void OnBeforeSerialize() //  나열 완료 후 호출, 나열된 데이터를 복구 가능
     {
         GetItem = new Dictionary<int, ItemObject>();
     }
-    // 보던거 22분부터 이어서
 }
