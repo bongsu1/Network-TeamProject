@@ -2,20 +2,24 @@ using Photon.Pun;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LoadingScene : MonoBehaviourPunCallbacks
 {
     [SerializeField] GameObject gameLodingScene;
+    [SerializeField] GameObject passwordErrorScene;
     [SerializeField] TMP_Text text;
     [SerializeField] string[] loadingMessages;
     [SerializeField] RectTransform image;
     [SerializeField] float moveSpeed ;
+    [SerializeField] Button closeButton;
 
     private static LoadingScene instance;
 
     private void Awake()
     {
         CreateInstance();
+        closeButton.onClick.AddListener(CloseButton);
     }
 
     public override void OnEnable()
@@ -28,8 +32,19 @@ public class LoadingScene : MonoBehaviourPunCallbacks
 
     public override void OnJoinedRoom()
     {
-        Debug.Log("Room");
         GameSceneLoading();
+    }
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        if (message == "Game does not exist")
+        {
+            passwordErrorScene.SetActive(true);
+        }
+    }
+
+    public void CloseButton()
+    {
+        passwordErrorScene.SetActive(false);
     }
 
     public void GameSceneLoading()
