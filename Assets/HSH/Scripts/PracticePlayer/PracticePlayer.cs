@@ -1,10 +1,13 @@
+using System.IO;
+using System.Text;
+using System;
 using UnityEngine;
 
 public class PracticePlayer : MonoBehaviour
 {
     public InventoryObject inventory;
     public InventoryObject equipment;
-
+    
     //public MouseItem mouseItem = new MouseItem(); // 이게 여기 옮겨지면 편해지는건?
     public void OnTriggerEnter(Collider other)
     {
@@ -13,7 +16,7 @@ public class PracticePlayer : MonoBehaviour
         {
             Item _item = new Item(item.itemObject);
 
-            if ( inventory.AddItem(new Item(item.itemObject), 1))
+            if (inventory.AddItem(new Item(item.itemObject), 1))
             {
                 Destroy(other.gameObject);
             }
@@ -25,14 +28,16 @@ public class PracticePlayer : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.I))
         {
             Debug.Log("Save");
-            inventory.SaveToJson();
-            equipment.SaveToJson();
+            //inventory.Save();
+            //equipment.Save();
+            //SaveToJson();
         }
         if (Input.GetKeyDown(KeyCode.U))
         {
             Debug.Log("Load");
-            inventory.LoadFromJson();
-            equipment.LoadFromJson();
+            //inventory.Load();
+            //equipment.Load();
+            
         }
     }
     private void OnDisable()

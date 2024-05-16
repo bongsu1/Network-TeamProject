@@ -4,6 +4,7 @@ using System.IO.Pipes;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -14,6 +15,7 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
     public ItemDatabaseObject database;
     public Inventory Container;
 
+    //public TotalData totaldata;
 
     //    private void OnEnable()
     //    {
@@ -32,7 +34,7 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
             return false;
         }
         InventorySlot slot = FindItemOnInventory(_item);
-        if (!database.Items[_item.Id].stackable || slot == null) // 합치기 가능한지 여부 체크
+        if (!database.Items[_item.Id].stackable || slot == null) // 합치기 가능한지 여부 체크되있는지 확인하고
         {
             SetEmptySlot(_item, _amount);
             return true;
@@ -114,7 +116,6 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
             item2.UpdateSlot( item1.item, item1.amount);
             item1.UpdateSlot( temp.item, temp.amount);
         }
-
     }
     // 아이템 제거
     public void RemoveItem(Item _item)
@@ -129,118 +130,85 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
         }
     }
 
-    [ContextMenu("저장 (JSON)")]
-    public void SaveToJson()
-    {
-        Debug.Log("인벤토리 저장 (JSON)");
+    //[ContextMenu("저장 (JSON)")]
+    //public void SaveToJson()
+    //{
+    //    Debug.Log("인벤토리 저장 (JSON)");
 
-        // 1. JSON 문자열 준비
-        string jsonData = JsonUtility.ToJson(Container, true); // 개인 필드 포함
+    //    // 1. JSON 문자열 준비
+    //    string jsonData = JsonUtility.ToJson(new SaveInven(inven.Container, equip.Container), true); // 개인 필드 포함
 
-        // 2. 저장 경로 가져오기
-        string savePath = Path.Combine(Application.persistentDataPath, "inventory.json"); // 예시 경로
+    //    // 2. 저장 경로 가져오기
+    //    string savePath = Path.Combine(Application.persistentDataPath, "inventory.json"); // 예시 경로
 
-        // 3. JSON 데이터를 파일에 쓰기
-        try
-        {
-            using (FileStream fileStream = File.Create(savePath))
-            {
-                byte[] data = Encoding.UTF8.GetBytes(jsonData);
-                fileStream.Write(data, 0, data.Length);
-                fileStream.Close();
-            }
-            
-            Debug.Log("인벤토리 JSON으로 성공적으로 저장됨!");
-        }
-        catch (Exception e)
-        {
-            Debug.LogError("인벤토리를 JSON으로 저장하는 중 오류 발생: " + e.Message);
-        }
-    }
+    //    // 3. JSON 데이터를 파일에 쓰기
+    //    try
+    //    {
+    //        using (FileStream fileStream = File.Create(savePath))
+    //        {
+    //            byte[] data = Encoding.UTF8.GetBytes(jsonData);
+    //            fileStream.Write(data, 0, data.Length);
+    //        }
+    //        Debug.Log("인벤토리 JSON으로 성공적으로 저장됨!");
+    //    }
+    //    catch (Exception e)
+    //    {
+    //        Debug.LogError("인벤토리를 JSON으로 저장하는 중 오류 발생: " + e.Message);
+    //    }
+    //}
+    
 
-    [ContextMenu("로드 (JSON)")]
-    public void LoadFromJson()
-    {
-        Debug.Log("인벤토리 로드 (JSON)");
+    //[ContextMenu("로드 (JSON)")]
+    //public void LoadFromJson()
+    //{
+    //    Debug.Log("인벤토리 로드 (JSON)");
 
-        // 1. 저장 경로 가져오기
-        string savePath = Path.Combine(Application.persistentDataPath, "inventory.json"); // 예시 경로
+    //    // 1. 저장 경로 가져오기
+    //    string savePath = Path.Combine(Application.persistentDataPath, "inventory.json"); // 예시 경로
 
-        // 2. 파일 존재 여부 확인
-        if (File.Exists(savePath))
-        {
-            // 3. JSON 데이터를 파일에 읽기
-            try
-            {
-                using (FileStream fileStream = File.OpenRead(savePath))
-                {
-                    byte[] data = new byte[(int)fileStream.Length];
-                    fileStream.Read(data, 0, data.Length);
+    //    // 2. 파일 존재 여부 확인
+    //    if (File.Exists(savePath))
+    //    {
+    //        // 3. JSON 데이터를 파일에 읽기
+    //        try
+    //        {
+    //            using (FileStream fileStream = File.OpenRead(savePath))
+    //            {
+    //                byte[] data = new byte[(int)fileStream.Length];
+    //                fileStream.Read(data, 0, data.Length);
 
-                    string jsonData = Encoding.UTF8.GetString(data);
+    //                string jsonData = Encoding.UTF8.GetString(data);
 
-                    // 4. JSON 데이터를 Container 객체로 역직렬화
-                    Inventory newContainer = JsonUtility.FromJson<Inventory>(jsonData);
-                    Container.Items = newContainer.Items; // 직접 배열 복사
+    //                // 4. JSON 데이터를 Container 객체로 역직렬화
+    //                SaveInven newContainer = JsonUtility.FromJson<SaveInven>(jsonData);
+    //                inven.Container.Items = newContainer.invenSave.Items; // 직접 배열 복사
+    //                equip.Container.Items = newContainer.equipSave.Items;
 
-                    for (int i = 0; i < Container.Items.Length; i++)
-                    {
-                        Debug.Log(newContainer.Items[i]);
-                        Container.Items[i].UpdateSlot( newContainer.Items[i].item, newContainer.Items[i].amount);
-                    }
-                    fileStream.Close();
-                    Debug.Log("인벤토리 JSON에서 성공적으로 로드됨!");
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.LogError("JSON에서 인벤토리를 로드하는 중 오류 발생: " + e.Message);
-            }
-        }
-        else
-        {
-            Debug.LogWarning("인벤토리 JSON 파일을 찾을 수 없음: " + savePath);
-        }
-    }
+    //                for (int i = 0; i < inven.Container.Items.Length; i++)
+    //                {
+    //                    Debug.Log(newContainer.invenSave.Items[i]);
+    //                    inven.Container.Items[i].UpdateSlot(newContainer.invenSave.Items[i].item, newContainer.invenSave.Items[i].amount);
+    //                }
+    //                for (int i = 0; i < equip.Container.Items.Length; i++)
+    //                {
+    //                    Debug.Log(newContainer.equipSave.Items[i]);
+    //                    equip.Container.Items[i].UpdateSlot(newContainer.equipSave.Items[i].item, newContainer.equipSave.Items[i].amount);
+    //                }
 
-    [ContextMenu("Save")]
-    public void Save()
-    {
-        Debug.Log("inven save");
-        //string saveData = JsonUtility.ToJson(this, true);
-        //BinaryFormatter bf = new BinaryFormatter();
-        //FileStream file = File.Create(string.Concat(Application.persistentDataPath, savePath));
-        //bf.Serialize(file, saveData);
-        //file.Close();
-
-        IFormatter formatter = new BinaryFormatter();
-        Stream stream = new FileStream(string.Concat(Application.persistentDataPath, savePath), FileMode.Create, FileAccess.Write);
-        formatter.Serialize(stream, Container);
-        stream.Close();
-    }
-    [ContextMenu("Load")]
-    public void Load()
-    {
-        if (File.Exists(string.Concat(Application.persistentDataPath, savePath)))
-        {
-            Debug.Log("inven Load");
-            //BinaryFormatter bf = new BinaryFormatter();
-            //FileStream file = File.Open(string.Concat(Application.persistentDataPath, savePath), FileMode.Open);
-            //JsonUtility.FromJsonOverwrite(bf.Deserialize(file).ToString(), this);
-            //file.Close();
-
-            IFormatter formatter = new BinaryFormatter();
-            Stream stream = new FileStream(string.Concat(Application.persistentDataPath, savePath), FileMode.Open, FileAccess.Read);
-            Inventory newContainer = (Inventory)formatter.Deserialize(stream);
-            for (int i = 0; i < Container.Items.Length; i++)
-            {
-                Container.Items[i].UpdateSlot( newContainer.Items[i].item, newContainer.Items[i].amount);
-            }
-
-
-            stream.Close();
-        }
-    }
+    //                Debug.Log("인벤토리 JSON에서 성공적으로 로드됨!");
+    //            }
+    //        }
+    //        catch (Exception e)
+    //        {
+    //            Debug.LogError("JSON에서 인벤토리를 로드하는 중 오류 발생: " + e.Message);
+    //        }
+    //    }
+    //    else
+    //    {
+    //        Debug.LogWarning("인벤토리 JSON 파일을 찾을 수 없음: " + savePath);
+    //    }
+    //}
+    
     [ContextMenu("Clear")]
     public void Clear()
     {
@@ -260,8 +228,22 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
     //}
 }
 [System.Serializable]
+public class SaveInven
+{
+    public Inventory invenSave;
+    public Inventory equipSave;
+
+    public SaveInven(Inventory invenSave, Inventory equipSave)
+    {
+        this.invenSave = invenSave;
+        this.equipSave = equipSave;
+    }
+}
+[System.Serializable]
 public class Inventory
 {
+    private Inventory inven;
+
     public InventorySlot[] Items = new InventorySlot[24];
     public void Clear()
     {
@@ -270,6 +252,11 @@ public class Inventory
             Items[i].RemoveItem();
             //Items[i].UpdateSlot(new Item(), 0);
         }
+    }
+
+    public Inventory(Inventory inven)
+    {
+        this.inven = inven;
     }
 }
 
@@ -312,6 +299,7 @@ public class InventorySlot
     }
     public void UpdateSlot(Item _item, int _amount)
     {
+        Debug.Log("UpdateSlot");
         //ID = _id;
         item = _item;
         amount = _amount;
