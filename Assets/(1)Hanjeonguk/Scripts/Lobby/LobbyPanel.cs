@@ -71,7 +71,6 @@ public class LobbyPanel : MonoBehaviour
         options.MaxPlayers = maxPlayer;
         PhotonNetwork.CreateRoom(roomName, options);
 
-        PhotonNetwork.LoadLevel("GameScene");//게임 씬 추가
     }
 
     public void LeaveLobby()

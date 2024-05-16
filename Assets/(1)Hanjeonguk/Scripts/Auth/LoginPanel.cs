@@ -54,6 +54,7 @@ public class LoginPanel : MonoBehaviour
 
         string email = emailInputField.text;
         string pass = passInputField.text;
+
         FirebaseManager.Auth.SignInWithEmailAndPasswordAsync(email, pass).ContinueWithOnMainThread(task =>
         {
             Debug.Log("SignInWithEmailAndPasswordAsync 통과 ");
@@ -71,19 +72,15 @@ public class LoginPanel : MonoBehaviour
                 return;
             }
 
-            if (FirebaseManager.Auth.CurrentUser.IsEmailVerified)  //이메일 확인된 계정
+            if (FirebaseManager.Auth.CurrentUser.IsEmailVerified)  //이메일 인증된 계정
             {
-                Debug.Log("이메일 확인 통과 ");
-
-                FirebaseManager.DB //로그인 체크
+                FirebaseManager.DB //로그인 상태 체크
                 .GetReference("UserData")
                 .Child(FirebaseManager.Auth.CurrentUser.UserId)
                 .Child("isLogin")
                 .GetValueAsync()
                 .ContinueWithOnMainThread(task =>
                 {
-
-                    Debug.Log("GetValueAsync() 통과 ");
 
                     if (task.IsCanceled || task.IsFaulted)
                     {
@@ -100,7 +97,7 @@ public class LoginPanel : MonoBehaviour
                        json = (bool)snapShot.Value;
                     }
                     
-                    if(json == false) //로그인중이 아닌 경우 
+                    if(json == false) //로그인중이 아닌 경우, 로그인 상태로 전환
                     {
                         FirebaseManager.DB
                          .GetReference("UserData")
@@ -111,18 +108,20 @@ public class LoginPanel : MonoBehaviour
                         PhotonNetwork.LoadLevel("LobbyScene");
                     }
 
-                    else //로그인중인 경우
+                    else //로그인중인 경우, 기존 접속자 로그아웃 코루틴
                     {
                         StartCoroutine(LogOutAndLogIn());
                     }
                 });
             }
                 
-            else 
+            else //이메일 미인증 계정
             {
                 panelController.ShowVerify();
             }
+
             SetInteractable(true);
+
         });
     }
 

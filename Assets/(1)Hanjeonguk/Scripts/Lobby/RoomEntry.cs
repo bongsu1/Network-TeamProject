@@ -28,6 +28,5 @@ public class RoomEntry : MonoBehaviour
     {
         PhotonNetwork.LeaveLobby();
         PhotonNetwork.JoinRoom(roomInfo.Name);
-        PhotonNetwork.LoadLevel("GameScene");
     }
 }

@@ -55,8 +55,7 @@ public class MenuPanel : MonoBehaviour
         string name = $"새로운 섬 {Random.Range(1, 1000)}";
         RoomOptions options = new RoomOptions() { MaxPlayers = 20 };
         PhotonNetwork.JoinRandomOrCreateRoom(roomName: name, roomOptions: options);
-
-        PhotonNetwork.LoadLevel("GameScene"); // 게임 씬 추가
+        Debug.Log("방생성");
     }
 
     public void JoinLobby()
@@ -67,18 +66,12 @@ public class MenuPanel : MonoBehaviour
     }
     public void Quit()
     {
-        FirebaseManager.DB
-                        .GetReference("UserData")
-                        .Child(FirebaseManager.Auth.CurrentUser.UserId)
-                        .Child("isLogin")
-                        .SetValueAsync(false);
-
         FirebaseManager.Auth.SignOut();
         Application.Quit();
        
     }
 
-    public void NickNameCheck()
+    public void NickNameCheck() //닉네임이 공란인지 체크
     {
         FirebaseManager.DB
             .GetReference("UserData")
@@ -94,18 +87,27 @@ public class MenuPanel : MonoBehaviour
                 }
 
                 DataSnapshot snapShot = task.Result;
+                string json = "";
 
-                string json = snapShot.Value.ToString();
-
-                if (json == "")
+                if (snapShot.Exists) //닉네임 있을 때
                 {
+                    Debug.Log("1");
+                    json = snapShot.Value.ToString();
+                }
+
+                else 
+                {
+                    Debug.Log("3");
                     nickNameInputField.text = ($"마을사람{Random.Range(1, 10000)}");
                     userPanel.ChangeNickName();
                 }
+
+                nickNameInputField.text = json;
+
             });
     }
 
-    private void LoginCheck(object sender, ValueChangedEventArgs args)
+    private void LoginCheck(object sender, ValueChangedEventArgs args) //같은 아이디 로그인 체크
     {
 
         FirebaseManager.DB 
@@ -132,7 +134,7 @@ public class MenuPanel : MonoBehaviour
                 });
     }
     
-    IEnumerator ValueChangedDelay()
+    IEnumerator ValueChangedDelay() 
     {
         yield return new WaitForSeconds(1f);
 
@@ -151,6 +153,7 @@ public class MenuPanel : MonoBehaviour
 
     public void DownButton()
     {
+        LoginErrorPanel.SetActive(false);
         FirebaseManager.Auth.SignOut();
         PhotonNetwork.LoadLevel("AuthScene");
     }

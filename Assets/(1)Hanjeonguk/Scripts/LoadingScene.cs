@@ -1,11 +1,15 @@
+using Photon.Pun;
 using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnitySceneManager = UnityEngine.SceneManagement.SceneManager;
 
-public class LoadingScene : MonoBehaviour
+public class LoadingScene : MonoBehaviourPunCallbacks
 {
-    [SerializeField] GameObject LodingScene;
+    [SerializeField] GameObject gameLodingScene;
+    [SerializeField] TMP_Text text;
+    [SerializeField] string[] loadingMessages;
+    [SerializeField] Transform image;
+    [SerializeField] float moveSpeed ;
 
     private static LoadingScene instance;
 
@@ -14,28 +18,78 @@ public class LoadingScene : MonoBehaviour
         CreateInstance();
     }
 
-    public void GameSceneLoading()
+    private void OnEnable()
     {
-        StartCoroutine(LoadingRoutine());
+        StartCoroutine(TextRoutine());
+        StartCoroutine(ImageRoutine());
     }
 
-    IEnumerator LoadingRoutine()
+    public override void OnJoinedRoom()
     {
-        LodingScene.SetActive(true);
+        Debug.Log("Room");
+        GameSceneLoading();
+    }
 
-        Time.timeScale = 0f;
+    public void GameSceneLoading()
+    {
+        StartCoroutine(GameSceneLoadingRoutine());
+    }
 
-        AsyncOperation oper = UnitySceneManager.LoadSceneAsync("GameScene");
-        while (oper.isDone == false)
+    IEnumerator GameSceneLoadingRoutine()
+    {
+        gameLodingScene.SetActive(true);
+
+        PhotonNetwork.LoadLevel("GameScene");
+
+        while (PhotonNetwork.LevelLoadingProgress < 1)
         {
             yield return null;
         }
 
-        Time.timeScale = 1f;
+        yield return new WaitForSeconds(3f);
 
-        LodingScene.SetActive(false);
+        gameLodingScene.SetActive(false);
+    }
+    IEnumerator TextRoutine()
+    {
+        for (int i = 0; i < loadingMessages.Length; i++)
+        {
+            text.text = loadingMessages[i];
+
+            if (i == loadingMessages.Length - 1)
+            {
+                i = -1;
+            }
+
+            yield return new WaitForSeconds(0.3f);
+        }
     }
 
+    IEnumerator ImageRoutine()
+    {
+        float startY = image.position.y; // 초기 Y 값
+        float direction = 1f; // 이동 방향
+
+        while (true)
+        {
+
+            // 새로운 Y 위치
+            float newY = image.position.y + Time.deltaTime * moveSpeed * direction;
+
+            //  이동 방향 반전
+            if (newY >= startY || newY <= startY - 30f)
+            {
+                direction *= -1f;
+            }
+
+            // 이미지의 위치 변경
+            image.position = new Vector3(image.position.x, newY, image.position.z);
+
+            Debug.Log(image.position);
+
+            yield return null; 
+        }
+    }
 
     private void CreateInstance()
     {
@@ -51,3 +105,9 @@ public class LoadingScene : MonoBehaviour
     }
 
 }
+
+
+
+
+
+

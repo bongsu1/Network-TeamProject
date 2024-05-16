@@ -22,11 +22,12 @@ public class UserPanel : MonoBehaviour
     {
         nickNameChangeButton.onClick.AddListener(ChangeNickName);
         closeButton.onClick.AddListener(CloseInfoPanel);
-
     }
 
     private void Start()
     {
+        PhotonNetwork.ConnectUsingSettings();
+
         FirebaseManager.DB
             .GetReference("UserData")
             .Child(FirebaseManager.Auth.CurrentUser.UserId)
@@ -48,7 +49,6 @@ public class UserPanel : MonoBehaviour
                 if (snapShot.Exists) //스냅샷 있을 때
                 {
                     string json = snapShot.GetRawJsonValue(); //Json형태로 값 읽기 //(int)snapShot.Value 값만 가져오기
-                    Debug.Log(json);
 
                     userData = JsonUtility.FromJson<UserData>(json); //유저데이터 형식으로 역직렬화
 
@@ -59,7 +59,7 @@ public class UserPanel : MonoBehaviour
                     userData = new UserData();
                     nickNameText.text = userData.nickName;
 
-                    FirebaseManager.Instance.DataSave(userData);
+                    //FirebaseManager.Instance.DataSave(userData);
                 }
             });
     }
@@ -130,6 +130,5 @@ public class UserPanel : MonoBehaviour
     {
         infoPanel.SetActive(false);
     }
-
 
 }
