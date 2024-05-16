@@ -8,7 +8,7 @@ public abstract class UserInterface : MonoBehaviour
 {
     //public MouseItem mouseItem = new MouseItem();
 
-    public PracticePlayer practicePlayer;
+    //public PracticePlayer practicePlayer;
 
     //public GameObject inventoryPrefab;
     public InventoryObject inventory;
@@ -35,7 +35,8 @@ public abstract class UserInterface : MonoBehaviour
     }
     private void Update()
     {
-        UpdateSlots();
+        slotsOnInterface.UpdateSlotDisplay();
+        //UpdateSlots();
         //UpdateDisplay();
     }
     public abstract void CreateSlots();
@@ -55,28 +56,28 @@ public abstract class UserInterface : MonoBehaviour
     //    itemsDisplayed.Add(slot, obj);
     //}
     //}
-    public void UpdateSlots() // 슬롯 이미지를 여기서 바꿈
-    {
-        foreach (KeyValuePair<GameObject, InventorySlot> _slot in slotsOnInterface)
-        {
-            Debug.Log($"1. {_slot}");
-            Debug.Log($"2. {_slot.Value}");
-            Debug.Log($"3. {_slot.Value.item.Id}");
-            Debug.Log($"위 버그는 유니티 엔진 내에서 플레이어 인벤토리 인스펙터창을 고정하고 재실행하면 해결됨");
-            if (_slot.Value.item.Id >= 0)
-            {
-                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = _slot.Value.ItemObject.uiDisplay;//inventory.database.GetItem[_slot.Value.item.Id].uiDisplay;
-                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 1);
-                _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = _slot.Value.amount == 1 ? "" : _slot.Value.amount.ToString("n0");
-            }
-            else
-            {
-                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = null;
-                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 0);
-                _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = "";
-            }
-        }
-    }
+    //public void UpdateSlots() // 슬롯 이미지를 여기서 바꿈
+    //{
+    //    foreach (KeyValuePair<GameObject, InventorySlot> _slot in slotsOnInterface)
+    //    {
+    //        Debug.Log($"1. {_slot}");
+    //        Debug.Log($"2. {_slot.Value}");
+    //        Debug.Log($"3. {_slot.Value.item.Id}");
+    //        Debug.Log($"위 버그는 유니티 엔진 내에서 플레이어 인벤토리 인스펙터창을 고정하고 재실행하면 해결됨");
+    //        if (_slot.Value.item.Id >= 0)
+    //        {
+    //            _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = _slot.Value.ItemObject.uiDisplay;//inventory.database.GetItem[_slot.Value.item.Id].uiDisplay;
+    //            _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 1);
+    //            _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = _slot.Value.amount == 1 ? "" : _slot.Value.amount.ToString("n0");
+    //        }
+    //        else
+    //        {
+    //            _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = null;
+    //            _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 0);
+    //            _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = "";
+    //        }
+    //    }
+    //}
 
     //public void UpdateDisplay()
     //{
@@ -130,19 +131,36 @@ public abstract class UserInterface : MonoBehaviour
     // 이 위 두개 수식 추가, 각 인벤토리에 event trigger 추가
     public void OnDragStart(GameObject obj)
     {
-        var mouseObject = new GameObject();
-        var rt = mouseObject.AddComponent<RectTransform>();
-        rt.sizeDelta = new Vector2(50, 50);
-        mouseObject.transform.SetParent(transform.parent);
-        if (slotsOnInterface[obj].item.Id >= 0)
+        //if (slotsOnInterface[obj].item.Id <= 0)
+        //{
+        //    return;
+        //}
+        
+        
+        MouseData.tempItemBeingDragged = CreateTempItem(obj);
+
+    }
+    public GameObject CreateTempItem(GameObject obj)
+    {
+        GameObject tempItem = null;
+
+        if (slotsOnInterface[obj].item.Id>= 0)
         {
-            var img = mouseObject.AddComponent<Image>();
+            tempItem = new GameObject();
+
+            var rt = tempItem.AddComponent<RectTransform>();
+            rt.sizeDelta = new Vector2(50, 50);
+            tempItem.transform.SetParent(transform.parent);
+            var img = tempItem.AddComponent<Image>();
+
+
             img.sprite = slotsOnInterface[obj].ItemObject.uiDisplay;//inventory.database.GetItem[SlotsOnInterface[obj].item.Id].uiDisplay; // 여기서 드래그시작할때 아이템 일러가 같이 움직이게 하는데
             img.raycastTarget = false;
         }
-        MouseData.tempItemBeingDragged = mouseObject;
-
+        return tempItem;
+        
     }
+
     public void OnDragEnd(GameObject obj)
     {
         Destroy(MouseData.tempItemBeingDragged);
@@ -155,6 +173,7 @@ public abstract class UserInterface : MonoBehaviour
         {
             InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver];
             //inventory.SwapItems
+            inventory.SwapItems(slotsOnInterface[obj], mouseHoverSlotData);
         }
         //var itemOnMouse = practicePlayer.mouseItem;
         //var mouseHoverItem = itemOnMouse.hoverItem;
@@ -204,4 +223,30 @@ public static class MouseData
     //public static InventorySlot item;
     //public static InventorySlot hoverItem;
     public static GameObject slotHoveredOver;
+}
+
+public static class ExtentionMethods // 이렇게 나눌 이유가 있나?
+{
+    public static void UpdateSlotDisplay(this Dictionary<GameObject, InventorySlot> _slotsOnInterface)
+    {
+        foreach (KeyValuePair<GameObject, InventorySlot> _slot in _slotsOnInterface)
+        {
+            Debug.Log($"1. {_slot}");
+            Debug.Log($"2. {_slot.Value}");
+            Debug.Log($"3. {_slot.Value.item.Id}");
+            Debug.Log($"위 버그는 유니티 엔진 내에서 플레이어 인벤토리 인스펙터창을 고정하고 재실행하면 해결됨");
+            if (_slot.Value.item.Id >= 0)
+            {
+                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = _slot.Value.ItemObject.uiDisplay;//inventory.database.GetItem[_slot.Value.item.Id].uiDisplay;
+                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 1);
+                _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = _slot.Value.amount == 1 ? "" : _slot.Value.amount.ToString("n0");
+            }
+            else
+            {
+                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = null;
+                _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 0);
+                _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = "";
+            }
+        }
+    }
 }

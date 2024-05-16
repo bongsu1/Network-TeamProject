@@ -35,7 +35,7 @@ public class DynamicInterface : UserInterface
     }
     public void OnClickpointer()
     {
-        Debug.Log("");
+        Debug.Log("mouse Onclick");
     }
     public Vector3 GetPositon(int i) // 인벤토리 슬롯 위치 잡는 부분
     {

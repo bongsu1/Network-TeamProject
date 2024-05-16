@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/Inventory")]
 public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceiver*/
@@ -22,40 +23,69 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
     //        database = Resources.Load<ItemDatabaseObject>("Database");
     //#endif
     //    }
-    public void AddItem(Item _item, int _amount)
+
+    // 동종아이템도 분리되서 들어가는 상태
+    public bool AddItem(Item _item, int _amount)
     {
-        if (_item.buffs.Length > 0)
+        if (EmptySlotCount <= 0)
+        {
+            return false;
+        }
+        InventorySlot slot = FindItemOnInventory(_item);
+        if (!database.GetItem[_item.Id].stackable || slot == null)
         {
             SetEmptySlot(_item, _amount);
-            return;
+            return true;
         }
-        for (int i = 0; i < Container.Items.Length; i++) // 같은 아이템끼리 합치는 부분
-        {
-            if (Container.Items[i].item/*.Id*/ == _item/*.Id*/) // 요 아이디를 풀면 아이템 1종류당 한칸으로 합쳐지고 이대로 두면 합쳐지지 않고 분리됨. 화살이랑 총알에만 합쳐지게 적용할 수 없나
-            {
-                Container.Items[i].AddAmount(_amount);
-                return;
-            }
-        }
-        SetEmptySlot(_item, _amount);
+        slot.AddAmount(_amount);
+        return true;
 
+        
 
-
-        //if ( _item.buffs.Length > 0)
+        //if (_item.buffs.Length > 0)
         //{
-        //    Container.Items.Add(new InventorySlot(_item.Id, _item, _amount));
+        //    SetEmptySlot(_item, _amount);
         //    return;
         //}
-        //for (int i = 0; i < Container.Items.Count; i++)
+        //for (int i = 0; i < Container.Items.Length; i++) // 같은 아이템끼리 합치는 부분
         //{
         //    if (Container.Items[i].item/*.Id*/ == _item/*.Id*/) // 요 아이디를 풀면 아이템 1종류당 한칸으로 합쳐지고 이대로 두면 합쳐지지 않고 분리됨. 화살이랑 총알에만 합쳐지게 적용할 수 없나
         //    {
         //        Container.Items[i].AddAmount(_amount);
         //        return;
         //    }
-        //}   
-        //Container.Items.Add(new InventorySlot(_item.Id, _item,_amount));
+        //}
+        //SetEmptySlot(_item, _amount);
+
     }
+    public InventorySlot FindItemOnInventory(Item _item)
+    {
+        for (int i = 0; i < Container.Items.Length;  i++)
+        {
+            if (Container.Items[i].item.Id == _item.Id)
+            {
+                return Container.Items[i];
+            }
+        }
+        return null;
+    }
+
+    public int EmptySlotCount
+    {
+        get
+        {
+            int counter = 0;
+            for (int i = 0; i < Container.Items.Length; i++)
+            {
+                if (Container.Items[i].item.Id <= -1)
+                {
+                    counter++;
+                }
+            }
+            return counter;
+        }
+    }
+
     // 처음에 빈 슬롯 세팅
     public InventorySlot SetEmptySlot(Item _item, int _amount)
     {
@@ -67,7 +97,7 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
             //Debug.Log($"3.{Container.Items[0]}");
             if (Container.Items[i].item.Id <= -1)
             {
-                Container.Items[i].UpdateSlot(_item.Id, _item, _amount);
+                Container.Items[i].UpdateSlot(_item, _amount);
                 return Container.Items[i];
             }
         }
@@ -77,19 +107,24 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
     // 아이템 두개 위치 교환
     public void SwapItems(InventorySlot item1, InventorySlot item2)
     {
-        if (item2.CanPlaceInSlot(item1.item)
-        //InventorySlot temp = new InventorySlot(item2.ID, item2.item, item2.amount);
-        //item2.UpdateSlot(item1.ID, item1.item, item1.amount);
-        //item1.UpdateSlot(temp.ID, temp.item, temp.amount);
+        Debug.Log("SwapItems");
+        if (item2.CanPlaceInSlot(item1.ItemObject) && item1.CanPlaceInSlot(item2.ItemObject))
+        {
+            InventorySlot temp = new InventorySlot(item2.item, item2.amount);
+            item2.UpdateSlot( item1.item, item1.amount);
+            item1.UpdateSlot( temp.item, temp.amount);
+        }
+
     }
     // 아이템 제거
     public void RemoveItem(Item _item)
     {
+        Debug.Log("RemoveItem");
         for (int i = 0; i < Container.Items.Length; i++)
         {
             if (Container.Items[i].item == _item)
             {
-                Container.Items[i].UpdateSlot(-1, null, 0);
+                Container.Items[i].UpdateSlot( null, 0);
             }
         }
     }
@@ -150,8 +185,8 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
 
                     for (int i = 0; i < Container.Items.Length; i++)
                     {
-                        Debug.Log(newContainer.Items[i].ID);
-                        Container.Items[i].UpdateSlot(newContainer.Items[i].ID, newContainer.Items[i].item, newContainer.Items[i].amount);
+                        Debug.Log(newContainer.Items[i]);
+                        Container.Items[i].UpdateSlot( newContainer.Items[i].item, newContainer.Items[i].amount);
                     }
                     fileStream.Close();
                     Debug.Log("인벤토리 JSON에서 성공적으로 로드됨!");
@@ -199,7 +234,7 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
             Inventory newContainer = (Inventory)formatter.Deserialize(stream);
             for (int i = 0; i < Container.Items.Length; i++)
             {
-                Container.Items[i].UpdateSlot(newContainer.Items[i].item.Id, newContainer.Items[i].item, newContainer.Items[i].amount);
+                Container.Items[i].UpdateSlot( newContainer.Items[i].item, newContainer.Items[i].amount);
             }
 
 
@@ -232,7 +267,8 @@ public class Inventory
     {
         for (int i = 0; i < Items.Length; i++)
         {
-            Items[i].UpdateSlot(-1, new Item(), 0);
+            Items[i].RemoveItem();
+            //Items[i].UpdateSlot(new Item(), 0);
         }
     }
 }
@@ -241,6 +277,7 @@ public class Inventory
 public class InventorySlot
 {
     public ItemType[] AllowedItems = new ItemType[0];
+    [System.NonSerialized]
     public UserInterface parent;
     //public int ID = -1;
     public Item item; // 아이템
@@ -264,16 +301,16 @@ public class InventorySlot
     public InventorySlot()
     {
         //ID = -1;
-        item = null;
+        item = new Item();
         amount = 0;
     }
-    public InventorySlot(int _id, Item _item, int _amount)
+    public InventorySlot(Item _item, int _amount)
     {
         //ID = _id;
         item = _item;
         amount = _amount;
     }
-    public void UpdateSlot(int _id, Item _item, int _amount)
+    public void UpdateSlot(Item _item, int _amount)
     {
         //ID = _id;
         item = _item;
