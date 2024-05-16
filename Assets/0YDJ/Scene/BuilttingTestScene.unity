@@ -455,6 +455,7 @@ GameObject:
   - component: {fileID: 189334797}
   - component: {fileID: 189334798}
   - component: {fileID: 189334799}
+  - component: {fileID: 189334800}
   m_Layer: 0
   m_Name: CraftManual
   m_TagString: Untagged
@@ -540,6 +541,28 @@ MonoBehaviour:
   m_DefaultActionMap: Camera
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &189334800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 189334795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 4
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &301703555
 GameObject:
   m_ObjectHideFlags: 3
@@ -1853,7 +1876,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   debugRoomName: 1111
   playerFollowCamera: {fileID: 1799211360}
-  isDebug: 1
+  isDebug: 0
 --- !u!4 &1624637780
 Transform:
   m_ObjectHideFlags: 0
@@ -2734,7 +2757,7 @@ PrefabInstance:
     - target: {fileID: 1116685426384931948, guid: 9b2b5892d05251246a4aa0e4493634db,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1961848134863748692, guid: 9b2b5892d05251246a4aa0e4493634db,
         type: 3}
