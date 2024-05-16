@@ -57,7 +57,7 @@ public class Chat : MonoBehaviourPun
         }
     }
 
-    // 인사
+    // InputSystem - Button
     private void OnGreet()
     {
         playerInput.actions["Greet"].Disable(); // 인사가 끝날때 까지 다시 누르지 못하게
@@ -69,8 +69,11 @@ public class Chat : MonoBehaviourPun
     IEnumerator GreetingRoutine()
     {
         yield return new WaitForSeconds(2f);
-        playerInput.actions["Greet"].Enable();
-        playerInput.actions["Move"].Enable();
+        if (!isChatting) // 채팅중이라면 인사가 끝나도 못 움직이게 설정
+        {
+            playerInput.actions["Greet"].Enable();
+            playerInput.actions["Move"].Enable();
+        }
     }
 
     [PunRPC]

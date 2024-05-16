@@ -103,7 +103,7 @@ public class DebugDataManager : MonoBehaviour
                 }
                 else
                 {
-                    roomData = new RoomData(roomName);
+                    roomData = new RoomData();
                 }
             });
         #endregion
