@@ -14,7 +14,7 @@ public class InfoPanel : MonoBehaviour
         closeButton.onClick.AddListener(Close);
     }
 
-    public void ShowInfo(string message)
+    public void ShowInfo(string message) //메세지 입력받아 정보창 띄우기
     {
         gameObject.SetActive(true);
         infoText.text = message;

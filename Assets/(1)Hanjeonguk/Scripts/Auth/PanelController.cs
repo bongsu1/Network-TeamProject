@@ -45,8 +45,7 @@ public class PanelController : MonoBehaviour
 
     public void Quit()
     {
-        Debug.Log("sadasd");
-        FirebaseManager.Auth.SignOut();
+       FirebaseManager.Auth.SignOut();
         Application.Quit();
     }
 }

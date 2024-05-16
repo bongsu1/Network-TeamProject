@@ -1,11 +1,11 @@
 using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
-using Firebase.Extensions;
+using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
-using static UnityEngine.UIElements.UxmlAttributeDescription;
 
-public class FirebaseManager : MonoBehaviour
+public class FirebaseManager : MonoBehaviourPunCallbacks
 {
     private static FirebaseManager instance;
     public static FirebaseManager Instance { get { return instance; } }
@@ -29,12 +29,16 @@ public class FirebaseManager : MonoBehaviour
     private void Awake()
     {
         CreateInstance();
-     
+
         CheckDependency();
     }
 
-
-    private void CreateInstance()
+    private void OnDisable() //게임 종료시 로그인 상태 false
+    {
+        db.GetReference("UserData").Child(FirebaseManager.Auth.CurrentUser.UserId).Child("isLogin").SetValueAsync(false);
+        PhotonNetwork.LeaveRoom();
+    }
+    private void CreateInstance() //싱글톤
     {
         if (instance == null)
         {
@@ -47,7 +51,7 @@ public class FirebaseManager : MonoBehaviour
         }
     }
 
-    private async void CheckDependency()
+    private async void CheckDependency() //Firebase 인증 초기화
     {
         DependencyStatus dependencyStatus = await FirebaseApp.CheckAndFixDependenciesAsync();
         if (dependencyStatus == DependencyStatus.Available)
@@ -72,14 +76,19 @@ public class FirebaseManager : MonoBehaviour
         }
     }
 
-    public void DataSave(UserData userData)
+    public void DataSave(UserData userData) //현재 데이터 Firebase에 저장
     {
         string json = JsonUtility.ToJson(userData);
 
-        FirebaseManager.DB
+        db
             .GetReference("UserData")
-            .Child(FirebaseManager.Auth.CurrentUser.UserId)
+            .Child(auth.CurrentUser.UserId)
             .SetRawJsonValueAsync(json);
     }
 
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        Debug.Log("접속종료");
+        db.GetReference("UserData").Child(FirebaseManager.Auth.CurrentUser.UserId).Child("isLogin").SetValueAsync(false);
+    }
 }

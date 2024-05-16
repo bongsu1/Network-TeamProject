@@ -79,7 +79,6 @@ public class VerifyPanel : MonoBehaviour
 
                 if (FirebaseManager.Auth.CurrentUser.IsEmailVerified) 
                 {
-                    //SceneManager.LoadScene("LobbyScene");
                     PhotonNetwork.LoadLevel("LobbyScene");
                 }
             });

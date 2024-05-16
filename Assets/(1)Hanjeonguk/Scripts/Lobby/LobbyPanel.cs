@@ -1,6 +1,5 @@
 using Photon.Pun;
 using Photon.Realtime;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -19,6 +18,7 @@ public class LobbyPanel : MonoBehaviour
 
     [SerializeField] TMP_InputField roomNameInputField;
     [SerializeField] TMP_InputField maxPlayerInputField;
+    [SerializeField] TMP_InputField passwordInputField;
 
     [SerializeField] InputFieldTabManager inputFieldTabMrg;
 
@@ -55,23 +55,30 @@ public class LobbyPanel : MonoBehaviour
         roomDictionary.Clear();
     }
 
-    public void CreateRoomConfirm()
+    public void CreateRoomConfirm() //방 생성
     {
         string roomName = roomNameInputField.text; //방 이름 설정
+
         if (roomName == "") //이름이 비어있을 때
         {
             roomName = $"Room{Random.Range(1000, 1000)}"; //랜덤 이름 적용
         }
 
         int maxPlayer = maxPlayerInputField.text == "" ? 20 : int.Parse(maxPlayerInputField.text);
-        
-        maxPlayer = Mathf.Clamp(maxPlayer, 1, 20); 
+        maxPlayer = Mathf.Clamp(maxPlayer, 1, 20);
+
+
+        ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable();
+        table.Add("roomName", roomName);
+        table.Add("password", passwordInputField.text);
 
         RoomOptions options = new RoomOptions();
         options.MaxPlayers = maxPlayer;
-        PhotonNetwork.CreateRoom(roomName, options);
+        options.CustomRoomProperties = table;
 
-        PhotonNetwork.LoadLevel("GameScene");//게임 씬 추가
+        options.CustomRoomPropertiesForLobby = new string[] { "roomName", "password"};
+
+        PhotonNetwork.CreateRoom(roomName + passwordInputField.text, options);
     }
 
     public void LeaveLobby()
@@ -81,7 +88,7 @@ public class LobbyPanel : MonoBehaviour
 
     public void CreateRoomPanel()
     {
-        createRoomPanel.SetActive(true); 
+        createRoomPanel.SetActive(true);
     }
     public void CreateRoomPanelClose()
     {
@@ -92,7 +99,7 @@ public class LobbyPanel : MonoBehaviour
     {
         //Update room info
         foreach (RoomInfo roomInfo in roomList)
-      
+
             //1. 방이 사라지는 경우
             if (roomInfo.RemovedFromList || roomInfo.IsOpen == false || roomInfo.IsVisible == false)
             //방이 삭제된 경우, 들어갈 수 없는 경우, 비공개인 경우
@@ -119,6 +126,6 @@ public class LobbyPanel : MonoBehaviour
                 roomEntry.SetRoomInfo(roomInfo);
                 roomDictionary.Add(roomInfo.Name, roomEntry);
             }
-        }
     }
+}
 
