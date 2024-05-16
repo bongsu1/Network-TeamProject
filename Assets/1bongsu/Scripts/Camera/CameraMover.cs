@@ -14,6 +14,7 @@ public class CameraMover : MonoBehaviour
     private CinemachineTransposer followCameraTransposer;
     private CinemachineTransposer highAngleCameraTransposer;
     private float scrollSign; // 휠 방향
+    private float zoomDistance; // 줌되어 있는 정도
 
     private void Start()
     {
@@ -25,6 +26,7 @@ public class CameraMover : MonoBehaviour
         {
             // body 타입이 Transposer일때
             this.followCameraTransposer = followCameraTransposer;
+            zoomDistance = this.followCameraTransposer.m_FollowOffset.y;
         }
         if (highAngleCameraBody is CinemachineTransposer highAngleCameraTransposer)
         {
@@ -32,17 +34,25 @@ public class CameraMover : MonoBehaviour
         }
     }
 
+    private void SetCameraOffset(float delta)
+    {
+        // 팔로우카메라 오프셋 조정
+        followCameraTransposer.m_FollowOffset.y = delta;
+        followCameraTransposer.m_FollowOffset.z = -delta;
+
+        // 하이앵글 카메라 높이 조정
+        highAngleCameraTransposer.m_FollowOffset.y = delta + 3f; // 팔로우카메라와 거리가 약간 다르기때문에 오차 조정
+    }
+
     // InputSystem - Value : Axis
     private void OnScroll(InputValue value)
     {
         scrollSign = Mathf.Clamp(value.Get<float>(), -1f, 1f); // 휠이 많이 돌아가도 일정 속도로 줌하기 위해 방향만 구함
 
-        // 팔로우카메라 오프셋 조정
-        followCameraTransposer.m_FollowOffset.y -= scrollSign * wheelSensitivity;
-        followCameraTransposer.m_FollowOffset.z += scrollSign * wheelSensitivity;
+        zoomDistance -= scrollSign * wheelSensitivity;
+        zoomDistance = Mathf.Clamp(zoomDistance, 5f, 10f); // 줌 가능범위 설정
 
-        // 하이앵글 카메라 높이 조정
-        highAngleCameraTransposer.m_FollowOffset.y -= scrollSign * wheelSensitivity;
+        SetCameraOffset(zoomDistance);
     }
 
     // InputSystem - Pass Through

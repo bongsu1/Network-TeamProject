@@ -8,6 +8,7 @@ public class DebugSceneManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] string debugRoomName;
     [SerializeField] CinemachineVirtualCamera playerFollowCamera;
+    [SerializeField] CinemachineVirtualCamera highAngleCamera;
 
     private void Start()
     {
@@ -48,8 +49,17 @@ public class DebugSceneManager : MonoBehaviourPunCallbacks
         Vector3 spawnPosition = DebugDataManager.Instance == null ? Vector3.zero : DebugDataManager.Instance.RoomData.position;
 
         GameObject player = PhotonNetwork.Instantiate("Player", spawnPosition, Quaternion.identity);
-        playerFollowCamera.gameObject.SetActive(true);
-        playerFollowCamera.Follow = player.transform;
-        playerFollowCamera.LookAt = player.transform;
+        if (playerFollowCamera != null)
+        {
+            playerFollowCamera.gameObject.SetActive(true);
+            playerFollowCamera.Follow = player.transform;
+            playerFollowCamera.LookAt = player.transform;
+        }
+        if (highAngleCamera != null)
+        {
+            highAngleCamera.gameObject.SetActive(true);
+            highAngleCamera.Follow = player.transform;
+            highAngleCamera.LookAt = player.transform;
+        }
     }
 }
