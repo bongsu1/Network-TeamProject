@@ -61,5 +61,6 @@ public class DebugSceneManager : MonoBehaviourPunCallbacks
             highAngleCamera.Follow = player.transform;
             highAngleCamera.LookAt = player.transform;
         }
+
     }
 }
