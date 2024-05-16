@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class TotalData : MonoBehaviour
 {
@@ -87,4 +88,5 @@ public class TotalData : MonoBehaviour
             Debug.LogWarning("인벤토리 JSON 파일을 찾을 수 없음: " + savePath);
         }
     }
+    
 }

@@ -33,7 +33,7 @@ public abstract class UserInterface : MonoBehaviour
         AddEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitInterface(gameObject); });
         //CreateDisplay();
     }
-    private void Update()
+    public void Update()
     {
         slotsOnInterface.UpdateSlotDisplay();
         //UpdateSlots();
@@ -224,9 +224,10 @@ public static class ExtentionMethods // 이렇게 나눌 이유가 있나?
     {
         foreach (KeyValuePair<GameObject, InventorySlot> _slot in _slotsOnInterface)
         {
-            Debug.Log($"1. {_slot}");
-            Debug.Log($"2. {_slot.Value}");
-            Debug.Log($"3. {_slot.Value.item.Id}");
+            Debug.Log($"00. {_slotsOnInterface}");
+            Debug.Log($"01. {_slot}");
+            Debug.Log($"02. {_slot.Value.item.Id}"); // 보통 땐 잘 된다. json 으로 로드 했을 때만 기능이 반응을 안한다....돌아가고는 있는데 스크립터블 오브젝트에서 읽지를 않는다.
+            Debug.Log($"03. {_slot.Value.item.Name}"); // 이게 널값인것까지 확인
             Debug.Log($"위 버그는 유니티 엔진 내에서 플레이어 인벤토리 인스펙터창을 고정하고 재실행하면 해결됨, updateSlotDisplay");
             if (_slot.Value.item.Id >= 0)
             {

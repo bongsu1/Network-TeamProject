@@ -299,7 +299,9 @@ public class InventorySlot
     }
     public void UpdateSlot(Item _item, int _amount)
     {
-        Debug.Log("UpdateSlot");
+        //Debug.Log(_item.Name);
+        //Debug.Log(_amount);
+        //Debug.Log("UpdateSlot");
         //ID = _id;
         item = _item;
         amount = _amount;
