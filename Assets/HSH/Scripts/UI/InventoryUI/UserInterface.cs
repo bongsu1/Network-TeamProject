@@ -133,7 +133,7 @@ public abstract class UserInterface : MonoBehaviour
     {
         MouseData.tempItemBeingDragged = CreateTempItem(obj);
     }
-    public GameObject CreateTempItem(GameObject obj)
+    public GameObject CreateTempItem(GameObject obj) // 
     {
         GameObject tempItem = null;
 
@@ -220,6 +220,7 @@ public static class MouseData
 
 public static class ExtentionMethods // 이렇게 나눌 이유가 있나?
 {
+    // 하위 클래스에서 자동으로 스스로의 슬롯을 찾아서 업데이트하기 위해 this.
     public static void UpdateSlotDisplay(this Dictionary<GameObject, InventorySlot> _slotsOnInterface)
     {
         foreach (KeyValuePair<GameObject, InventorySlot> _slot in _slotsOnInterface)
@@ -229,8 +230,12 @@ public static class ExtentionMethods // 이렇게 나눌 이유가 있나?
             Debug.Log($"02. {_slot.Value.item.Id}"); // 보통 땐 잘 된다. json 으로 로드 했을 때만 기능이 반응을 안한다....돌아가고는 있는데 스크립터블 오브젝트에서 읽지를 않는다.
             Debug.Log($"03. {_slot.Value.item.Name}"); // 이게 널값인것까지 확인
             Debug.Log($"위 버그는 유니티 엔진 내에서 플레이어 인벤토리 인스펙터창을 고정하고 재실행하면 해결됨, updateSlotDisplay");
-            if (_slot.Value.item.Id >= 0)
+            // 참조는 깨진거 아님. 
+            // 스크립터블 오브젝트(인벤토리)는 정상적으로 변경됨
+            // 스크립터블 오브젝트도 변경되고 참조가 끊어진것도 아니고 업데이트도 무사히 돌아가는데 왜 안될까
+            if (_slot.Value.item.Id >= 0) //  슬롯의 ID 가 0보다 크면(아이템이 있으면)
             {
+                Debug.Log($"0.{_slot.Key.transform}");
                 _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = _slot.Value.ItemObject.uiDisplay;//inventory.database.GetItem[_slot.Value.item.Id].uiDisplay;
                 _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 1);
                 _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = _slot.Value.amount == 1 ? "" : _slot.Value.amount.ToString("n0");

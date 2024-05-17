@@ -14,11 +14,11 @@ public class DynamicInterface : UserInterface
     public int NUMBER_OF_COLUMN;
     public int Y_SPACE_BETWEEN_ITEMS;
 
-
+    
     public override void CreateSlots()
     {
         Debug.Log("dynamic createslots");
-        slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
+        slotsOnInterface = new Dictionary<GameObject, InventorySlot>(); // 굳이 게임오브젝트일 이유가 있었나? 스크립터블 오브젝트라서?
         for (int i = 0; i < inventory.Container.Items.Length; i++)
         {
             var obj = Instantiate(inventoryPrefab, Vector3.zero, Quaternion.identity, transform);

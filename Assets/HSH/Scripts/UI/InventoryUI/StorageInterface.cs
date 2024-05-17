@@ -1,4 +1,5 @@
-using System.Collections;
+using Photon.Pun;
+using Photon.Pun.UtilityScripts;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -35,4 +36,12 @@ public class StorageInterface : UserInterface
     {
         return new Vector3(X_START + (X_SPACE_BETWEEN_ITEM * (i % NUMBER_OF_COLUMN)), Y_START + (-Y_SPACE_BETWEEN_ITEMS * (i / NUMBER_OF_COLUMN)), 0f);
     }
+    //[PunRPC]
+
+    //private void RequestUpdate()
+    //{
+    //    Debug.Log("Request Update");
+        
+
+    //}
 }

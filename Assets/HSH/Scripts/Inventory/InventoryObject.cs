@@ -1,12 +1,5 @@
-using System;
-using System.IO;
-using System.IO.Pipes;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/Inventory")]
 public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceiver*/
@@ -15,25 +8,25 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
     public ItemDatabaseObject database;
     public Inventory Container;
 
-    //public TotalData totaldata;
+    public GameObject DropitemPrefab;
 
-    //    private void OnEnable()
-    //    {
-    //#if UNITY_EDITOR
-    //        database = (ItemDatabaseObject)AssetDatabase.LoadAssetAtPath("Assets/HSH/Scriptable Objects/Items/Data base/Database.asset", typeof(ItemDatabaseObject));
-    //#else 
-    //        database = Resources.Load<ItemDatabaseObject>("Database");
-    //#endif
-    //    }
 
-    // 동종아이템도 분리되서 들어가는 상태
+    /*  private void OnEnable()
+      {
+  #if UNITY_EDITOR
+          database = (ItemDatabaseObject)AssetDatabase.LoadAssetAtPath("Assets/HSH/Scriptable Objects/Items/Data base/Database.asset", typeof(ItemDatabaseObject));
+  #else 
+          database = Resources.Load<ItemDatabaseObject>("Database");
+  #endif
+      }*/
+
     public bool AddItem(Item _item, int _amount)
     {
         if (EmptySlotCount <= 0)
         {
             return false;
         }
-        InventorySlot slot = FindItemOnInventory(_item);
+        InventorySlot slot = FindItemOnInventory(_item); 
         if (!database.Items[_item.Id].stackable || slot == null) // 합치기 가능한지 여부 체크되있는지 확인하고
         {
             SetEmptySlot(_item, _amount);
@@ -42,29 +35,29 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
         slot.AddAmount(_amount);
         return true;
 
-        
 
-        //if (_item.buffs.Length > 0)
-        //{
-        //    SetEmptySlot(_item, _amount);
-        //    return;
-        //}
-        //for (int i = 0; i < Container.Items.Length; i++) // 같은 아이템끼리 합치는 부분
-        //{
-        //    if (Container.Items[i].item/*.Id*/ == _item/*.Id*/) // 요 아이디를 풀면 아이템 1종류당 한칸으로 합쳐지고 이대로 두면 합쳐지지 않고 분리됨. 화살이랑 총알에만 합쳐지게 적용할 수 없나
-        //    {
-        //        Container.Items[i].AddAmount(_amount);
-        //        return;
-        //    }
-        //}
-        //SetEmptySlot(_item, _amount);
+
+        /*if (_item.buffs.Length > 0)
+        {
+            SetEmptySlot(_item, _amount);
+            return;
+        }
+        for (int i = 0; i < Container.Items.Length; i++) // 같은 아이템끼리 합치는 부분
+        {
+            if (Container.Items[i].item.Id == _item.Id) // 요 아이디를 풀면 아이템 1종류당 한칸으로 합쳐지고 이대로 두면 합쳐지지 않고 분리됨. 화살이랑 총알에만 합쳐지게 적용할 수 없나
+            {
+                Container.Items[i].AddAmount(_amount);
+                return;
+            }
+        }
+        SetEmptySlot(_item, _amount);*/
 
     }
     public InventorySlot FindItemOnInventory(Item _item)
     {
-        for (int i = 0; i < Container.Items.Length;  i++)
+        for (int i = 0; i < Container.Items.Length; i++)
         {
-            if (Container.Items[i].item.Id == _item.Id)
+            if (Container.Items[i].item.Id == _item.Id)// 슬롯에 같은 아이템 있는지 확인하고 있으면 그 슬롯 반환, 없으면 null값 반환
             {
                 return Container.Items[i];
             }
@@ -72,7 +65,7 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
         return null;
     }
 
-    public int EmptySlotCount
+    public int EmptySlotCount // 빈칸 카운트
     {
         get
         {
@@ -89,7 +82,7 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
     }
 
     // 처음에 빈 슬롯 세팅
-    public InventorySlot SetEmptySlot(Item _item, int _amount)
+    public InventorySlot SetEmptySlot(Item _item, int _amount) // 빈슬롯을 상황에 따라 세팅.
     {
         for (int i = 0; i < Container.Items.Length; i++)
         {
@@ -97,24 +90,24 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
             //Debug.Log($"1.{Container}");
             //Debug.Log($"2.{Container.Items.Length}");
             //Debug.Log($"3.{Container.Items[0]}");
-            if (Container.Items[i].item.Id <= -1)
+            if (Container.Items[i].item.Id <= -1) // 특정 슬롯의 ID가 -1 아래라는건 비어있다는 것
             {
-                Container.Items[i].UpdateSlot(_item, _amount);
-                return Container.Items[i];
+                Container.Items[i].UpdateSlot(_item, _amount); // 빈 슬롯에 아이템을 넣는다.
+                return Container.Items[i]; // 그리고 그 슬롯값 반환
             }
         }
         // 인벤이 가득 찼을 떄의 스크립트 필요?
-        return null;
+        return null; // 꽉찼으면 null 반환
     }
     // 아이템 두개 위치 교환
-    public void SwapItems(InventorySlot item1, InventorySlot item2)
+    public void SwapItems(InventorySlot item1, InventorySlot item2) // 아이템 스왑하는 함수
     {
         Debug.Log("SwapItems");
-        if (item2.CanPlaceInSlot(item1.ItemObject) && item1.CanPlaceInSlot(item2.ItemObject))
+        if (item2.CanPlaceInSlot(item1.ItemObject) && item1.CanPlaceInSlot(item2.ItemObject))  //
         {
             InventorySlot temp = new InventorySlot(item2.item, item2.amount);
-            item2.UpdateSlot( item1.item, item1.amount);
-            item1.UpdateSlot( temp.item, temp.amount);
+            item2.UpdateSlot(item1.item, item1.amount);
+            item1.UpdateSlot(temp.item, temp.amount);
         }
     }
     // 아이템 제거
@@ -125,7 +118,7 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
         {
             if (Container.Items[i].item == _item)
             {
-                Container.Items[i].UpdateSlot( null, 0);
+                Container.Items[i].UpdateSlot(null, 0);
             }
         }
     }
@@ -156,7 +149,7 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
     //        Debug.LogError("인벤토리를 JSON으로 저장하는 중 오류 발생: " + e.Message);
     //    }
     //}
-    
+
 
     //[ContextMenu("로드 (JSON)")]
     //public void LoadFromJson()
@@ -208,7 +201,7 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
     //        Debug.LogWarning("인벤토리 JSON 파일을 찾을 수 없음: " + savePath);
     //    }
     //}
-    
+
     [ContextMenu("Clear")]
     public void Clear()
     {
@@ -242,7 +235,7 @@ public class SaveInven
 [System.Serializable]
 public class Inventory
 {
-    private Inventory inven;
+    //private Inventory inven;
 
     public InventorySlot[] Items = new InventorySlot[24];
     public void Clear()
@@ -254,10 +247,10 @@ public class Inventory
         }
     }
 
-    public Inventory(Inventory inven)
-    {
-        this.inven = inven;
-    }
+    //public Inventory(Inventory inven)
+    //{
+    //    this.inven = inven;
+    //}
 }
 
 [System.Serializable]
@@ -274,7 +267,7 @@ public class InventorySlot
     {
         get
         {
-            if(item.Id >= 0)
+            if (item.Id >= 0)
             {
                 return parent.inventory.database.Items[item.Id];
             }
@@ -299,33 +292,35 @@ public class InventorySlot
     }
     public void UpdateSlot(Item _item, int _amount)
     {
-        //Debug.Log(_item.Name);
-        //Debug.Log(_amount);
-        //Debug.Log("UpdateSlot");
+        Debug.Log("UpdateSlot");
         //ID = _id;
         item = _item;
         amount = _amount;
     }
-    public void AddAmount(int value)
+    public void AddAmount(int value) // 아이템 갯수 더하는 부분
     {
         amount += value;
     }
-    public bool CanPlaceInSlot(ItemObject _itemObject)
+    public bool CanPlaceInSlot(ItemObject _itemObject) // 아이템 드갈수 있는지 확인하는 부분
     {
-        if (AllowedItems.Length <= 0 || _itemObject == null || _itemObject.data.Id < 0)
+        if (AllowedItems.Length <= 0 || _itemObject == null || _itemObject.data.Id < 0) // 장비를 안가리거나, 비어있거나, ID가 -1이면(이것도 비어있거나란 말)
         {
-            return true;
+            return true; // 가능함
         }
-        for (int i = 0; i < AllowedItems.Length; i++)
+        for (int i = 0; i < AllowedItems.Length; i++) // 혹은 장비 허가값이 같으면(맞는 장비칸이면)
         {
             if (_itemObject.type == AllowedItems[i])
-                return true;
+                return true; // 가능함
         }
-        return false;
+        return false; // 둘다 아니면 불가능함
     }
-    public void RemoveItem()
+    public void RemoveItem() // 아이템 제거
     {
         item = new Item();
         amount = 0;
+    }
+    public void DropItem()
+    {
+
     }
 }
