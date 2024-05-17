@@ -69,6 +69,7 @@ public class LobbyPanel : MonoBehaviour
 
 
         ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable();
+
         table.Add("roomName", roomName);
         table.Add("password", passwordInputField.text);
 
@@ -78,7 +79,7 @@ public class LobbyPanel : MonoBehaviour
 
         options.CustomRoomPropertiesForLobby = new string[] { "roomName", "password"};
 
-        PhotonNetwork.CreateRoom(roomName + passwordInputField.text, options);
+        PhotonNetwork.CreateRoom($"{roomName}{passwordInputField.text}", options);
     }
 
     public void LeaveLobby()

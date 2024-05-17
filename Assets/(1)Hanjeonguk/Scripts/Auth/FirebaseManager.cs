@@ -5,7 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 
-public class FirebaseManager : MonoBehaviourPunCallbacks
+public class FirebaseManager : MonoBehaviour
 {
     private static FirebaseManager instance;
     public static FirebaseManager Instance { get { return instance; } }
@@ -86,9 +86,4 @@ public class FirebaseManager : MonoBehaviourPunCallbacks
             .SetRawJsonValueAsync(json);
     }
 
-    public override void OnDisconnected(DisconnectCause cause)
-    {
-        Debug.Log("접속종료");
-        db.GetReference("UserData").Child(FirebaseManager.Auth.CurrentUser.UserId).Child("isLogin").SetValueAsync(false);
-    }
 }

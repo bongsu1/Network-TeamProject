@@ -25,13 +25,14 @@ public class MenuPanel : MonoBehaviour
 
     [SerializeField] FirebaseUser currentUser;
     [SerializeField] GameObject LoginErrorPanel;
+    [SerializeField] GameObject OptionsCanvas;
     [SerializeField] Button downButton;
 
     private void Awake()
     {
         quickStartButton.onClick.AddListener(QuickStart);
         lobbyButton.onClick.AddListener(JoinLobby);
-        //optionButton.onClick.AddListener(JoinOption);
+        optionButton.onClick.AddListener(JoinOption);
         quitButton.onClick.AddListener(Quit);
 
         inputFieldTabMrg = new InputFieldTabManager();
@@ -53,7 +54,17 @@ public class MenuPanel : MonoBehaviour
         NickNameCheck();
 
         string name = $"새로운 섬 {Random.Range(1, 1000)}";
-        RoomOptions options = new RoomOptions() { MaxPlayers = 20 };
+        RoomOptions options = new RoomOptions();
+        
+
+        ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable();
+        table.Add("roomName", name);
+
+        options.MaxPlayers = 20;
+        options.CustomRoomProperties = table;
+
+        options.CustomRoomPropertiesForLobby = new string[] { "roomName" };
+
         PhotonNetwork.JoinRandomOrCreateRoom(roomName: name, roomOptions: options);
         Debug.Log("방생성");
     }
@@ -63,6 +74,10 @@ public class MenuPanel : MonoBehaviour
         NickNameCheck();
 
         PhotonNetwork.JoinLobby();
+    }
+    public void JoinOption()
+    {
+        OptionsCanvas.SetActive(true);
     }
     public void Quit()
     {
