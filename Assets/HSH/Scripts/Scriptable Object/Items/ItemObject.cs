@@ -18,14 +18,17 @@ public enum Attributes
     Stamina,
     strength
 }
-public abstract class ItemObject : ScriptableObject
+[CreateAssetMenu(fileName = "New Item", menuName = "Inventory System/Items/item")]
+public class ItemObject : ScriptableObject
 {
-    public int Id;
+    //public int Id;
     public Sprite uiDisplay;
+    public bool stackable; // 합치기 가능한지 아닌지 여부 체크하는 부분
     public ItemType type;
     [TextArea(15, 20)]
     public string description;
-    public ItemBuff[] buffs;
+    //public ItemBuff[] buffs;
+    public Item data = new Item();
 
     public Item CreateItem()
     {
@@ -38,7 +41,7 @@ public abstract class ItemObject : ScriptableObject
 public class Item
 {
     public string Name;
-    public int Id;
+    public int Id = -1;
     public ItemBuff[] buffs;
     public Item()
     {
@@ -48,13 +51,13 @@ public class Item
     public Item(ItemObject itemobject)
     {
         Name = itemobject.name;
-        Id = itemobject.Id;
-        buffs = new ItemBuff[itemobject.buffs.Length];
+        Id = itemobject.data.Id;
+        buffs = new ItemBuff[itemobject.data.buffs.Length];
         for (int i = 0; i < buffs.Length; i++)
         {
-            buffs[i] = new ItemBuff(itemobject.buffs[i].min, itemobject.buffs[i].max)
+            buffs[i] = new ItemBuff(itemobject.data.buffs[i].min, itemobject.data.buffs[i].max)
             {
-                attribute = itemobject.buffs[i].attribute
+                attribute = itemobject.data.buffs[i].attribute
             };
         }
     }

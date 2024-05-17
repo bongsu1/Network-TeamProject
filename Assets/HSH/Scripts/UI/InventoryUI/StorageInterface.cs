@@ -1,9 +1,10 @@
+using Photon.Pun;
 using Photon.Pun.UtilityScripts;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class DynamicInterface : UserInterface
+public class StorageInterface : UserInterface
 {
     public GameObject inventoryPrefab;
 
@@ -13,12 +14,10 @@ public class DynamicInterface : UserInterface
     public int X_SPACE_BETWEEN_ITEM;
     public int NUMBER_OF_COLUMN;
     public int Y_SPACE_BETWEEN_ITEMS;
-
-    
     public override void CreateSlots()
     {
-        Debug.Log("dynamic createslots");
-        slotsOnInterface = new Dictionary<GameObject, InventorySlot>(); // 굳이 게임오브젝트일 이유가 있었나? 스크립터블 오브젝트라서?
+        Debug.Log("Storage createslots");
+        slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
         for (int i = 0; i < inventory.Container.Items.Length; i++)
         {
             var obj = Instantiate(inventoryPrefab, Vector3.zero, Quaternion.identity, transform);
@@ -33,12 +32,16 @@ public class DynamicInterface : UserInterface
             slotsOnInterface.Add(obj, inventory.Container.Items[i]);
         }
     }
-    public void OnClickpointer()
-    {
-        Debug.Log("mouse Onclick");
-    }
     public Vector3 GetPositon(int i) // 인벤토리 슬롯 위치 잡는 부분
     {
         return new Vector3(X_START + (X_SPACE_BETWEEN_ITEM * (i % NUMBER_OF_COLUMN)), Y_START + (-Y_SPACE_BETWEEN_ITEMS * (i / NUMBER_OF_COLUMN)), 0f);
     }
+    //[PunRPC]
+
+    //private void RequestUpdate()
+    //{
+    //    Debug.Log("Request Update");
+        
+
+    //}
 }

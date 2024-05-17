@@ -9,12 +9,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e57f5c331153049479c0c9683a3e0893, type: 3}
+  m_Script: {fileID: 11500000, guid: 193171459f484b840bf5daa82208e308, type: 3}
   m_Name: 004 SMG
   m_EditorClassIdentifier: 
-  Id: 4
   uiDisplay: {fileID: 21300000, guid: f7ea29b8c710a4860850e0f22153eeff, type: 3}
+  stackable: 0
   type: 2
-  description: SMG
-  buffs: []
-  defenceBonus: 0
+  description: 
+  data:
+    Name: 
+    Id: 4
+    buffs: []
