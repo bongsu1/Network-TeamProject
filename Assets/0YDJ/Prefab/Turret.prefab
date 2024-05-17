@@ -125,12 +125,9 @@ MonoBehaviour:
   range: 5
   layerMask:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 536870920
   spinSpeed: 300
   fireRate: 1
-  bulletPre: {fileID: 2452962418327461870, guid: 2929292fe4ce0a64ab742d32e3ed1fde,
-    type: 3}
-  pool: {fileID: 0}
 --- !u!114 &5668929254075176750
 MonoBehaviour:
   m_ObjectHideFlags: 0

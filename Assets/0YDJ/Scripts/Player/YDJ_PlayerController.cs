@@ -8,6 +8,7 @@ public class YDJ_PlayerController : MonoBehaviourPun, IDamageble
     [SerializeField] Rigidbody rigid;
     [SerializeField] PlayerInput playerInput;
     [SerializeField] Animator animator;
+    [SerializeField] Huntting huntting;
     [Header("Stat")]
     [SerializeField] float moveSpeed;
     [SerializeField] int hp;
@@ -22,6 +23,8 @@ public class YDJ_PlayerController : MonoBehaviourPun, IDamageble
         {
             // 플레이어인풋 삭제
             Destroy(playerInput);
+
+            gameObject.layer = 3;
         }
     }
 
@@ -42,6 +45,9 @@ public class YDJ_PlayerController : MonoBehaviourPun, IDamageble
 
     private void Turn()
     {
+        if (huntting.TargetIn())
+            return;
+
         Vector3 inputDir = transform.position + moveDir; // 입력하는 방향
         Vector3 nextDir;                                 // 바라볼 방향
         if (-transform.forward == moveDir) // 바라보는 방향과 입력방향이 반대일때는 방향이 바뀌지 않아서 추가
@@ -58,6 +64,8 @@ public class YDJ_PlayerController : MonoBehaviourPun, IDamageble
     // 인풋시스템으로 움직이는 방향 입력 받기
     private void OnMove(InputValue value)
     {
+        
+
         if (isWalking != (value.Get<Vector2>() != Vector2.zero)) // 네트워크 최적화를 위해 달라질때만 호출
         {
             isWalking = value.Get<Vector2>() != Vector2.zero;
@@ -86,6 +94,7 @@ public class YDJ_PlayerController : MonoBehaviourPun, IDamageble
 
     public void Damaged(int Damage)
     {
+        
         hp -= Damage;
         if (hp <= 0)
             PlayerDied();

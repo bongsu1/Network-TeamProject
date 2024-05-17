@@ -13,6 +13,7 @@ public class Huntting : MonoBehaviourPun
     [SerializeField] float range = 0f;
     [SerializeField] float spinSpeed;
     [SerializeField] LayerMask layerMask;
+    [SerializeField] Bullet bulletPrefab;
     private float lastFireTime = float.MinValue;
     private bool isSetReady;
     Transform Target = null;
@@ -21,7 +22,7 @@ public class Huntting : MonoBehaviourPun
     private void Start()
     {
         pool = ObjectPool.instance;
-        //pool = GameObject.Find("ObjectPooler").GetComponent< ObjectPool>;
+        InvokeRepeating("SearchEnemy", 0f, 0.5f); //SetReady 함수 초마다 호출시켜주기
     }
 
     private void Update()
@@ -42,32 +43,23 @@ public class Huntting : MonoBehaviourPun
     private void SetReady()// 조준
     {
         isSetReady = Input.GetButton("Fire2");
-        //if (isSetReady)
-        //{
-        //    Vector3 dir = Target.position - transform.position; //타겟과 터렛의 위치를 뺀 값
-        //    Quaternion lookRotation = Quaternion.LookRotation(dir);
-        //    Vector3 euler = Quaternion.RotateTowards(transform.rotation, lookRotation, spinSpeed * Time.deltaTime).eulerAngles;
-        //    transform.rotation = Quaternion.Euler(0, euler.y, 0);
-        //}
+
         photonView.RPC("ChangeSetReadyAnimation", RpcTarget.All, isSetReady); // 애니메이션 작동
+
+        if (isSetReady && Target != null)
+        {
+            Debug.Log(Target.name);
+            Vector3 dir = Target.position - transform.position; //타겟과 터렛의 위치를 뺀 값
+            Quaternion lookRotation = Quaternion.LookRotation(dir);
+            Vector3 euler = Quaternion.RotateTowards(transform.rotation, lookRotation, spinSpeed * Time.deltaTime).eulerAngles;
+            transform.rotation = Quaternion.Euler(0, euler.y, 0);
+        }
     }
 
-    //인풋시스템은 멀티접속 시 안먹음
-    //private void OnSetReady(InputValue value)
-    //{
-    //    Debug.Log("OnSetReady");
-    //    isSetReady = value.isPressed;
-    //    photonView.RPC("ChangeSetReadyAnimation", RpcTarget.All, isSetReady); // 애니메이션 작동
-    //}
 
     [PunRPC]
     private void ChangeSetReadyAnimation(bool isSetReady, PhotonMessageInfo info)
     {
-        //Vector3 dir = Target.position - transform.position; //타겟과 터렛의 위치를 뺀 값
-        //Quaternion lookRotation = Quaternion.LookRotation(dir);
-        //Vector3 euler = Quaternion.RotateTowards(transform.rotation, lookRotation, spinSpeed * Time.deltaTime).eulerAngles;
-        //transform.rotation = Quaternion.Euler(0, euler.y, 0);
-
         animator.SetBool("IsSetReady", isSetReady);
     }
 
@@ -94,23 +86,51 @@ public class Huntting : MonoBehaviourPun
         Target = shortestTarget;
     }
 
+    public bool TargetIn() //PlayerController에게 전달할 함수 (타켓 있을 때 Turn 방지)
+    {
+        if(Target != null && Input.GetButton("Fire2"))
+        {
+            return true;
+        }
+        return false;
+    }
+
 
 
     private void Fire() // 발사
     {
-        photonView.RPC("CreateBullet", RpcTarget.All);
+        photonView.RPC("CreateBullet", RpcTarget.All, muzzlePoint.transform.position, transform.rotation);
     }
 
     [PunRPC]
-    private void CreateBullet(PhotonMessageInfo info)
+    private void CreateBullet(Vector3 position, Quaternion rotation, PhotonMessageInfo info)
     {
         if (Time.time < lastFireTime + fireCoolTime) //쿨타임
             return;
         lastFireTime = Time.time;
 
-        //float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime)); //서버 지연시간 보정
+        float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime)); //서버 지연시간 보정
 
-        pool.GetPool(muzzlePoint.transform.position, transform.rotation);
+        Quaternion gunShake = transform.rotation;
+        //gunShake.y = transform.rotation.y + Random.RandomRange(-0.03f, 0.03f);
+        Bullet bullet = Instantiate(bulletPrefab, position, rotation);
+
+        //pool.GetPool(muzzlePoint.transform.position, transform.rotation);
+        Debug.Log($"총알 속도 : {bullet.Velocity}");
+        bullet.AwakeN(position, position + bullet.Velocity * lag);  
     }
 
 }
+
+
+
+//**************************************************************************
+
+
+//인풋시스템은 멀티접속 시 안먹음
+//private void OnSetReady(InputValue value)
+//{
+//    Debug.Log("OnSetReady");
+//    isSetReady = value.isPressed;
+//    photonView.RPC("ChangeSetReadyAnimation", RpcTarget.All, isSetReady); // 애니메이션 작동
+//}
