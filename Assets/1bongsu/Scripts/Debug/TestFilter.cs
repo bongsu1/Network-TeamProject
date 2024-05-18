@@ -1,34 +1,36 @@
-using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public class TestFilter : MonoBehaviour
 {
-    [Header("Add Script")]
-    [SerializeField] List<string> addList;
-    [Header("filter")]
-    [SerializeField] string script;
+    [Header("Input Text")]
+    [SerializeField] string input;
+    [TextArea][SerializeField] string pattern;
+    [SerializeField] string replacement;
     [Header("Result")]
     [SerializeField] string result;
 
-    private void Start()
+    [ContextMenu("Regex Test")]
+    private void RegexTest()
     {
-        ChatFilter.SetList();
-        foreach (string item in addList)
-        {
-            ChatFilter.AddScript(item);
-        }
+        result = Regex.Replace(input, pattern, replacement); // 데이터에 추가하기 전에 되는지 실행용
     }
 
-    [ContextMenu("Add List")]
-    private void AddScript()
+    [ContextMenu("Filter")]
+    private void Filtering()
     {
-        ChatFilter.AddScript(script);
-        addList.Add(script);
+        result = ChatFilter.Filtering(input);
     }
 
-    [ContextMenu("Filter Script")]
-    private void FilterScript()
+    [ContextMenu("AddText")]
+    private void AddText()
     {
-        result = ChatFilter.Filtering(script);
+        ChatFilter.AddText(input, pattern, replacement);
+    }
+
+    [ContextMenu("Load")]
+    private void LoadData()
+    {
+        ChatFilter.LoadData();
     }
 }

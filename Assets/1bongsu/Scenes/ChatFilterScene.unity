@@ -1491,8 +1491,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a9d71d422f2f8944b9022c39d32d33f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addList: []
-  script: 
+  input: 
+  pattern: 
+  replacement: 
   result: 
 --- !u!4 &1780254583
 Transform:
