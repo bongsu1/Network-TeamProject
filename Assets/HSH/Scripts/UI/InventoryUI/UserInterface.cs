@@ -160,6 +160,7 @@ public abstract class UserInterface : MonoBehaviour
         if(MouseData.interfaceMouseIsOver == null)
         {
             slotsOnInterface[obj].RemoveItem();
+            //slotsOnInterface[obj].DropItem();
             return;
         }
         if(MouseData.slotHoveredOver)
@@ -168,31 +169,7 @@ public abstract class UserInterface : MonoBehaviour
             //inventory.SwapItems
             inventory.SwapItems(slotsOnInterface[obj], mouseHoverSlotData);
         }
-        //var itemOnMouse = practicePlayer.mouseItem;
-        //var mouseHoverItem = itemOnMouse.hoverItem;
-        //var mouseHoverObj = itemOnMouse.hoverObj;
-        //var GetItemObject = inventory.database.GetItem;
-
-
-
-        //Debug.Log(itemOnMouse.hoverItem.ID);
-        //if (itemOnMouse.ui != null)
-        //{
-        //    if (mouseHoverObj)
-        //    {
-        //        if (mouseHoverItem.CanPlaceInSlot(GetItemObject[itemsDisplayed[obj].ID]) && (mouseHoverItem.item.Id <= -1 ||
-        //            (mouseHoverItem.item.Id >= 0) && itemsDisplayed[obj].CanPlaceInSlot(GetItemObject[mouseHoverItem.item.Id]))) // 뒷조건 추가해서 실수로 파괴되는 일 없도록
-        //        {
-        //            inventory.MoveItem(itemsDisplayed[obj], mouseHoverItem.parent.itemsDisplayed[itemOnMouse.hoverObj]); // 아이템 슬롯 이동
-        //        }
-        //    }
-        //}
-        //else
-        //{
-        //    inventory.RemoveItem(itemsDisplayed[obj].item); // 아이템 드래그해서 드롭시 파괴.
-        //}
-        //Destroy(practicePlayer.mouseItem.obj);
-        //itemOnMouse.item = null;
+        
     }
     public void OnDrag(GameObject obj)
     {

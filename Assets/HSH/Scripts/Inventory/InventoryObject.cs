@@ -8,7 +8,7 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
     public ItemDatabaseObject database;
     public Inventory Container;
 
-    public GameObject DropitemPrefab;
+    public DropItem DropitemPrefab;
 
 
     /*  private void OnEnable()
@@ -80,7 +80,7 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
             return counter;
         }
     }
-
+    
     // 처음에 빈 슬롯 세팅
     public InventorySlot SetEmptySlot(Item _item, int _amount) // 빈슬롯을 상황에 따라 세팅.
     {
@@ -119,6 +119,17 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
             if (Container.Items[i].item == _item)
             {
                 Container.Items[i].UpdateSlot(null, 0);
+            }
+        }
+    }
+    public void DropItem(Item _item)
+    {
+        Debug.Log("DropItem");
+        for ( int i = 0; i < Container.Items.Length;i++)
+        {
+            if (Container.Items[i].item == _item)
+            {
+
             }
         }
     }
@@ -221,12 +232,12 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
     //}
 }
 [System.Serializable]
-public class SaveInven
+public class InvenData
 {
     public Inventory invenSave;
     public Inventory equipSave;
 
-    public SaveInven(Inventory invenSave, Inventory equipSave)
+    public InvenData(Inventory invenSave, Inventory equipSave)
     {
         this.invenSave = invenSave;
         this.equipSave = equipSave;
@@ -321,6 +332,6 @@ public class InventorySlot
     }
     public void DropItem()
     {
-
+        
     }
 }
