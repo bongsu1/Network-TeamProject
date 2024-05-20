@@ -30,14 +30,14 @@ public class PracticePlayer : MonoBehaviour
             Debug.Log("Save");
             //inventory.Save();
             //equipment.Save();
-            //SaveToJson();
+            Manager.Inven.SaveToJson();
         }
         if (Input.GetKeyDown(KeyCode.U))
         {
             Debug.Log("Load");
             //inventory.Load();
             //equipment.Load();
-            
+            Manager.Inven.LoadFromJson();
         }
     }
     private void OnDisable()
