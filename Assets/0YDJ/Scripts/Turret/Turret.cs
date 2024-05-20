@@ -3,6 +3,7 @@ using UnityEngine;
 public class Turret : MonoBehaviour
 {
     [SerializeField] Transform GunBody = null;
+    [SerializeField] Transform GunMuzzle;
     [SerializeField] float range = 0f;
     [SerializeField] LayerMask layerMask = 0;
     [SerializeField] float spinSpeed;
@@ -73,7 +74,7 @@ public class Turret : MonoBehaviour
                 {
                     currentFireRate = fireRate;
                     //Instantiate(bulletPre, transform.position, lookRotation);
-                    pool.GetPool(transform.position, lookRotation);
+                    pool.GetPool(GunMuzzle.transform.position, lookRotation);
                     Debug.Log("발사");
                 }
             }

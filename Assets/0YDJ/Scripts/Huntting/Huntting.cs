@@ -6,7 +6,7 @@ public class Huntting : MonoBehaviourPun
 {
 
     [SerializeField] Animator animator;
-    [SerializeField] GameObject muzzlePoint;
+    [SerializeField] Transform firePoint;
     private ObjectPool pool;
 
     [SerializeField] float fireCoolTime;
@@ -14,9 +14,17 @@ public class Huntting : MonoBehaviourPun
     [SerializeField] float spinSpeed;
     [SerializeField] LayerMask layerMask;
     [SerializeField] Bullet bulletPrefab;
+
+    [Header("holdObject")]
+    [SerializeField] GameObject gun;
+    GameObject holdObject = null;
+
+    // hold set
     private float lastFireTime = float.MinValue;
     private bool isSetReady;
     Transform Target = null;
+
+
 
 
     private void Start()
@@ -46,9 +54,10 @@ public class Huntting : MonoBehaviourPun
 
         photonView.RPC("ChangeSetReadyAnimation", RpcTarget.All, isSetReady); // 애니메이션 작동
 
-        if (isSetReady && Target != null)
+        gun.SetActive(isSetReady);
+
+        if (Target != null)
         {
-            Debug.Log(Target.name);
             Vector3 dir = Target.position - transform.position; //타겟과 터렛의 위치를 뺀 값
             Quaternion lookRotation = Quaternion.LookRotation(dir);
             Vector3 euler = Quaternion.RotateTowards(transform.rotation, lookRotation, spinSpeed * Time.deltaTime).eulerAngles;
@@ -99,27 +108,41 @@ public class Huntting : MonoBehaviourPun
 
     private void Fire() // 발사
     {
-        photonView.RPC("CreateBullet", RpcTarget.All, muzzlePoint.transform.position, transform.rotation);
+        // 마스터클라이언트에게 쏜거 확인(나 쏜다 말함 -> 마스터에게 전달 -> 마스터가 모두에게 전달)
+       
+        photonView.RPC("Fire2", RpcTarget.MasterClient, firePoint.transform.position, transform.rotation);
     }
 
     [PunRPC]
-    private void CreateBullet(Vector3 position, Quaternion rotation, PhotonMessageInfo info)
+    private void Fire2(Vector3 position, Quaternion rotation) // 발사
     {
         if (Time.time < lastFireTime + fireCoolTime) //쿨타임
             return;
         lastFireTime = Time.time;
 
-        float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime)); //서버 지연시간 보정
-
-        Quaternion gunShake = transform.rotation;
-        //gunShake.y = transform.rotation.y + Random.RandomRange(-0.03f, 0.03f);
-        Bullet bullet = Instantiate(bulletPrefab, position, rotation);
-
-        //pool.GetPool(muzzlePoint.transform.position, transform.rotation);
-        Debug.Log($"총알 속도 : {bullet.Velocity}");
-        bullet.AwakeN(position, position + bullet.Velocity * lag);  
+        //서버에게 쿨타임 확인하고 보내기 (서버를 거쳐서 쿨타임 됐나 확인)
+        photonView.RPC("CreateBullet", RpcTarget.AllViaServer,position, rotation);
+    
     }
 
+    [PunRPC]
+    private void CreateBullet(Vector3 position, Quaternion rotation, PhotonMessageInfo info)
+    {
+        //if (Time.time < lastFireTime + fireCoolTime) //쿨타임
+        //    return;
+        //lastFireTime = Time.time;
+
+        float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime)); //서버 지연시간 보정
+
+
+        //Quaternion gunShake = transform.rotation;
+        //gunShake.y = transform.rotation.y + Random.RandomRange(-0.03f, 0.03f);
+        Bullet bullet = Instantiate(bulletPrefab, position, rotation);
+        bullet.transform.position += bullet.Velocity * lag;
+        //pool.GetPool(firePoint.transform.position, transform.rotation);
+        //Debug.Log($"총알 속도 : {bullet.Velocity}");
+        //bullet.AwakeN(position, position + bullet.Velocity * lag);  
+    }
 }
 
 

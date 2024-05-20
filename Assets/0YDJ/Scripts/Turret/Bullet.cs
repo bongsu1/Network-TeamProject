@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 
@@ -8,30 +9,32 @@ public class Bullet : MonoBehaviour
     [SerializeField] float moveSpeed = 10f;//총알의 이동 속도
     private Rigidbody rigid;
 
-    public float MoveSpeed { get { return moveSpeed; } }
+
+    //public float MoveSpeed { get { return moveSpeed; } }
 
     private ObjectPool pool;
     public ObjectPool Pool { get { return pool; } set { pool = value; } }
 
-    public Vector3 Velocity { get { return rigid.velocity; } }
+    public Vector3 Velocity { get { return rigid.velocity; } set { rigid.velocity = value; } }
+    //public Rigidbody Rigid { get { return rigid; } set { rigid = value; } }
 
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
-        rigid.velocity = (transform.forward * moveSpeed);
+
+        //rigid.velocity = (transform.forward * moveSpeed);
     }
 
-    public void AwakeN(Vector3 SpawnPosition, Vector3 NextPosition)
-    {
-        transform.position = Vector3.MoveTowards(SpawnPosition, NextPosition, moveSpeed * Time.deltaTime);
-    }
+    //public void AwakeN(Vector3 SpawnPosition, Vector3 NextPosition)
+    //{
+    //    transform.position = Vector3.MoveTowards(SpawnPosition, NextPosition, moveSpeed * Time.deltaTime);
+    //}
 
     void Update()
     {
         //transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
         rigid.velocity = (transform.forward * moveSpeed);
-
-        Debug.Log(rigid.velocity);
+        //Debug.Log(rigid.velocity);
     }
 
 
@@ -53,4 +56,24 @@ public class Bullet : MonoBehaviour
         //    poolObject.Release();
         //}
     }
+
+
+    //public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    //{
+    //    if (stream.IsWriting)
+    //    {
+    //        stream.SendNext(rigid.position);
+    //        stream.SendNext(rigid.rotation);
+    //        stream.SendNext(rigid.velocity);
+    //    }
+    //    else
+    //    {
+    //        rigid.position = (Vector3)stream.ReceiveNext();
+    //        rigid.rotation = (Quaternion)stream.ReceiveNext();
+    //        rigid.velocity = (Vector3)stream.ReceiveNext();
+
+        //        float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime));
+        //        rigid.position += rigid.velocity * lag;
+        //    }
+    //}
 }

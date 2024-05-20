@@ -3,20 +3,18 @@ using UnityEngine;
 
 public class PreviewObject : MonoBehaviour
 {
-    public List<Collider> colliderList = new List<Collider>(); // 충돌한 오브젝트들 저장할 리스트
+    private List<Collider> colliderList = new List<Collider>(); // 충돌한 오브젝트들 저장할 리스트
 
-    [SerializeField] int layerGround = 31; // 지형 레이어 (무시하게 할것)
+    private int layerGround = 31; // 지형 레이어 (무시하게 할것)
     //[SerializeField] int IGNORE_RAYCAST_LAYER = 30; // ignore_raycast (무시하게 할것)
 
     [SerializeField] Material blue;
     [SerializeField] Material red;
 
-    private RaycastHit hitInfo;
     [SerializeField] LayerMask IgnoreLayer;
 
     private Renderer newMaterials;
 
-    private Vector3 Vel;
 
     private void Start()
     {

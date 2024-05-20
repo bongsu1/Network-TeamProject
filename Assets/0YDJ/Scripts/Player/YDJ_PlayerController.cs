@@ -31,6 +31,7 @@ public class YDJ_PlayerController : MonoBehaviourPun, IDamageble
     private void Update()
     {
         Turn();
+        
     }
 
     private void FixedUpdate()

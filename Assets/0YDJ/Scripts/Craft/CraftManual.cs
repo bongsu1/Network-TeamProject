@@ -46,6 +46,7 @@ public class CraftManual : MonoBehaviourPun
         if (Physics.Raycast(ray, out hitInfo, range, IgnoreLayer | GroundLayer)) //레이캐스트로 그라운드 체크(range로 범위 조정 가능)                      
         {
             Pointer = hitInfo.point;
+
             Pointer.y = hitInfo.transform.position.y + hitInfo.transform.up.y;
         }
     }
@@ -53,7 +54,7 @@ public class CraftManual : MonoBehaviourPun
 
     public void SlotClick(int _slotNumber) //슬럿 클릭시 프리뷰 프리펩 생성
     {
-        go_Preview = Instantiate(craft_fire[_slotNumber].go_PreviewPrefab, Pointer, Quaternion.identity);
+        go_Preview = Instantiate(craft_fire[_slotNumber].go_PreviewPrefab, Pointer, Quaternion.Euler(-90, 0, 0));
         go_Prefab = craft_fire[_slotNumber].go_prefab;
         isPreviewActivated = true;
         go_BaseUI.SetActive(false);
