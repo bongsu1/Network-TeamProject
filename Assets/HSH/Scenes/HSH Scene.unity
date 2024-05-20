@@ -15116,6 +15116,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5616447827494442414}
   - component: {fileID: 6812070430276252789}
+  - component: {fileID: 9037094100592806306}
   - component: {fileID: 2538438227109905057}
   - component: {fileID: 9037094100592806305}
   - component: {fileID: 8350526111948528746}
@@ -17626,6 +17627,26 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &9037094100592806306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6464636390620882838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a7c4b290e32b644caa9eebd493dfb67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rigid: {fileID: 2538438227109905057}
+  playerInput: {fileID: 9037094100592806305}
+  animator: {fileID: 2753215535411642088}
+  chat: {fileID: 0}
+  moveSpeed: 0
+  OnChangeWalking:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &9042762328326590711
 Transform:
   m_ObjectHideFlags: 0
