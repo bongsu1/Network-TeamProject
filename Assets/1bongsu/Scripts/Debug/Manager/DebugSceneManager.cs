@@ -7,6 +7,7 @@ using UnityEngine;
 public class DebugSceneManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] string debugRoomName;
+    [SerializeField] GameObject playerPrefab;
     [SerializeField] CinemachineVirtualCamera playerFollowCamera;
     [SerializeField] CinemachineVirtualCamera highAngleCamera;
 
@@ -48,7 +49,7 @@ public class DebugSceneManager : MonoBehaviourPunCallbacks
         // test..
         Vector3 spawnPosition = DebugDataManager.Instance == null ? Vector3.zero : DebugDataManager.Instance.RoomData.position;
 
-        GameObject player = PhotonNetwork.Instantiate("Player", spawnPosition, Quaternion.identity);
+        GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, spawnPosition, Quaternion.identity);
         if (playerFollowCamera != null)
         {
             playerFollowCamera.gameObject.SetActive(true);
