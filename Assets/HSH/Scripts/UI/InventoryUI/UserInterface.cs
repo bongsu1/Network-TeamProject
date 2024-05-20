@@ -159,17 +159,16 @@ public abstract class UserInterface : MonoBehaviour
         Destroy(MouseData.tempItemBeingDragged);
         if(MouseData.interfaceMouseIsOver == null)
         {
+            Manager.Inven.DropPositioning();
+            inventory.DropItem(slotsOnInterface[obj]);
             slotsOnInterface[obj].RemoveItem();
-            //slotsOnInterface[obj].DropItem();
             return;
         }
         if(MouseData.slotHoveredOver)
         {
             InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver];
-            //inventory.SwapItems
             inventory.SwapItems(slotsOnInterface[obj], mouseHoverSlotData);
         }
-        
     }
     public void OnDrag(GameObject obj)
     {
@@ -179,12 +178,6 @@ public abstract class UserInterface : MonoBehaviour
             MouseData.tempItemBeingDragged.GetComponent<RectTransform>().position = Input.mousePosition;
         }
     }
-    // 여기까지 아이템 드래그앤 드랍
-    //public Vector3 GetPositon(int i) // 인벤토리 슬롯 위치 잡는 부분
-    //{
-    //    return new Vector3(X_START + (X_SPACE_BETWEEN_ITEM * (i % NUMBER_OF_COLUMN)), Y_START + (-Y_SPACE_BETWEEN_ITEMS * (i / NUMBER_OF_COLUMN)), 0f);
-    //}
-
 }
 public static class MouseData
 {

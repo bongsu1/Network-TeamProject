@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiDisplay: {fileID: 21300000, guid: e192d0276be844506b9177fc754b0372, type: 3}
   stackable: 0
+  dropItem: {fileID: 3827633198487540712, guid: 69101693d9b33c747b8f28607f882526,
+    type: 3}
   type: 2
   description: Chainsaw
   data:
     Name: 
-    Id: -1
+    Id: 0
     buffs: []

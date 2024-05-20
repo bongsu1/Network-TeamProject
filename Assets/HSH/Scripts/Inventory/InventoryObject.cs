@@ -1,5 +1,7 @@
+using Photon.Pun;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/Inventory")]
 public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceiver*/
@@ -7,9 +9,6 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
     public string savePath;
     public ItemDatabaseObject database;
     public Inventory Container;
-
-    public DropItem DropitemPrefab;
-
 
     /*  private void OnEnable()
       {
@@ -52,6 +51,10 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
         }
         SetEmptySlot(_item, _amount);*/
 
+    }
+    public void DropItem()
+    {
+        
     }
     public InventorySlot FindItemOnInventory(Item _item)
     {
@@ -110,6 +113,22 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
             item1.UpdateSlot(temp.item, temp.amount);
         }
     }
+    public void DropItem(InventorySlot item) // 아이텝 드랍하는 함수
+    {
+        Debug.Log("DropItem;");
+        for (int i = 0;i < Container.Items.Length;i++)
+        {
+            if (Container.Items[i] != item)
+            {
+                continue;
+            }
+            else
+            {
+                Debug.Log("item drop");
+                Instantiate(database.Items[i].dropItem, Manager.Inven.dropPotision, Quaternion.identity);
+            }
+        }
+    }
     // 아이템 제거
     public void RemoveItem(Item _item)
     {
@@ -122,97 +141,6 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
             }
         }
     }
-    public void DropItem(Item _item)
-    {
-        Debug.Log("DropItem");
-        for ( int i = 0; i < Container.Items.Length;i++)
-        {
-            if (Container.Items[i].item == _item)
-            {
-
-            }
-        }
-    }
-
-    //[ContextMenu("저장 (JSON)")]
-    //public void SaveToJson()
-    //{
-    //    Debug.Log("인벤토리 저장 (JSON)");
-
-    //    // 1. JSON 문자열 준비
-    //    string jsonData = JsonUtility.ToJson(new SaveInven(inven.Container, equip.Container), true); // 개인 필드 포함
-
-    //    // 2. 저장 경로 가져오기
-    //    string savePath = Path.Combine(Application.persistentDataPath, "inventory.json"); // 예시 경로
-
-    //    // 3. JSON 데이터를 파일에 쓰기
-    //    try
-    //    {
-    //        using (FileStream fileStream = File.Create(savePath))
-    //        {
-    //            byte[] data = Encoding.UTF8.GetBytes(jsonData);
-    //            fileStream.Write(data, 0, data.Length);
-    //        }
-    //        Debug.Log("인벤토리 JSON으로 성공적으로 저장됨!");
-    //    }
-    //    catch (Exception e)
-    //    {
-    //        Debug.LogError("인벤토리를 JSON으로 저장하는 중 오류 발생: " + e.Message);
-    //    }
-    //}
-
-
-    //[ContextMenu("로드 (JSON)")]
-    //public void LoadFromJson()
-    //{
-    //    Debug.Log("인벤토리 로드 (JSON)");
-
-    //    // 1. 저장 경로 가져오기
-    //    string savePath = Path.Combine(Application.persistentDataPath, "inventory.json"); // 예시 경로
-
-    //    // 2. 파일 존재 여부 확인
-    //    if (File.Exists(savePath))
-    //    {
-    //        // 3. JSON 데이터를 파일에 읽기
-    //        try
-    //        {
-    //            using (FileStream fileStream = File.OpenRead(savePath))
-    //            {
-    //                byte[] data = new byte[(int)fileStream.Length];
-    //                fileStream.Read(data, 0, data.Length);
-
-    //                string jsonData = Encoding.UTF8.GetString(data);
-
-    //                // 4. JSON 데이터를 Container 객체로 역직렬화
-    //                SaveInven newContainer = JsonUtility.FromJson<SaveInven>(jsonData);
-    //                inven.Container.Items = newContainer.invenSave.Items; // 직접 배열 복사
-    //                equip.Container.Items = newContainer.equipSave.Items;
-
-    //                for (int i = 0; i < inven.Container.Items.Length; i++)
-    //                {
-    //                    Debug.Log(newContainer.invenSave.Items[i]);
-    //                    inven.Container.Items[i].UpdateSlot(newContainer.invenSave.Items[i].item, newContainer.invenSave.Items[i].amount);
-    //                }
-    //                for (int i = 0; i < equip.Container.Items.Length; i++)
-    //                {
-    //                    Debug.Log(newContainer.equipSave.Items[i]);
-    //                    equip.Container.Items[i].UpdateSlot(newContainer.equipSave.Items[i].item, newContainer.equipSave.Items[i].amount);
-    //                }
-
-    //                Debug.Log("인벤토리 JSON에서 성공적으로 로드됨!");
-    //            }
-    //        }
-    //        catch (Exception e)
-    //        {
-    //            Debug.LogError("JSON에서 인벤토리를 로드하는 중 오류 발생: " + e.Message);
-    //        }
-    //    }
-    //    else
-    //    {
-    //        Debug.LogWarning("인벤토리 JSON 파일을 찾을 수 없음: " + savePath);
-    //    }
-    //}
-
     [ContextMenu("Clear")]
     public void Clear()
     {
@@ -329,9 +257,5 @@ public class InventorySlot
     {
         item = new Item();
         amount = 0;
-    }
-    public void DropItem()
-    {
-        
     }
 }

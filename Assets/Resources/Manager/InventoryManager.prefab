@@ -192,5 +192,6 @@ MonoBehaviour:
         Id: -1
         buffs: []
       amount: 0
+  player: {fileID: 6154726722394234709, guid: 26b91048d66fa0541b4c4b4ce8735518, type: 3}
   email: qwer24632@gmail.com
   pass: asdasd

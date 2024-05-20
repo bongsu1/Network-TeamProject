@@ -24,6 +24,7 @@ public class ItemObject : ScriptableObject
     //public int Id;
     public Sprite uiDisplay;
     public bool stackable; // 합치기 가능한지 아닌지 여부 체크하는 부분
+    public GameObject dropItem;
     public ItemType type;
     [TextArea(15, 20)]
     public string description;
