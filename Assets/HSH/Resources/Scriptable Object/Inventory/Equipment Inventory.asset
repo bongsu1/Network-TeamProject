@@ -17,42 +17,34 @@ MonoBehaviour:
   Container:
     Items:
     - AllowedItems: 01000000
-      parent: {fileID: 0}
-      ID: -1
       item:
         Name: 
-        Id: 0
+        Id: -1
         buffs: []
       amount: 0
     - AllowedItems: 05000000
-      parent: {fileID: 0}
-      ID: -1
       item:
         Name: 
-        Id: 0
+        Id: -1
         buffs: []
       amount: 0
     - AllowedItems: 04000000
-      parent: {fileID: 0}
-      ID: -1
       item:
         Name: 
-        Id: 0
+        Id: -1
         buffs: []
       amount: 0
     - AllowedItems: 0200000003000000
-      parent: {fileID: 0}
-      ID: -1
       item:
         Name: 
-        Id: 0
+        Id: -1
         buffs: []
       amount: 0
     - AllowedItems: 02000000
-      parent: {fileID: 0}
-      ID: -1
       item:
         Name: 
-        Id: 0
+        Id: -1
         buffs: []
       amount: 0
+  dropItemPrefab: {fileID: 3612829445818242114, guid: 69101693d9b33c747b8f28607f882526,
+    type: 3}

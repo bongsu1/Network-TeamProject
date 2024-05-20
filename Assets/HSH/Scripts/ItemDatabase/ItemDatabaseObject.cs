@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Item Database", menuName = "Inventory System/Items/Database")]
@@ -12,7 +11,7 @@ public class ItemDatabaseObject : ScriptableObject, ISerializationCallbackReceiv
     {
         for (int i = 0; i < Items.Length; i++)
         {
-            if (Items[i].data.Id !=i)
+            if (Items[i].data.Id != i)
             {
                 Items[i].data.Id = i;
             }

@@ -1,14 +1,15 @@
-using System.IO;
-using System.Text;
-using System;
 using UnityEngine;
 
 public class PracticePlayer : MonoBehaviour
 {
     public InventoryObject inventory;
     public InventoryObject equipment;
-    
-    //public MouseItem mouseItem = new MouseItem(); // 이게 여기 옮겨지면 편해지는건?
+
+
+    private void Start()
+    {
+        Manager.Inven.player = this;
+    }
     public void OnTriggerEnter(Collider other)
     {
         var item = other.GetComponent<DropItem>();

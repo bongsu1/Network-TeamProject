@@ -12,7 +12,7 @@ public class InventoryManager : Singleton<InventoryManager>
     //[SerializeField] StaticInterface equipment;
     [Header("Drop")]
     [SerializeField] public PracticePlayer player;
-    [SerializeField] public Vector3 dropPotision = new Vector3();
+    [SerializeField] public Vector3 dropPotision;
 
     [Header("Auth")]
     [SerializeField] string email;
@@ -181,8 +181,7 @@ public class InventoryManager : Singleton<InventoryManager>
         }
         else
         {
-            Debug.Log("why dont work");
-            dropPotision = player.transform.position;
+            dropPotision = player.transform.position + new Vector3(0, 0, 2);
         }
     }
     //private void StartSaveRoutine()

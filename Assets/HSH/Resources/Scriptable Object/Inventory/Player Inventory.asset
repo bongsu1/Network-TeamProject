@@ -160,4 +160,5 @@ MonoBehaviour:
         Id: -1
         buffs: []
       amount: 0
-  DropitemPrefab: {fileID: 0}
+  dropItemPrefab: {fileID: 3612829445818242114, guid: 69101693d9b33c747b8f28607f882526,
+    type: 3}

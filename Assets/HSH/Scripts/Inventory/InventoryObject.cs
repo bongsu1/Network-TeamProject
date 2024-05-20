@@ -1,7 +1,5 @@
 using Photon.Pun;
 using UnityEngine;
-using UnityEngine.UI;
-using static UnityEditor.Progress;
 
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/Inventory")]
 public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceiver*/
@@ -9,6 +7,7 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
     public string savePath;
     public ItemDatabaseObject database;
     public Inventory Container;
+    public DropItem dropItemPrefab;
 
     /*  private void OnEnable()
       {
@@ -25,7 +24,7 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
         {
             return false;
         }
-        InventorySlot slot = FindItemOnInventory(_item); 
+        InventorySlot slot = FindItemOnInventory(_item);
         if (!database.Items[_item.Id].stackable || slot == null) // 합치기 가능한지 여부 체크되있는지 확인하고
         {
             SetEmptySlot(_item, _amount);
@@ -54,7 +53,7 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
     }
     public void DropItem()
     {
-        
+
     }
     public InventorySlot FindItemOnInventory(Item _item)
     {
@@ -83,7 +82,7 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
             return counter;
         }
     }
-    
+
     // 처음에 빈 슬롯 세팅
     public InventorySlot SetEmptySlot(Item _item, int _amount) // 빈슬롯을 상황에 따라 세팅.
     {
@@ -115,17 +114,23 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
     }
     public void DropItem(InventorySlot item) // 아이텝 드랍하는 함수
     {
+        Debug.Log($"00. {item.item.Id}");
         Debug.Log("DropItem;");
-        for (int i = 0;i < Container.Items.Length;i++)
+        for (int i = 0; i < Container.Items.Length; i++)
         {
-            if (Container.Items[i] != item)
+            Debug.Log($"02. {Container.Items[i].item.Id}");
+            if (Container.Items[i].item.Id != item.item.Id)
             {
                 continue;
             }
             else
             {
-                Debug.Log("item drop");
-                Instantiate(database.Items[i].dropItem, Manager.Inven.dropPotision, Quaternion.identity);
+                Debug.Log($"01. {database.Items[item.item.Id]}");
+                DropItem dropItem = PhotonNetwork.Instantiate("dropItemPrefab", Manager.Inven.dropPotision, Quaternion.identity).GetComponent<DropItem>(); //  생성하면서 바로 컴포넌트 할당
+                dropItem.itemObject = database.Items[item.item.Id]; // 내부 정보 변경
+                dropItem.gameObject.name = database.Items[item.item.Id].name; // 이름 넣어주는곳
+                break;
+
             }
         }
     }

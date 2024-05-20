@@ -10,12 +10,13 @@ GameObject:
   m_Component:
   - component: {fileID: 7257856296045194535}
   - component: {fileID: 3612829445818242114}
+  - component: {fileID: 7031544756977351957}
   - component: {fileID: 7217756507116762362}
   - component: {fileID: 7041138633696791928}
   - component: {fileID: 1380052822520109696}
   - component: {fileID: 2975726639179322048}
   m_Layer: 0
-  m_Name: 001 Pike
+  m_Name: dropItemPrefab
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,7 +49,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8f50a49af0c0c54da468296961a9623, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemObject: {fileID: 11400000, guid: f3854938c5b77304cba9186cb67819bf, type: 2}
+  itemObject: {fileID: 0}
+--- !u!114 &7031544756977351957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3827633198487540712}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!33 &7217756507116762362
 MeshFilter:
   m_ObjectHideFlags: 0
