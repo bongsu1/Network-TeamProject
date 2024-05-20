@@ -50,7 +50,7 @@ public class Chat : MonoBehaviourPun
             // IME때문에 한글입력이 완료되지 않았다고 판단되어 마지막 글자가 인풋필드에 입력되지 않는다
             // 한글로 입력시 마지막 글자는 미완성 처리가 되어서 <u>'글자'</u> 로 전달되어서
             // Replace로 앞에글자를 지워서 비속어 필터에서 사용할 수 있어진다.
-            string chat = chatInput.textComponent.text.Replace("<u>", ""); 
+            string chat = chatInput.textComponent.text.Replace("<u>", "");
 
             //string chat = chatInput.text;
 
@@ -90,14 +90,8 @@ public class Chat : MonoBehaviourPun
     [PunRPC]
     private void ChatFilter(string chat)
     {
-        // 비속어가 있다면 거르고 채팅 보내지 않기 or 별표시
-        // ex) test..
-        if (chat.Contains("비속어"))
-        {
-            chat = chat.Replace("비속어", "\"filtered\"");
-        }
-
-        photonView.RPC("SendChat", RpcTarget.AllViaServer, chat);
+        // 비속어를 필터링후에 메세지 보내기
+        photonView.RPC("SendChat", RpcTarget.AllViaServer, chat.Filtering());
     }
 
     [PunRPC]

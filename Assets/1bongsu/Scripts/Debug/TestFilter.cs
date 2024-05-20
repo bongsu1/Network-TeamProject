@@ -19,18 +19,18 @@ public class TestFilter : MonoBehaviour
     [ContextMenu("Filter")]
     private void Filtering()
     {
-        result = ChatFilter.Filtering(input);
+        result = TextFilter.Filtering(input);
     }
 
     [ContextMenu("AddText")]
     private void AddText()
     {
-        ChatFilter.AddText(input, pattern, replacement);
+        TextFilter.AddText(input, pattern, replacement);
     }
 
     [ContextMenu("Load")]
     private void LoadData()
     {
-        ChatFilter.LoadData();
+        TextFilter.LoadData();
     }
 }

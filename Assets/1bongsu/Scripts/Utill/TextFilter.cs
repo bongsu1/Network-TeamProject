@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-public static class ChatFilter
+public static class TextFilter
 {
     private const string DB_PATH = "BadWord";
 
@@ -90,15 +90,14 @@ public static class ChatFilter
     }
 }
 
-// 왜인지는 모르겠는데 리스트가 직렬화가 안돼서 만듬
 [Serializable]
 public class BadWordList
 {
-    public BadWord[] badWords;
+    public List<BadWord> badWords;
 
     public BadWordList(List<BadWord> badWords)
     {
-        this.badWords = badWords.ToArray();
+        this.badWords = badWords;
     }
 }
 
