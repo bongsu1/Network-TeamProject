@@ -15,6 +15,7 @@ public class CameraMover : MonoBehaviour
     private CinemachineTransposer highAngleCameraTransposer;
     private float scrollSign; // 휠 방향
     private float zoomDistance; // 줌되어 있는 정도
+    private bool isChatting;
 
     private void Start()
     {
@@ -47,6 +48,9 @@ public class CameraMover : MonoBehaviour
     // InputSystem - Value : Axis
     private void OnScroll(InputValue value)
     {
+        if (isChatting)
+            return;
+
         scrollSign = Mathf.Clamp(value.Get<float>(), -1f, 1f); // 휠이 많이 돌아가도 일정 속도로 줌하기 위해 방향만 구함
 
         zoomDistance -= scrollSign * wheelSensitivity;
@@ -58,13 +62,18 @@ public class CameraMover : MonoBehaviour
     // InputSystem - Pass Through
     private void OnChangeAngle(InputValue value)
     {
-        if (value.isPressed)
+        if (value.isPressed && !isChatting)
         {
             highAngleCamera.Priority = 15;
         }
-        else
+        else if (!value.isPressed)
         {
             highAngleCamera.Priority = 5;
         }
+    }
+
+    public void SetIsChatting(bool isChatting)
+    {
+        this.isChatting = isChatting;
     }
 }

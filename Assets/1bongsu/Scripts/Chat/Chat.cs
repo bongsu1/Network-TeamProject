@@ -14,18 +14,33 @@ public class Chat : MonoBehaviourPun
     [SerializeField] Image chattingImage; // 채팅중에 띄우는 이미지
 
     private TMP_InputField chatInput;
+    private CameraMover cameraMover;
     private bool isChatting;           // 채팅중이면 true
+
+    public UnityEvent<bool> OnChatting;
 
     public UnityEvent OnGreeting;
 
     private void Start()
     {
         chatInput = chatUI.GetUI<TMP_InputField>("ChatInputField");
+
+        cameraMover = FindObjectOfType<CameraMover>();
+        if (cameraMover != null)
+            OnChatting.AddListener(cameraMover.SetIsChatting);
+    }
+
+    private void OnDisable()
+    {
+        if (cameraMover != null)
+            OnChatting.RemoveListener(cameraMover.SetIsChatting);
     }
 
     private void OnChat(InputValue value)
     {
         isChatting = !isChatting;
+
+        OnChatting?.Invoke(isChatting); // 채팅중이라는 것을 이벤트로 알리기
 
         chatInput.gameObject.SetActive(isChatting);
         photonView.RPC("InChatting", RpcTarget.Others, isChatting); // 채팅중에는 상대방들에게 알리는 이미지 띄우기

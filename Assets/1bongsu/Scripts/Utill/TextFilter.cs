@@ -64,7 +64,6 @@ public static class TextFilter
         // 이미 있는 단어 일때(수정)
         if (regexDic.ContainsKey(input))
         {
-            Debug.Log($"이미 있어서 여기로 들어옴 index : {regexDic[input].index}");
             regexDic[input].regex = new Regex(pattern, RegexOptions.Compiled);
             badWordList[regexDic[input].index] = newBadWord;
         }
