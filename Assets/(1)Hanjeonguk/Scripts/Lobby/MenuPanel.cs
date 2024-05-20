@@ -83,7 +83,6 @@ public class MenuPanel : MonoBehaviour
     {
         FirebaseManager.Auth.SignOut();
         Application.Quit();
-       
     }
 
     public void NickNameCheck() //닉네임이 공란인지 체크
@@ -104,18 +103,30 @@ public class MenuPanel : MonoBehaviour
                 DataSnapshot snapShot = task.Result;
                 string json = "";
 
-                if (snapShot.Exists) //닉네임 있을 때
+                if (snapShot.Exists) //닉네임 있을 때 기존 닉네임 사용
                 {
                     Debug.Log("1");
                     json = snapShot.Value.ToString();
+
+
+                    if (json == "") //닉네임 있지만 공란일 때 랜덤 닉네임 사용
+                    {
+                        Debug.Log("3");
+                        nickNameInputField.text = ($"마을사람{Random.Range(1, 10000)}");
+                        userPanel.ChangeNickName();
+                    }
                 }
 
-                else 
+                else  //닉네임 없을 때 랜덤 닉네임 사용
                 {
-                    Debug.Log("3");
+                    Debug.Log("2");
                     nickNameInputField.text = ($"마을사람{Random.Range(1, 10000)}");
                     userPanel.ChangeNickName();
                 }
+
+                
+
+               
 
                 nickNameInputField.text = json;
 

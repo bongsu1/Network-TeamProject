@@ -31,6 +31,14 @@ public class LoadingScene : MonoBehaviourPunCallbacks
         optionCloseButton1.onClick.AddListener(OptionCloseButton);
         optionCloseButton2.onClick.AddListener(OptionCloseButton);
     }
+    public override void OnDisable() //게임 종료시 로그인 상태 false
+    {
+        FirebaseManager.DB.GetReference("UserData").Child(FirebaseManager.Auth.CurrentUser.UserId).Child("isLogin").SetValueAsync(false);
+        if (PhotonNetwork.CurrentRoom != null)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
+    }
 
     public override void OnJoinedRoom()
     {

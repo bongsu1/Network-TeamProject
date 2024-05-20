@@ -15,6 +15,13 @@ public class Options : MonoBehaviour
     [SerializeField] Slider bgmSlider;
     [SerializeField] Slider sfxSlider;
 
+    [SerializeField] Button quitButton;
+    [SerializeField] Button keyPopButton;
+    [SerializeField] Button keyPopCloseButton;
+    [SerializeField] Button keyPopCloseButton2;
+
+    [SerializeField] GameObject keyRebinding;   
+
     private void Awake()
     {
         audioMixer.GetFloat("BGM", out float b_value);
@@ -26,11 +33,17 @@ public class Options : MonoBehaviour
         bgmSlider.onValueChanged.AddListener(delegate { SliderCheck(bgmSlider); });
         sfxSlider.onValueChanged.AddListener(delegate { SliderCheck(sfxSlider); });
 
-        QualitySetting(QualitySettings.GetQualityLevel());
+       // QualitySetting(QualitySettings.GetQualityLevel());
 
         qualityLow.onValueChanged.AddListener(delegate { QualitySetting(0); });
         qualityMedium.onValueChanged.AddListener(delegate { QualitySetting(1); });
         qualityHigh.onValueChanged.AddListener(delegate { QualitySetting(2); });
+
+        quitButton.onClick.AddListener(Quit);
+
+        keyPopButton.onClick.AddListener(KeyPop);
+        keyPopCloseButton.onClick.AddListener(KeyPopClose);
+        keyPopCloseButton2.onClick.AddListener(KeyPopClose);
     }
 
     public void QualitySetting(int level)
@@ -65,8 +78,24 @@ public class Options : MonoBehaviour
     {
         audioMixer.SetFloat("Master", 20);
     }
+
     public void SoundOff()
     {
         audioMixer.SetFloat("Master", -80);
+    }
+
+    public void Quit()
+    {
+        FirebaseManager.Auth.SignOut();
+        Application.Quit();
+    }
+
+    public void KeyPop()
+    {
+        keyRebinding.SetActive(true);
+    }
+    public void KeyPopClose()
+    {
+        keyRebinding.SetActive(false);
     }
 }
