@@ -50,6 +50,7 @@ public class DebugSceneManager : MonoBehaviourPunCallbacks
         Vector3 spawnPosition = DebugDataManager.Instance == null ? Vector3.zero : DebugDataManager.Instance.RoomData.position;
 
         GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, spawnPosition, Quaternion.identity);
+        GameObject Chicken = PhotonNetwork.InstantiateRoomObject("Chicken", Vector3.zero, Quaternion.identity); // test
         if (playerFollowCamera != null)
         {
             playerFollowCamera.gameObject.SetActive(true);
