@@ -40,7 +40,7 @@ public class PreviewObject : MonoBehaviour
     }
 
 
-    private void OnTriggerStay(Collider other)        
+    private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.layer == 30) //모든 프리펩마다 콜리더 위쪽을 살짝 깍음 위쪽만 탐지 못하게 해서 이단쌓기 가능
         {
@@ -48,7 +48,7 @@ public class PreviewObject : MonoBehaviour
             {
                 colliderList.Add(other);
             }
-            return;  
+            return;
         }
 
         if (other.gameObject.layer != layerGround && other.gameObject.layer != 30) //그라운드 레이어 외에는 콜리더 리스트에 추가

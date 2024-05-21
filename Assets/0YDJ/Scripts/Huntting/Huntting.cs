@@ -97,7 +97,7 @@ public class Huntting : MonoBehaviourPun
 
     public bool TargetIn() //PlayerController에게 전달할 함수 (타켓 있을 때 Turn 방지)
     {
-        if(Target != null && Input.GetButton("Fire2"))
+        if (Target != null && Input.GetButton("Fire2"))
         {
             return true;
         }
@@ -109,7 +109,7 @@ public class Huntting : MonoBehaviourPun
     private void Fire() // 발사
     {
         // 마스터클라이언트에게 쏜거 확인(나 쏜다 말함 -> 마스터에게 전달 -> 마스터가 모두에게 전달)
-       
+
         photonView.RPC("Fire2", RpcTarget.MasterClient, firePoint.transform.position, transform.rotation);
     }
 
@@ -121,8 +121,8 @@ public class Huntting : MonoBehaviourPun
         lastFireTime = Time.time;
 
         //서버에게 쿨타임 확인하고 보내기 (서버를 거쳐서 쿨타임 됐나 확인)
-        photonView.RPC("CreateBullet", RpcTarget.AllViaServer,position, rotation);
-    
+        photonView.RPC("CreateBullet", RpcTarget.AllViaServer, position, rotation);
+
     }
 
     [PunRPC]
