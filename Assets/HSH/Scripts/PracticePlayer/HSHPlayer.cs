@@ -36,7 +36,10 @@ public class HSHPlayer : MonoBehaviourPun
     }
     private void Start()
     {
-        Manager.Inven.HSHplayer = this;
+        if (photonView.IsMine)
+        {
+            Manager.Inven.HSHplayer = this;
+        }        
     }
     private void Update()
     {

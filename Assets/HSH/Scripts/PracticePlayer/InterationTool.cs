@@ -28,7 +28,7 @@ public class InterationTool : MonoBehaviour
         {
             foreach (Collider collider in colliders)
             {
-                HSH_IInteractable interactable = collider.GetComponent<HSH_IInteractable>();
+                HSH_IInteractable<InventoryObject> interactable = collider.GetComponent<HSH_IInteractable<InventoryObject>>();
                 if (interactable == null)
                 {
                     Debug.Log($"널값이래");
@@ -40,10 +40,7 @@ public class InterationTool : MonoBehaviour
                 if (Vector3.Dot(toTargetDir, transform.forward) < cosRange)
                     return;
                 Debug.Log("상호작용툴에서 작동");
-                interactable.Interact();
-                Debug.Log("1함수 작동");
                 interactable.Interact(inventory);
-                Debug.Log("2함수 작동");
                 break;
             }
         }

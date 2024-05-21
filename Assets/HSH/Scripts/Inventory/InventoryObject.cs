@@ -117,13 +117,13 @@ public class InventoryObject : ScriptableObject/*, IPunObservable*/
         if (PhotonNetwork.InRoom)
         {
             Debug.Log("dropItem");
+            
             // 룸 오브젝트 프리팹 인스턴스화
             GameObject roomObject = PhotonNetwork.Instantiate("dropItemPrefab", Manager.Inven.dropPosition, Quaternion.identity);
 
             // 룸 오브젝트 내 DropItem 컴포넌트에 액세스해서 변경
             //DropItem 에 MonoBehaviourPun 달면 바로 답나오는 문제를 이래 헤매면 어떡하니 나야
             roomObject.GetComponent<DropItem>().photonView.RPC("SetItemObject", RpcTarget.All, item.item.Id, database.Items[item.item.Id].name);
-            // 무슨 오류
         }
         else
         {
