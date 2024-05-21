@@ -9,8 +9,11 @@ public class ObjectPool : MonoBehaviour
 
     private Stack<PooledObject> objectPool;
 
+    public static ObjectPool instance;
+
     private void Awake()
     {
+        instance = this;
         CreatePool(prefab,size,capacity);
     }
 

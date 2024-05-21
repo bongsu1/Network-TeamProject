@@ -3,13 +3,13 @@ using UnityEngine;
 public class Turret : MonoBehaviour
 {
     [SerializeField] Transform GunBody = null;
+    [SerializeField] Transform GunMuzzle;
     [SerializeField] float range = 0f;
     [SerializeField] LayerMask layerMask = 0;
     [SerializeField] float spinSpeed;
     [SerializeField] float fireRate = 0f;
-    [SerializeField] GameObject bulletPre;
+    private ObjectPool pool;
 
-    [SerializeField] ObjectPool pool;
     float currentFireRate;
 
     Transform Target = null;
@@ -45,6 +45,7 @@ public class Turret : MonoBehaviour
 
     private void Start()
     {
+        pool = ObjectPool.instance;
         currentFireRate = fireRate;
         InvokeRepeating("SearchEnemy", 0f, 0.5f);
     }
@@ -68,12 +69,12 @@ public class Turret : MonoBehaviour
             Quaternion fireRotation = Quaternion.Euler(0, lookRotation.eulerAngles.y, 0); //총구가 플레이어를 가리킬 때 쏘기
             if (Quaternion.Angle(GunBody.rotation, fireRotation) < 5f)
             {
-                currentFireRate -= Time.deltaTime;
+                currentFireRate -= Time.deltaTime; //몇초마다 쏘는가
                 if (currentFireRate <= 0)
                 {
                     currentFireRate = fireRate;
                     //Instantiate(bulletPre, transform.position, lookRotation);
-                    pool.GetPool(transform.position, lookRotation);
+                    pool.GetPool(GunMuzzle.transform.position, lookRotation);
                     Debug.Log("발사");
                 }
             }
