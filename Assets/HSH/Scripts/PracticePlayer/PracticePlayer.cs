@@ -8,7 +8,7 @@ public class PracticePlayer : MonoBehaviour
 
     private void Start()
     {
-        Manager.Inven.player = this;
+        //Manager.Inven.player = this;
     }
     public void OnTriggerEnter(Collider other)
     {
@@ -26,20 +26,16 @@ public class PracticePlayer : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.I))
-        {
-            Debug.Log("Save");
-            //inventory.Save();
-            //equipment.Save();
-            Manager.Inven.SaveToJson();
-        }
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            Debug.Log("Load");
-            //inventory.Load();
-            //equipment.Load();
-            Manager.Inven.LoadFromJson();
-        }
+        //if (Input.GetKeyDown(KeyCode.I))
+        //{
+        //    Debug.Log("Save");
+        //    Manager.Inven.SaveToJson();
+        //}
+        //if (Input.GetKeyDown(KeyCode.U))
+        //{
+        //    Debug.Log("Load");
+        //    Manager.Inven.LoadFromJson();
+        //}
     }
     private void OnDisable()
     {

@@ -2,13 +2,18 @@ using Cinemachine;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class DirectPlay : MonoBehaviourPunCallbacks
+public class HSHDebugManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] string debugRoomName;
     [SerializeField] CinemachineVirtualCamera playerFollowCamera;
     [SerializeField] CinemachineVirtualCamera highAngleCamera;
+
+    [Header("Auth")]
+    [SerializeField] string email;
+    [SerializeField] string pass;
 
     private void Start()
     {
@@ -46,7 +51,7 @@ public class DirectPlay : MonoBehaviourPunCallbacks
     private void GameStart()
     {
         // test..
-        Vector3 spawnPosition = DebugDataManager.Instance == null ? new Vector3(2, 2, 2) : DebugDataManager.Instance.RoomData.position;
+        Vector3 spawnPosition = DebugDataManager.Instance == null ? Vector3.zero : DebugDataManager.Instance.RoomData.position;
 
         GameObject player = PhotonNetwork.Instantiate("HSHPlayer", spawnPosition, Quaternion.identity);
         if (playerFollowCamera != null)

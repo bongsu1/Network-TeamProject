@@ -11,7 +11,8 @@ public class InventoryManager : Singleton<InventoryManager>
     //[SerializeField] DynamicInterface inventory;
     //[SerializeField] StaticInterface equipment;
     [Header("Drop")]
-    [SerializeField] public PracticePlayer player;
+    //[SerializeField] public PracticePlayer player;
+    [SerializeField] public HSHPlayer HSHplayer;
     [SerializeField] public Vector3 dropPotision;
 
     [Header("Auth")]
@@ -22,7 +23,7 @@ public class InventoryManager : Singleton<InventoryManager>
     private InvenData invenData;
     public InvenData InvenData { get { return invenData; } }
 
-
+    //get set 개념좀 잡자...
     [ContextMenu("저장 (JSON)")]
     public void SaveToJson()
     {
@@ -175,15 +176,16 @@ public class InventoryManager : Singleton<InventoryManager>
     public void DropPositioning()
     {
         Debug.Log("Repositioning");
-        if(player == null)
+        if(HSHplayer == null)
         {
             return;
         }
         else
         {
-            dropPotision = player.transform.position + new Vector3(0, 0, 2);
+            dropPotision = HSHplayer.transform.position + new Vector3(0, 0, 0);
         }
-    }
+    } // 자꾸 이러네ㅇㅇㅇ
+    
     //private void StartSaveRoutine()
     //{
     //    saveRoutine = StartCoroutine(SaveRoutine());

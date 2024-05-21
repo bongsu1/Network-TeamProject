@@ -8,6 +8,7 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
     public ItemDatabaseObject database;
     public Inventory Container;
     public DropItem dropItemPrefab;
+    public HSHPlayer HSHplayer;
 
     /*  private void OnEnable()
       {
@@ -51,9 +52,9 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
         SetEmptySlot(_item, _amount);*/
 
     }
-    public void DropItem()
+    public void Myposition()
     {
-
+        
     }
     public InventorySlot FindItemOnInventory(Item _item)
     {
@@ -112,6 +113,7 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
             item1.UpdateSlot(temp.item, temp.amount);
         }
     }
+    [PunRPC]
     public void DropItem(InventorySlot item) // 아이텝 드랍하는 함수
     {
         Debug.Log($"00. {item.item.Id}");
@@ -130,10 +132,21 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
                 dropItem.itemObject = database.Items[item.item.Id]; // 내부 정보 변경
                 dropItem.gameObject.name = database.Items[item.item.Id].name; // 이름 넣어주는곳
                 break;
-
+                
             }
         }
     }
+    //[PunRPC]
+    //private void RequestDropItem()
+    //{
+    //    Debug.Log("Request");
+    //    photonView.RPC("ResultDropItem", RpcTarget.AllViaServer, Manager.Inven.dropPotision, Manager.Inven.HSHplayer.transform.rotation);
+    //}
+    //[PunRPC]
+    //public void ResultDropItem()
+    //{
+
+    //}
     // 아이템 제거
     public void RemoveItem(Item _item)
     {

@@ -15,6 +15,9 @@ public class HSHPlayer : MonoBehaviourPun
     [SerializeField] Chat chat;
     [Header("Stat")]
     [SerializeField] float moveSpeed;
+    [Header("Inventory")]
+    [SerializeField] InventoryObject inventory;
+    [SerializeField] InventoryObject equipment;
 
     private Vector3 moveDir; // 입력받는 방향
     private bool isWalking; // 애니메이션 작동 변수
@@ -33,10 +36,28 @@ public class HSHPlayer : MonoBehaviourPun
 
         chat.OnGreeting.AddListener(Greeting); // 인사트리거를 이벤트로 받는다
     }
-
+    private void Start()
+    {
+        Manager.Inven.HSHplayer = this;
+    }
     private void Update()
     {
         Turn();
+
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            Debug.Log("Save");
+            //inventory.Save();
+            //equipment.Save();
+            Manager.Inven.SaveToJson();
+        }
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            Debug.Log("Load");
+            //inventory.Load();
+            //equipment.Load();
+            Manager.Inven.LoadFromJson();
+        }
     }
 
     private void FixedUpdate()
@@ -81,10 +102,16 @@ public class HSHPlayer : MonoBehaviourPun
     {
         animator.Play("Greeting");
     }
-
+    
     [PunRPC]
     private void ChangeWalkingAnimation(bool isWalking, PhotonMessageInfo info)
     {
         animator.SetBool("IsWalking", isWalking);
+    }
+    private void OnDisable()
+    {
+        Debug.Log("Clear slot");
+        inventory.Container.Clear();
+        equipment.Container.Clear();
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StorageObject : MonoBehaviour, HSH_IInteractable
+public class StorageObject : MonoBehaviour
 {
     public InventoryObject storage;
 
@@ -11,8 +11,4 @@ public class StorageObject : MonoBehaviour, HSH_IInteractable
         storage.Container.Clear();
     }
 
-    public void Interact()
-    {
-        
-    }
 }
