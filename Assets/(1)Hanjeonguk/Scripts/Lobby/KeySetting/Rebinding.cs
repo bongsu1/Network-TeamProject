@@ -21,6 +21,7 @@ public class Rebinding : MonoBehaviour
 
     private string path = null;
 
+    [SerializeField] int bindingIndex=0;
     private void Awake()
     {
         duplicationErrorClose.onClick.AddListener(DuplicationErrorClose);
@@ -35,12 +36,12 @@ public class Rebinding : MonoBehaviour
 
         currentAction.action.Disable(); //키를 변경하기 전 inputaction 비활성화 
 
-        if (currentAction.action.bindings[0].hasOverrides)  //오버라이드 되었는지 확인
-            path = currentAction.action.bindings[0].overridePath; //오버라이드 경로 가져오기
+        if (currentAction.action.bindings[bindingIndex].hasOverrides)  //오버라이드 되었는지 확인
+            path = currentAction.action.bindings[bindingIndex].overridePath; //오버라이드 경로 가져오기
         else
-            path = currentAction.action.bindings[0].path; //기본 경로 가져오기
+            path = currentAction.action.bindings[bindingIndex].path; //기본 경로 가져오기
 
-        operation = currentAction.action.PerformInteractiveRebinding() //키변경 함수
+        operation = currentAction.action.PerformInteractiveRebinding(bindingIndex) //키변경 함수
             .WithControlsExcluding("Mouse")  //해당 키 무시
             .WithCancelingThrough("<Mouse>/rightButton") //키변경 취소
             .OnMatchWaitForAnother(0.1f)   //키 변경 지연 시간
@@ -83,12 +84,12 @@ public class Rebinding : MonoBehaviour
 
     public void ShowText() //버튼 텍스트 변경
     {
-        buttonText.text = InputControlPath.ToHumanReadableString(currentAction.action.bindings[0].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+        buttonText.text = InputControlPath.ToHumanReadableString(currentAction.action.bindings[bindingIndex].effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
     }
 
     private bool CheckBindings(InputAction action)
     {
-        InputBinding newBinding = action.bindings[0];
+        InputBinding newBinding = action.bindings[bindingIndex];
 
         foreach (InputActionMap actionMap in actionAsset.actionMaps) //actionMaps 수만큼 반복
         {

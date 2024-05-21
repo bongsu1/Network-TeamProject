@@ -731,7 +731,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1904682843110584739}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6196639266675287431}
+        m_TargetAssemblyTypeName: Rebinding, Assembly-CSharp
+        m_MethodName: StartRebinding
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6085271604912817101
 GameObject:
   m_ObjectHideFlags: 0
@@ -1375,6 +1387,8 @@ MonoBehaviour:
   waitButton: {fileID: 3492577680216445347}
   duplicationError: {fileID: 65234158808165057}
   duplicationErrorClose: {fileID: 6674653605067976072}
+  buttonController: {fileID: 0}
+  bindingIndex: 0
 --- !u!1 &8847377243745448605
 GameObject:
   m_ObjectHideFlags: 0
