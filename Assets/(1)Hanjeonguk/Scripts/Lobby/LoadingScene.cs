@@ -16,7 +16,7 @@ public class LoadingScene : MonoBehaviourPunCallbacks
     [SerializeField] RectTransform image;
 
     [SerializeField] string[] loadingMessages;
-    [SerializeField] float moveSpeed ;
+    [SerializeField] float moveSpeed;
 
     [SerializeField] Button passwordErrorCloseButton;
     [SerializeField] Button optionCloseButton1;
@@ -85,15 +85,9 @@ public class LoadingScene : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(3f);
 
         gameLodingScene.SetActive(false);
-      
+
         StopAllCoroutines();
     }
-
-
-
-
-
-
 
     IEnumerator TextRoutine()
     {
@@ -121,7 +115,7 @@ public class LoadingScene : MonoBehaviourPunCallbacks
             float newY = image.anchoredPosition.y + Time.deltaTime * moveSpeed * direction;
 
             //  이동 방향 반전
-            if (newY >= startY || newY <= startY -30f)
+            if (newY >= startY || newY <= startY - 30f)
             {
                 direction *= -1f;
             }
@@ -129,7 +123,7 @@ public class LoadingScene : MonoBehaviourPunCallbacks
             // 이미지의 위치 변경
             image.anchoredPosition = new Vector2(image.anchoredPosition.x, newY);
 
-            yield return null; 
+            yield return null;
         }
     }
 
