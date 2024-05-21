@@ -23,7 +23,7 @@ public static class AnimatorRPC
     {
         photonView.RPC("PlayAnimation", RpcTarget.All, clipName);
     }
-    
+
     [PunRPC]
     private static void PlayAnimation(string clipName)
     {

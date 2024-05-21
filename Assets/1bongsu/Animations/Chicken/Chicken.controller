@@ -121,8 +121,8 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: RandomPattern
     m_EventTreshold: 1
-  - m_ConditionMode: 1
-    m_ConditionEvent: EndWalk
+  - m_ConditionMode: 2
+    m_ConditionEvent: IsRoaming
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -4213846070836022022}
@@ -149,8 +149,8 @@ AnimatorStateTransition:
   - m_ConditionMode: 6
     m_ConditionEvent: RandomPattern
     m_EventTreshold: 0
-  - m_ConditionMode: 1
-    m_ConditionEvent: EndWalk
+  - m_ConditionMode: 2
+    m_ConditionEvent: IsRoaming
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -6177867033918944947}
@@ -203,14 +203,8 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: DoWalk
-    m_Type: 9
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 0}
-  - m_Name: EndWalk
-    m_Type: 9
+  - m_Name: IsRoaming
+    m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
@@ -263,7 +257,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: DoWalk
+    m_ConditionEvent: IsRoaming
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 4968585430164530692}

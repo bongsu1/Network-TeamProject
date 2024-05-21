@@ -16,6 +16,8 @@ public class C_IdleState : AnimalState
 {
     public override void Enter()
     {
+        owner.CurState = Animal.State.Idle;
+
         int rand = Random.Range(0, 2);
         owner.Animator.SetInteger("RandomPattern", rand);
         owner.StartCoroutine(IdleRoutine());
@@ -24,7 +26,7 @@ public class C_IdleState : AnimalState
     IEnumerator IdleRoutine()
     {
         // 지금 재생하는 애니메이션의 이름이 "Idle"이면
-        yield return new WaitUntil(() => owner.Animator.GetCurrentAnimatorStateInfo(0).IsName("Idle")); 
+        yield return new WaitUntil(() => owner.Animator.GetCurrentAnimatorStateInfo(0).IsName("Idle"));
         yield return new WaitForSeconds(2f);
         ChangeState(Animal.State.Roam);
     }
@@ -41,6 +43,8 @@ public class C_RoamState : AnimalState
 
     public override void Enter()
     {
+        owner.CurState = Animal.State.Roam;
+
         int count = 0;
         do
         {
@@ -51,16 +55,20 @@ public class C_RoamState : AnimalState
                 nextPoint = owner.transform.position;
         } while (!owner.Agent.CalculatePath(nextPoint, owner.Agent.path)); // 다음 포인트가 갈 수 있는 곳 일때까지 반복
 
-        owner.Animator.SetTrigger("DoWalk");
+        owner.Animator.SetBool("IsRoaming", true);
         SetDestination(nextPoint);
+    }
+
+    public override void Exit()
+    {
+        owner.Animator.SetBool("IsRoaming", false);
     }
 
     public override void Transition()
     {
-        if ((nextPoint - owner.transform.position).sqrMagnitude < 0.02f)
+        if ((nextPoint - owner.transform.position).sqrMagnitude < 0.01f)
         {
             ChangeState(Animal.State.Idle);
-            owner.Animator.SetTrigger("EndWalk");
         }
     }
 
@@ -72,11 +80,6 @@ public class C_RoamState : AnimalState
 
 public class C_RunState : AnimalState
 {
-    public override void Enter()
-    {
-        owner.Animator.Play("Run");
-    }
-
     public C_RunState(Animal owner)
     {
         this.owner = owner;

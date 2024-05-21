@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5272470393754663977}
   - component: {fileID: 7540007816922948150}
   - component: {fileID: 4502852190442346535}
+  - component: {fileID: -7210939602306849248}
   m_Layer: 0
   m_Name: Chicken
   m_TagString: Untagged
@@ -124,10 +125,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.2
-  m_Speed: 1
+  m_Speed: 0.5
   m_Acceleration: 50
   avoidancePriority: 50
-  m_AngularSpeed: 360
+  m_AngularSpeed: 500
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -170,7 +171,9 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
+  - {fileID: 5272470393754663977}
   - {fileID: 4502852190442346535}
+  - {fileID: -7210939602306849248}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -190,6 +193,30 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &-7210939602306849248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72190140060450555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 3
+    SynchronizeType: 1
+    Name: RandomPattern
+  - Type: 4
+    SynchronizeType: 1
+    Name: IsRoaming
+  m_SynchronizeLayers:
+  - SynchronizeType: 1
+    LayerIndex: 0
 --- !u!1 &161963072460953179
 GameObject:
   m_ObjectHideFlags: 0
