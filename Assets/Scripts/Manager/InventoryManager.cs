@@ -13,7 +13,7 @@ public class InventoryManager : Singleton<InventoryManager>
     [Header("Drop")]
     //[SerializeField] public PracticePlayer player;
     [SerializeField] public HSHPlayer HSHplayer;
-    [SerializeField] public Vector3 dropPotision;
+    [SerializeField] public Vector3 dropPosition;
 
     [Header("Auth")]
     [SerializeField] string email;
@@ -182,7 +182,7 @@ public class InventoryManager : Singleton<InventoryManager>
         }
         else
         {
-            dropPotision = HSHplayer.transform.position + new Vector3(0, 0, 0);
+            dropPosition = HSHplayer.transform.position + new Vector3(0, 0, 0);
         }
     } // 자꾸 이러네ㅇㅇㅇ
     

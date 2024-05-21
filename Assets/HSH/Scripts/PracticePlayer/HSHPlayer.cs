@@ -1,6 +1,4 @@
 using Photon.Pun;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -102,7 +100,7 @@ public class HSHPlayer : MonoBehaviourPun
     {
         animator.Play("Greeting");
     }
-    
+
     [PunRPC]
     private void ChangeWalkingAnimation(bool isWalking, PhotonMessageInfo info)
     {

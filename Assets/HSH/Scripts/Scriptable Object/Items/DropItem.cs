@@ -1,11 +1,13 @@
+using Photon.Pun;
 using UnityEngine;
 
-public class DropItem : MonoBehaviour, HSH_IInteractable
+public class DropItem : MonoBehaviourPun, HSH_IInteractable
 {
     public ItemObject itemObject;
+    public ItemDatabaseObject database;
     public void Interact()
     {
-        
+
     }
     public void Interact(InventoryObject Inventory)
     {
@@ -14,5 +16,12 @@ public class DropItem : MonoBehaviour, HSH_IInteractable
         {
             Destroy(gameObject); // DropItem GameObject 제거
         }
+    }
+    [PunRPC]
+    public void SetItemObject(int id, string name)
+    {
+        Debug.Log("SetItemObject");
+        this.itemObject = database.Items[id];
+        this.gameObject.name = name;
     }
 }
