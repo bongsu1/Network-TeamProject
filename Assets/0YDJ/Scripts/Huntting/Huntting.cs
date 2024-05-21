@@ -56,7 +56,7 @@ public class Huntting : MonoBehaviourPun
 
         gun.SetActive(isSetReady);
 
-        if (Target != null)
+        if (TargetIn())
         {
             Vector3 dir = Target.position - transform.position; //타겟과 터렛의 위치를 뺀 값
             Quaternion lookRotation = Quaternion.LookRotation(dir);

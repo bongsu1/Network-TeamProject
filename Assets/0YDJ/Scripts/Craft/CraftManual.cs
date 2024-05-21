@@ -47,14 +47,30 @@ public class CraftManual : MonoBehaviourPun
         {
             Pointer = hitInfo.point;
 
-            Pointer.y = hitInfo.transform.position.y + hitInfo.transform.up.y;
+            if (hitInfo.transform.gameObject.layer == 31) // 바닥에 둘 때 오차 보정
+            {
+                Pointer.y = hitInfo.transform.position.y + go_Preview.transform.localScale.y - 0.5f;
+                return;
+            }
+
+            if (go_Preview.transform.localScale.y > 1) // 두 칸 이상 전용
+            {
+                if (hitInfo.transform.localScale.y > 1) // 두 칸 이상이 두 칸 이상 위에 쌓을 때
+                {
+                    Pointer.y = hitInfo.transform.position.y + go_Preview.transform.localScale.y;
+                    return;
+                }
+                Pointer.y = hitInfo.transform.position.y + go_Preview.transform.localScale.y - (go_Preview.transform.localScale.y * 0.5f - 0.5f);  // 두 칸이 땅에 닿을 때 -0.5f
+                return;
+            }
+            Pointer.y = hitInfo.transform.position.y + go_Preview.transform.localScale.y + (hitInfo.transform.localScale.y * 0.5f - 0.5f);
         }
     }
 
 
     public void SlotClick(int _slotNumber) //슬럿 클릭시 프리뷰 프리펩 생성
     {
-        go_Preview = Instantiate(craft_fire[_slotNumber].go_PreviewPrefab, Pointer, Quaternion.Euler(-90, 0, 0));
+        go_Preview = Instantiate(craft_fire[_slotNumber].go_PreviewPrefab, Pointer, Quaternion.Euler(0, 0, 0));
         go_Prefab = craft_fire[_slotNumber].go_prefab;
         isPreviewActivated = true;
         go_BaseUI.SetActive(false);
@@ -62,13 +78,16 @@ public class CraftManual : MonoBehaviourPun
 
     void Update()
     {
-        PointerPosition();
+
 
         if (Input.GetKeyDown(KeyCode.Tab) && !isPreviewActivated) //인벤토리 창 열기
             Window();
 
         if (isPreviewActivated) // 프리뷰 상태 중 프리뷰 프리펩 계속 업데이트
+        {
+            PointerPosition();
             PreviewPositionUpdate();
+        }
 
         if (Input.GetButtonDown("Fire1")) // 짓기
             Build();
@@ -102,7 +121,6 @@ public class CraftManual : MonoBehaviourPun
         if (isPreviewActivated && go_Preview.GetComponent<PreviewObject>().isBuildable())
         {
             photonView.RPC("CreateCraftObject", RpcTarget.MasterClient, go_Prefab.name, Pointer, go_Preview.transform.rotation); // OthersBuffered를 사용하면 나중에 서버에 들어온 사람도 서버에 쌓인 데이터를 받을 수 있다
-            Instantiate(go_Prefab, Pointer, go_Preview.transform.rotation);
             Destroy(go_Preview);
             isActivated = false;
             isPreviewActivated = false;

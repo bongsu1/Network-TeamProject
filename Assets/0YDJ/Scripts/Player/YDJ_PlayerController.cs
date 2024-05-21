@@ -2,7 +2,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class YDJ_PlayerController : MonoBehaviourPun, IDamageble
+public class YDJ_PlayerController : MonoBehaviourPun
 {
     [Header("Componet")]
     [SerializeField] Rigidbody rigid;
@@ -77,27 +77,21 @@ public class YDJ_PlayerController : MonoBehaviourPun, IDamageble
         moveDir.z = value.Get<Vector2>().y;
     }
 
-    [PunRPC]
-    private void ChangeWalkingAnimation(bool isWalking, PhotonMessageInfo info)
-    {
-        animator.SetBool("IsWalking", isWalking);
-    }
+    //[PunRPC]
+    //private void ChangeWalkingAnimation(bool isWalking, PhotonMessageInfo info)
+    //{
+    //    animator.SetBool("IsWalking", isWalking);
+    //}
 
 
 
-    // 다정
-    private void PlayerDied()
-    {
+    //// 다정
+    //private void PlayerDied()
+    //{
 
-        Destroy(gameObject);
+    //    Destroy(gameObject);
 
-    }
+    //}
 
-    public void Damaged(int Damage)
-    {
-        
-        hp -= Damage;
-        if (hp <= 0)
-            PlayerDied();
-    }
+
 }

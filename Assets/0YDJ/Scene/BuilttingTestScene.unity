@@ -323,17 +323,17 @@ MonoBehaviour:
   go_BaseUI: {fileID: 22449266}
   craft_fire:
   - craftName: Brick
-    go_prefab: {fileID: 8060011957566198917, guid: d027b14a2a8e9ab4bbd3eed2beffd8e5,
+    go_prefab: {fileID: 8833014857866130543, guid: 95106ce9f3f307f439e2ca4d1ea6a791,
       type: 3}
-    go_PreviewPrefab: {fileID: 8060011957566198917, guid: a2658375b2e736747849852ddc43a02c,
+    go_PreviewPrefab: {fileID: 8833014857866130543, guid: 0f94bc934a5fc434b8e05704e34ad8f0,
+      type: 3}
+  - craftName: Brick2
+    go_prefab: {fileID: 7341812997690165988, guid: ebdd25b1c29239244a328cb53d2e433f,
+      type: 3}
+    go_PreviewPrefab: {fileID: 3979314201428074970, guid: 15dd87a0aded99445ad03ce5d79076ca,
       type: 3}
   - craftName: Brige
-    go_prefab: {fileID: 8416093922353885732, guid: 2109657fa4b901642a020f72bb9a0975,
-      type: 3}
-    go_PreviewPrefab: {fileID: 8416093922353885732, guid: b37941fc537f03344a5670db67520dc8,
-      type: 3}
-  - craftName: Test
-    go_prefab: {fileID: 7618940115267047920, guid: 7d0e0cdde84216c44a1e3bf784570588,
+    go_prefab: {fileID: 7618940115267047920, guid: 4df7d056cf441574dad64762fbce599b,
       type: 3}
     go_PreviewPrefab: {fileID: 7618940115267047920, guid: deb757770478f0a45a74b7c5467b3660,
       type: 3}

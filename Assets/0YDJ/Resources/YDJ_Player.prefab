@@ -6156,6 +6156,7 @@ GameObject:
   - component: {fileID: 7939448143917236527}
   - component: {fileID: 57710884322146081}
   - component: {fileID: 5599625170943092428}
+  - component: {fileID: -731414386237338011}
   m_Layer: 29
   m_Name: YDJ_Player
   m_TagString: Untagged
@@ -6396,6 +6397,23 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1
   select: 0
+--- !u!114 &-731414386237338011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7019179893844252096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee543b66574e50e459525809c12c3fcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthUI: {fileID: 810323563465821716, guid: ae95e4bd28072f547be03323042004c2, type: 3}
+  playerController: {fileID: 4842752740669726189}
+  OnChangeHealth:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7048386704844891562
 GameObject:
   m_ObjectHideFlags: 0

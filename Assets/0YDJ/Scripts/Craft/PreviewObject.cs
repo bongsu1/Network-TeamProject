@@ -18,7 +18,7 @@ public class PreviewObject : MonoBehaviour
 
     private void Start()
     {
-        newMaterials = gameObject.GetComponent<Renderer>();
+        newMaterials = gameObject.GetComponentInChildren<Renderer>();
     }
 
     void Update()

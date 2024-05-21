@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 3360979166125277346}
   - component: {fileID: 4080998476305899592}
   - component: {fileID: 8643733961950564273}
-  - component: {fileID: 1260114624720482442}
+  - component: {fileID: 4897160310909812877}
   - component: {fileID: 6058333171494279244}
-  - component: {fileID: -9953354767208098}
-  m_Layer: 0
-  m_Name: BrigePreview
+  - component: {fileID: 3546186431428604234}
+  m_Layer: 30
+  m_Name: Brige
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 7c4c0ac2622a4894bb110f23e8e87c0c, type: 2}
+  - {fileID: 2100000, guid: 9d17f709302a8b04aa7f323fddd4c01a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -86,7 +86,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &1260114624720482442
+--- !u!65 &4897160310909812877
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,12 +101,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 0.9436084, z: 1}
+  m_Center: {x: 0, y: -0.028195798, z: 0}
 --- !u!54 &6058333171494279244
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -134,7 +134,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-9953354767208098
+--- !u!114 &3546186431428604234
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,11 +143,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 7618940115267047920}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5adbc9df4d7e0d64cbdb7134ae7c8544, type: 3}
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blue: {fileID: 2100000, guid: c488c54b09ef4d640bf7a44c51a50229, type: 2}
-  red: {fileID: 2100000, guid: 076344400f1cd45479f434260f411d95, type: 2}
-  IgnoreLayer:
-    serializedVersion: 2
-    m_Bits: 1073741824
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
