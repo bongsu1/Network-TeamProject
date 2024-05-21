@@ -40,10 +40,13 @@ public class C_IdleState : AnimalState
 public class C_RoamState : AnimalState
 {
     private Vector3 nextPoint;
+    private float time;
 
     public override void Enter()
     {
         owner.CurState = Animal.State.Roam;
+
+        time = Time.time;
 
         int count = 0;
         do
@@ -57,6 +60,14 @@ public class C_RoamState : AnimalState
 
         owner.Animator.SetBool("IsRoaming", true);
         SetDestination(nextPoint);
+    }
+
+    public override void Update()
+    {
+        if (Time.time - time > 7f)
+        {
+            SetDestination(owner.transform.position); // 가끔 네비 경계면에 지정을 해줘서 목적지에 도달하지 못한다
+        }
     }
 
     public override void Exit()
