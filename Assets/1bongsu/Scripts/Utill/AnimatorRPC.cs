@@ -19,9 +19,9 @@ public static class AnimatorRPC
     /// </summary>
     /// <param name="animator"></param>
     /// <param name="clipName"></param>
-    public static void Play(this PhotonView potonview, string clipName)
+    public static void Play(this PhotonView photonView, string clipName)
     {
-        potonview.RPC("PlayAnimation", RpcTarget.All, clipName);
+        photonView.RPC("PlayAnimation", RpcTarget.All, clipName);
     }
     
     [PunRPC]
