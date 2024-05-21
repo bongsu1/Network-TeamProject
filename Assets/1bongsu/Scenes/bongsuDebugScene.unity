@@ -349,7 +349,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_OverrideArea: 0
-  m_Area: 0
+  m_Area: 1
   m_OverrideGenerateLinks: 0
   m_GenerateLinks: 0
   m_IgnoreFromBuild: 0
@@ -555,7 +555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6490239c3ad4c7488706603c6ff38c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  email: rlaqhdtn22@gmail.com
+  email: rlaqhdtn43@naver.com
   pass: qwe123
 --- !u!114 &341737085
 MonoBehaviour:
@@ -1500,7 +1500,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1709852801}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.6794496, y: -0.0000001430934, z: 0.00000013250892, w: 0.7337222}
+  m_LocalRotation: {x: 0.6794496, y: 0.00000007046787, z: -0.00000006525544, w: 0.73372215}
   m_LocalPosition: {x: 0, y: 13, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0

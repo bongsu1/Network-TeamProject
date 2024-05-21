@@ -69,6 +69,7 @@ public class PlayerController : MonoBehaviourPun
         {
             IsWalking = value.Get<Vector2>() != Vector2.zero;
             photonView.RPC("ChangeWalkingAnimation", RpcTarget.All, isWalking); // 애니메이션 작동
+            //photonView.SetParmeter(Parameter.SetBool, "IsWalking", isWalking); // test
         }
 
         moveDir.x = value.Get<Vector2>().x;
@@ -85,4 +86,27 @@ public class PlayerController : MonoBehaviourPun
     {
         animator.SetBool("IsWalking", isWalking);
     }
+
+    /*[PunRPC]
+    public void SetAnimationParameter(Parameter type, string parameterName, object value)
+    {
+        switch (type)
+        {
+            case Parameter.SetBool:
+                if (value is bool boolean)
+                    animator.SetBool(parameterName, boolean);
+                break;
+            case Parameter.SetFloat:
+                if (value is float single)
+                    animator.SetFloat(parameterName, single);
+                break;
+            case Parameter.SetInteger:
+                if (value is int integer)
+                    animator.SetInteger(parameterName, integer);
+                break;
+            case Parameter.SetTrigger:
+                animator.SetTrigger(parameterName);
+                break;
+        }
+    }*/
 }
