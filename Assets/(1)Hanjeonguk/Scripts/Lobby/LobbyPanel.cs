@@ -61,7 +61,7 @@ public class LobbyPanel : MonoBehaviour
 
         if (roomName == "") //이름이 비어있을 때
         {
-            roomName = $"Room{Random.Range(1000, 1000)}"; //랜덤 이름 적용
+            roomName = $"새로운 섬 {Random.Range(1000, 1000)}"; //랜덤 이름 적용
         }
 
         int maxPlayer = maxPlayerInputField.text == "" ? 20 : int.Parse(maxPlayerInputField.text);
@@ -69,6 +69,7 @@ public class LobbyPanel : MonoBehaviour
 
 
         ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable();
+
         table.Add("roomName", roomName);
         table.Add("password", passwordInputField.text);
 
@@ -78,7 +79,7 @@ public class LobbyPanel : MonoBehaviour
 
         options.CustomRoomPropertiesForLobby = new string[] { "roomName", "password"};
 
-        PhotonNetwork.CreateRoom(roomName + passwordInputField.text, options);
+        PhotonNetwork.CreateRoom($"{roomName}{passwordInputField.text}", options);
     }
 
     public void LeaveLobby()

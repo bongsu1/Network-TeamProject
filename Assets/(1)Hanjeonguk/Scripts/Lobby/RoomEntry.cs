@@ -1,13 +1,17 @@
+using Firebase.Extensions;
 using Photon.Pun;
 using Photon.Realtime;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+
 
 public class RoomEntry : MonoBehaviour
 {
     [SerializeField] TMP_Text roomName;
     [SerializeField] TMP_Text currentPlayer;
+    [SerializeField] TMP_Text ping;
 
     [SerializeField] GameObject passwordPopPanel;
 
@@ -26,6 +30,7 @@ public class RoomEntry : MonoBehaviour
         joinRoomButton.onClick.AddListener(JoinRoom);
         closePopButton.onClick.AddListener(ClosePopButton);
         connectButton.onClick.AddListener(ConnectButton);
+        StartCoroutine(PingCheck());
     }
 
     public void SetRoomInfo(RoomInfo roomInfo)
@@ -37,19 +42,18 @@ public class RoomEntry : MonoBehaviour
 
         string password = (string)roomInfo.CustomProperties["password"];
 
-        if (password != "")
+        if (password != "" && password != null)
         {
             image.SetActive(true);
         }
     }
-
 
     public void JoinRoom()
     {
         // 선택한 방이 비밀번호가 있는지 체크
         string password = (string)roomInfo.CustomProperties["password"];
 
-        if(password == "")
+        if (password == "" || password == null)
         {
             // 비밀번호가 없다면
             PhotonNetwork.LeaveLobby();
@@ -68,6 +72,16 @@ public class RoomEntry : MonoBehaviour
 
     public void ConnectButton()
     {
-        PhotonNetwork.JoinRoom(roomName.text+passwordInputField.text);
+        PhotonNetwork.LeaveLobby();
+        PhotonNetwork.JoinRoom($"{roomName.text}{passwordInputField.text}");
+    }
+
+    IEnumerator PingCheck()
+    {
+        while (true)
+        {
+            ping.text = $"{PhotonNetwork.GetPing()} ms";
+            yield return new WaitForSeconds(1f);
+        }
     }
 }

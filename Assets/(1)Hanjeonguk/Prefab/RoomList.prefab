@@ -1350,6 +1350,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomName: {fileID: 8083099349443149828}
   currentPlayer: {fileID: 3249420319423628388}
+  ping: {fileID: 4811943096952935421}
   passwordPopPanel: {fileID: 7024471738477574907}
   passwordInputField: {fileID: 319622353779123574}
   image: {fileID: 687175737942801091}

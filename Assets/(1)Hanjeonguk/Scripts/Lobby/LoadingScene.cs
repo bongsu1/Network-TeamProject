@@ -8,31 +8,42 @@ public class LoadingScene : MonoBehaviourPunCallbacks
 {
     [SerializeField] GameObject gameLodingScene;
     [SerializeField] GameObject passwordErrorScene;
+    [SerializeField] GameObject optionScene;
+
     [SerializeField] TMP_Text text;
-    [SerializeField] string[] loadingMessages;
+    [SerializeField] TMP_Text currentServer;
+
     [SerializeField] RectTransform image;
-    [SerializeField] float moveSpeed ;
-    [SerializeField] Button closeButton;
+
+    [SerializeField] string[] loadingMessages;
+    [SerializeField] float moveSpeed;
+
+    [SerializeField] Button passwordErrorCloseButton;
+    [SerializeField] Button optionCloseButton1;
+    [SerializeField] Button optionCloseButton2;
 
     private static LoadingScene instance;
 
     private void Awake()
     {
         CreateInstance();
-        closeButton.onClick.AddListener(CloseButton);
+        passwordErrorCloseButton.onClick.AddListener(PasswordErrorCloseButton);
+        optionCloseButton1.onClick.AddListener(OptionCloseButton);
+        optionCloseButton2.onClick.AddListener(OptionCloseButton);
     }
-
-    public override void OnEnable()
+    public override void OnDisable() //게임 종료시 로그인 상태 false
     {
-        base.OnEnable();
-
-        StartCoroutine(TextRoutine());
-        StartCoroutine(ImageRoutine());
+        FirebaseManager.DB.GetReference("UserData").Child(FirebaseManager.Auth.CurrentUser.UserId).Child("isLogin").SetValueAsync(false);
+        if (PhotonNetwork.CurrentRoom != null)
+        {
+            PhotonNetwork.LeaveRoom();
+        }
     }
 
     public override void OnJoinedRoom()
     {
         GameSceneLoading();
+        currentServer.text = PhotonNetwork.CurrentRoom.Name;
     }
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
@@ -42,9 +53,14 @@ public class LoadingScene : MonoBehaviourPunCallbacks
         }
     }
 
-    public void CloseButton()
+    public void PasswordErrorCloseButton()
     {
         passwordErrorScene.SetActive(false);
+    }
+
+    public void OptionCloseButton()
+    {
+        optionScene.SetActive(false);
     }
 
     public void GameSceneLoading()
@@ -56,6 +72,9 @@ public class LoadingScene : MonoBehaviourPunCallbacks
     {
         gameLodingScene.SetActive(true);
 
+        StartCoroutine(TextRoutine());
+        StartCoroutine(ImageRoutine());
+
         PhotonNetwork.LoadLevel("GameScene");
 
         while (PhotonNetwork.LevelLoadingProgress < 1)
@@ -66,7 +85,10 @@ public class LoadingScene : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(3f);
 
         gameLodingScene.SetActive(false);
+
+        StopAllCoroutines();
     }
+
     IEnumerator TextRoutine()
     {
         for (int i = 0; i < loadingMessages.Length; i++)
@@ -93,7 +115,7 @@ public class LoadingScene : MonoBehaviourPunCallbacks
             float newY = image.anchoredPosition.y + Time.deltaTime * moveSpeed * direction;
 
             //  이동 방향 반전
-            if (newY >= startY || newY <= startY -30f)
+            if (newY >= startY || newY <= startY - 30f)
             {
                 direction *= -1f;
             }
@@ -101,7 +123,7 @@ public class LoadingScene : MonoBehaviourPunCallbacks
             // 이미지의 위치 변경
             image.anchoredPosition = new Vector2(image.anchoredPosition.x, newY);
 
-            yield return null; 
+            yield return null;
         }
     }
 

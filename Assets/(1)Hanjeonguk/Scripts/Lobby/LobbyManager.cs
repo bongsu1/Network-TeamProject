@@ -5,11 +5,10 @@ using UnityEngine;
 
 public class LobbyManager : MonoBehaviourPunCallbacks
 {
-    public enum Panel { Menu, Lobby, Option }
+    public enum Panel { Menu, Lobby}
 
     [SerializeField] MenuPanel menuPanel;
     [SerializeField] LobbyPanel lobbyPanel;
-    [SerializeField] OptionPanel optionPanel;
 
     private void Start()
     {
@@ -33,6 +32,5 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         menuPanel.gameObject.SetActive(panel == Panel.Menu);
         lobbyPanel.gameObject.SetActive(panel == Panel.Lobby);
-        optionPanel.gameObject.SetActive(panel == Panel.Option);
     }
 }

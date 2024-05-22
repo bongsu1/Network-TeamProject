@@ -5,7 +5,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
 
-public class FirebaseManager : MonoBehaviourPunCallbacks
+public class FirebaseManager : MonoBehaviour
 {
     private static FirebaseManager instance;
     public static FirebaseManager Instance { get { return instance; } }
@@ -33,11 +33,7 @@ public class FirebaseManager : MonoBehaviourPunCallbacks
         CheckDependency();
     }
 
-    private void OnDisable() //게임 종료시 로그인 상태 false
-    {
-        db.GetReference("UserData").Child(FirebaseManager.Auth.CurrentUser.UserId).Child("isLogin").SetValueAsync(false);
-        PhotonNetwork.LeaveRoom();
-    }
+
     private void CreateInstance() //싱글톤
     {
         if (instance == null)
@@ -86,9 +82,4 @@ public class FirebaseManager : MonoBehaviourPunCallbacks
             .SetRawJsonValueAsync(json);
     }
 
-    public override void OnDisconnected(DisconnectCause cause)
-    {
-        Debug.Log("접속종료");
-        db.GetReference("UserData").Child(FirebaseManager.Auth.CurrentUser.UserId).Child("isLogin").SetValueAsync(false);
-    }
 }
