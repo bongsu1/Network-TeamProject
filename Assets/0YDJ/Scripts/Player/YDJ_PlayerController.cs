@@ -8,7 +8,7 @@ public class YDJ_PlayerController : MonoBehaviourPun
     [SerializeField] Rigidbody rigid;
     [SerializeField] PlayerInput playerInput;
     [SerializeField] Animator animator;
-    [SerializeField] Huntting huntting;
+    [SerializeField] Action huntting;
     [Header("Stat")]
     [SerializeField] float moveSpeed;
     [SerializeField] int hp;
@@ -24,6 +24,7 @@ public class YDJ_PlayerController : MonoBehaviourPun
             // 플레이어인풋 삭제
             Destroy(playerInput);
 
+            // 다른 플레이어들 레이어 변경 (총으로 타겟 정할 때 겹침 문제 해결)
             gameObject.layer = 3;
         }
     }
