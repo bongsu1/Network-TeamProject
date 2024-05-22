@@ -34,28 +34,24 @@ MonoBehaviour:
   RunInBackground: 1
   StartInOfflineMode: 0
   RpcList:
+  - ChatFilter
   - ClickRpc
+  - CreateBullet
+  - CreateCraftObject
   - DestroyRpc
   - DestroySpaceship
   - Fire
-  - RespawnSpaceship
-  - ChangeWalkingAnimation
-  - ChatFilter
-  - SendChat
-  - InChatting
   - Greeting
-  - CreateCraftObject
-  - ChangeSetReadyAnimation
-  - CreateBullet
-  - Fire2
-  - PlayAnimation
-  - SetAnimationParameter
-  - GunChangeSetReadyAnimation
-  - AxChangeSetReadyAnimation
-  - AxFire2
+  - GuestDropItem
   - GunFire2
-  - SwingAx
-  - AxFire
+  - InChatting
+  - PlayAnimation
+  - RequestGuestDropItem
+  - RespawnSpaceship
+  - ResultGuestDropItem
+  - SendChat
+  - SetAnimationParameter
+  - SetItemObject
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

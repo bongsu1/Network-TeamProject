@@ -92,7 +92,8 @@ public class HSHPlayer : MonoBehaviourPun
         if (isWalking != (value.Get<Vector2>() != Vector2.zero)) // 네트워크 최적화를 위해 달라질때만 호출
         {
             IsWalking = value.Get<Vector2>() != Vector2.zero;
-            photonView.RPC("ChangeWalkingAnimation", RpcTarget.All, isWalking); // 애니메이션 작동
+            //photonView.RPC("ChangeWalkingAnimation", RpcTarget.All, isWalking); // 애니메이션 작동
+            photonView.RPC("SetAnimationParameter", RpcTarget.All, Parameter.SetBool, "IsWalking", isWalking);
         }
 
         moveDir.x = value.Get<Vector2>().x;
@@ -104,11 +105,11 @@ public class HSHPlayer : MonoBehaviourPun
         animator.Play("Greeting");
     }
 
-    [PunRPC]
-    private void ChangeWalkingAnimation(bool isWalking, PhotonMessageInfo info)
-    {
-        animator.SetBool("IsWalking", isWalking);
-    }
+    //[PunRPC]
+    //private void ChangeWalkingAnimation(bool isWalking, PhotonMessageInfo info)
+    //{
+    //    animator.SetBool("IsWalking", isWalking);
+    //}
     public void GuestDropItem(InventorySlot item)
     {
         photonView.RPC("RequestGuestDropItem", RpcTarget.MasterClient, item.item.Id, Manager.Inven.database.Items[item.item.Id].name);
@@ -150,7 +151,7 @@ public class HSHPlayer : MonoBehaviourPun
     {
         Debug.Log($"004. {id}");
         Debug.Log($"005. {name}");
-        
+
     }
 
 
@@ -163,6 +164,29 @@ public class HSHPlayer : MonoBehaviourPun
             inventory.Container.Clear();
             equipment.Container.Clear();
         }
-        
+
+    }
+
+    [PunRPC]
+    public void SetAnimationParameter(Parameter type, string parameterName, object value)
+    {
+        switch (type)
+        {
+            case Parameter.SetBool:
+                if (value is bool boolean)
+                    animator.SetBool(parameterName, boolean);
+                break;
+            case Parameter.SetFloat:
+                if (value is float single)
+                    animator.SetFloat(parameterName, single);
+                break;
+            case Parameter.SetInteger:
+                if (value is int integer)
+                    animator.SetInteger(parameterName, integer);
+                break;
+            case Parameter.SetTrigger:
+                animator.SetTrigger(parameterName);
+                break;
+        }
     }
 }
