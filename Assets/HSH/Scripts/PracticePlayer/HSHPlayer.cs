@@ -109,7 +109,7 @@ public class HSHPlayer : MonoBehaviourPun
     {
         animator.SetBool("IsWalking", isWalking);
     }
-    public void DropItem(InventorySlot item)
+    public void GuestDropItem(InventorySlot item)
     {
         photonView.RPC("RequestGuestDropItem", RpcTarget.MasterClient, item.item.Id, Manager.Inven.database.Items[item.item.Id].name);
         Debug.Log($"000. {item.item.Id}");
@@ -125,10 +125,11 @@ public class HSHPlayer : MonoBehaviourPun
         {
             Debug.Log("dropItem roomObject");
 
+            object[] instantiationData = { id, name };
             // 룸 오브젝트 프리팹 인스턴스화
             GameObject roomObject = PhotonNetwork.InstantiateRoomObject("dropItemPrefab", transform.position, Quaternion.identity);
 
-            roomObject.GetComponent<DropItem>().photonView.RPC("SetItemObject", RpcTarget.All, id, name);
+            roomObject.GetComponent<DropItem>().photonView.RPC("SetItemObject", RpcTarget.AllBuffered, id, name);
         }
         //photonView.RPC("ResultGuestDropItem", RpcTarget.AllViaServer, id, name);
         /*else

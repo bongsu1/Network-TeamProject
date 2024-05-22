@@ -165,7 +165,7 @@ public abstract class UserInterface : MonoBehaviour
                 Debug.Log("to guest");
                 Manager.Inven.DropPositioning();
                 //inventory.GuestDropItem(slotsOnInterface[obj]);
-                Manager.Inven.HSHplayer.DropItem(slotsOnInterface[obj]);
+                Manager.Inven.HSHplayer.GuestDropItem(slotsOnInterface[obj]);
                 slotsOnInterface[obj].RemoveItem();
             }
             else
