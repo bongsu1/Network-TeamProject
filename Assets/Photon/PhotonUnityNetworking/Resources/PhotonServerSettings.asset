@@ -48,6 +48,8 @@ MonoBehaviour:
   - ChangeSetReadyAnimation
   - CreateBullet
   - Fire2
+  - PlayAnimation
+  - SetAnimationParameter
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -20,7 +20,7 @@ public class Chicken : Animal
     IEnumerator WaitMasterChangeRoutine()
     {
         yield return new WaitUntil(() => PhotonNetwork.IsMasterClient);
-        stateMachine.Start(curState);
+        stateMachine.Start(State.Idle);
         isMaster = true;
     }
 }
