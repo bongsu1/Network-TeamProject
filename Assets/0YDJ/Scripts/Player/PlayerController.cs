@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviourPun
     [SerializeField] Rigidbody rigid;
     [SerializeField] PlayerInput playerInput;
     [SerializeField] Animator animator;
-    [SerializeField] Huntting huntting;
+    [SerializeField] Action action;
     [Header("Chat")]
     [SerializeField] Chat chat;
     [Header("Stat")]
@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviourPun
         {
             // 플레이어인풋 삭제
             Destroy(playerInput);
+            gameObject.layer = 3;
         }
 
         chat.OnGreeting.AddListener(Greeting); // 인사트리거를 이벤트로 받는다
@@ -50,8 +51,8 @@ public class PlayerController : MonoBehaviourPun
 
     private void Turn()
     {
-        if (huntting.TargetIn())
-            return;
+        //if (action.TargetIn())
+        //    return;
 
         Vector3 inputDir = transform.position + moveDir; // 입력하는 방향
         Vector3 nextDir;                                 // 바라볼 방향
@@ -90,27 +91,4 @@ public class PlayerController : MonoBehaviourPun
     {
         animator.SetBool("IsWalking", isWalking);
     }
-
-    /*[PunRPC]
-    public void SetAnimationParameter(Parameter type, string parameterName, object value)
-    {
-        switch (type)
-        {
-            case Parameter.SetBool:
-                if (value is bool boolean)
-                    animator.SetBool(parameterName, boolean);
-                break;
-            case Parameter.SetFloat:
-                if (value is float single)
-                    animator.SetFloat(parameterName, single);
-                break;
-            case Parameter.SetInteger:
-                if (value is int integer)
-                    animator.SetInteger(parameterName, integer);
-                break;
-            case Parameter.SetTrigger:
-                animator.SetTrigger(parameterName);
-                break;
-        }
-    }*/
 }

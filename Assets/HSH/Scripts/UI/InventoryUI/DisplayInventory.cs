@@ -106,12 +106,12 @@
 //    //        }
 //    //    }
 //    //}
-//    private void AddEvent(GameObject obj, EventTriggerType type, UnityAction<BaseEventData> action)
+//    private void AddEvent(GameObject obj, EventTriggerType type, UnityAction<BaseEventData> Action)
 //    {
 //        EventTrigger trigger = obj.GetComponent<EventTrigger>();
 //        var eventTrigger = new EventTrigger.Entry();
 //        eventTrigger.eventID = type;
-//        eventTrigger.callback.AddListener(action);
+//        eventTrigger.callback.AddListener(Action);
 //        trigger.triggers.Add(eventTrigger);
 //    }
 //    //여기부터
