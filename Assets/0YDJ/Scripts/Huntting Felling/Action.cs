@@ -72,7 +72,8 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
         Debug.Log("총 조준");
         isSetReady = Input.GetButton("Fire2");
 
-        photonView.RPC("GunChangeSetReadyAnimation", RpcTarget.All, isSetReady); // 애니메이션 작동
+        //photonView.RPC("GunChangeSetReadyAnimation", RpcTarget.All, isSetReady); // 애니메이션 작동
+        photonView.RPC("SetAnimationParameter", RpcTarget.All, Parameter.SetBool, "GunIsSetReady", isSetReady);
 
         gun.SetActive(isSetReady);
 
@@ -90,11 +91,11 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
         }
     }
 
-    [PunRPC]
-    private void GunChangeSetReadyAnimation(bool isSetReady, PhotonMessageInfo info)
-    {
-        animator.SetBool("GunIsSetReady", isSetReady);
-    }
+    //[PunRPC]
+    //private void GunChangeSetReadyAnimation(bool isSetReady, PhotonMessageInfo info)
+    //{
+    //    animator.SetBool("GunIsSetReady", isSetReady);
+    //}
 
 
     private void SearchEnemy()
@@ -170,26 +171,27 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
         Debug.Log("도끼 조준");
         isSetReady = Input.GetButton("Fire2");
 
-        photonView.RPC("AxChangeSetReadyAnimation", RpcTarget.All, isSetReady); // 애니메이션 작동
+        //photonView.RPC("AxChangeSetReadyAnimation", RpcTarget.All, isSetReady); // 애니메이션 작동
+        photonView.RPC("SetAnimationParameter", RpcTarget.All, Parameter.SetBool, "AxIsSetReady", isSetReady);
 
         ax.SetActive(isSetReady);
     }
 
-    [PunRPC]
-    private void AxChangeSetReadyAnimation(bool isSetReady, PhotonMessageInfo info)
+    //[PunRPC]
+    //private void AxChangeSetReadyAnimation(bool isSetReady, PhotonMessageInfo info)
+    //{
+    //    animator.SetBool("AxIsSetReady", isSetReady);
+    //}
+
+    private void AxFire() // 도끼 스윙
     {
-        animator.SetBool("AxIsSetReady", isSetReady);
+        //animator.SetBool("AxIsSetReady", isSetReady);
+        photonView.RPC("SetAnimationParameter", RpcTarget.All, Parameter.SetBool, "AxSwing", isSetReady);
     }
 
-    [PunRPC]
-    private void AxFire() // 발사
-    {
-        animator.SetBool("AxIsSetReady", isSetReady);
-    }
-
-        //if (Time.time < lastFireTime + fireCoolTime) //쿨타임
-        //    return;
-        //lastFireTime = Time.time;
+    //if (Time.time < lastFireTime + fireCoolTime) //쿨타임
+    //    return;
+    //lastFireTime = Time.time;
 
 }
 

@@ -51,8 +51,8 @@ public class PlayerController : MonoBehaviourPun
 
     private void Turn()
     {
-        //if (action.TargetIn())
-        //    return;
+        if (action.TargetIn())
+            return;
 
         Vector3 inputDir = transform.position + moveDir; // 입력하는 방향
         Vector3 nextDir;                                 // 바라볼 방향
@@ -73,8 +73,8 @@ public class PlayerController : MonoBehaviourPun
         if (isWalking != (value.Get<Vector2>() != Vector2.zero)) // 네트워크 최적화를 위해 달라질때만 호출
         {
             IsWalking = value.Get<Vector2>() != Vector2.zero;
-            photonView.RPC("ChangeWalkingAnimation", RpcTarget.All, isWalking); // 애니메이션 작동
-            //photonView.SetParmeter(Parameter.SetBool, "IsWalking", isWalking); // test
+            //photonView.RPC("ChangeWalkingAnimation", RpcTarget.All, isWalking); // 애니메이션 작동
+            photonView.SetParmeter(Parameter.SetBool, "IsWalking", isWalking); // test
         }
 
         moveDir.x = value.Get<Vector2>().x;
@@ -86,9 +86,32 @@ public class PlayerController : MonoBehaviourPun
         animator.Play("Greeting");
     }
 
+    //[PunRPC]
+    //private void ChangeWalkingAnimation(bool isWalking, PhotonMessageInfo info)
+    //{
+    //    animator.SetBool("IsWalking", isWalking);
+    //}
+
     [PunRPC]
-    private void ChangeWalkingAnimation(bool isWalking, PhotonMessageInfo info)
+    public void SetAnimationParameter(Parameter type, string parameterName, object value)
     {
-        animator.SetBool("IsWalking", isWalking);
+        switch (type)
+        {
+            case Parameter.SetBool:
+                if (value is bool boolean)
+                    animator.SetBool(parameterName, boolean);
+                break;
+            case Parameter.SetFloat:
+                if (value is float single)
+                    animator.SetFloat(parameterName, single);
+                break;
+            case Parameter.SetInteger:
+                if (value is int integer)
+                    animator.SetInteger(parameterName, integer);
+                break;
+            case Parameter.SetTrigger:
+                animator.SetTrigger(parameterName);
+                break;
+        }
     }
 }
