@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -137,7 +138,7 @@ public abstract class UserInterface : MonoBehaviour
     {
         GameObject tempItem = null;
 
-        if (slotsOnInterface[obj].item.Id>= 0)
+        if (slotsOnInterface[obj].item.Id >= 0)
         {
             tempItem = new GameObject();
 
@@ -151,20 +152,31 @@ public abstract class UserInterface : MonoBehaviour
             img.raycastTarget = false;
         }
         return tempItem;
-        
+
     }
 
     public void OnDragEnd(GameObject obj)
     {
         Destroy(MouseData.tempItemBeingDragged);
-        if(MouseData.interfaceMouseIsOver == null)
+        if (MouseData.interfaceMouseIsOver == null)
         {
-            Manager.Inven.DropPositioning();
-            inventory.DropItem(slotsOnInterface[obj]);
-            slotsOnInterface[obj].RemoveItem();
-            return;
+            if (PhotonNetwork.IsMasterClient == false)
+            {
+                Debug.Log("to guest");
+                Manager.Inven.DropPositioning();
+                //inventory.GuestDropItem(slotsOnInterface[obj]);
+                Manager.Inven.HSHplayer.DropItem(slotsOnInterface[obj]);
+                slotsOnInterface[obj].RemoveItem();
+            }
+            else
+            {
+                Manager.Inven.DropPositioning();
+                inventory.MasterDropItem(slotsOnInterface[obj]);
+                slotsOnInterface[obj].RemoveItem();
+            }
+
         }
-        if(MouseData.slotHoveredOver)
+        if (MouseData.slotHoveredOver)
         {
             InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver];
             inventory.SwapItems(slotsOnInterface[obj], mouseHoverSlotData);
@@ -172,7 +184,6 @@ public abstract class UserInterface : MonoBehaviour
     }
     public void OnDrag(GameObject obj)
     {
-        Debug.Log("Ondrag 는 작동하나");
         if (MouseData.tempItemBeingDragged != null)
         {
             MouseData.tempItemBeingDragged.GetComponent<RectTransform>().position = Input.mousePosition;
@@ -205,7 +216,7 @@ public static class ExtentionMethods // 이렇게 나눌 이유가 있나?
             // 스크립터블 오브젝트도 변경되고 참조가 끊어진것도 아니고 업데이트도 무사히 돌아가는데 왜 안될까*/
             if (_slot.Value.item.Id >= 0) //  슬롯의 ID 가 0보다 크면(아이템이 있으면)
             {
-                Debug.Log($"0.{_slot.Key.transform}");
+                //Debug.Log($"0.{_slot.Key.transform}");
                 _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = _slot.Value.ItemObject.uiDisplay;//inventory.database.GetItem[_slot.Value.item.Id].uiDisplay;
                 _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 1);
                 _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = _slot.Value.amount == 1 ? "" : _slot.Value.amount.ToString("n0");

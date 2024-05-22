@@ -39,7 +39,7 @@ public class HSHPlayer : MonoBehaviourPun
         if (photonView.IsMine)
         {
             Manager.Inven.HSHplayer = this;
-        }        
+        }
     }
     private void Update()
     {
@@ -109,6 +109,51 @@ public class HSHPlayer : MonoBehaviourPun
     {
         animator.SetBool("IsWalking", isWalking);
     }
+    public void DropItem(InventorySlot item)
+    {
+        photonView.RPC("RequestGuestDropItem", RpcTarget.MasterClient, item.item.Id, Manager.Inven.database.Items[item.item.Id].name);
+        Debug.Log($"000. {item.item.Id}");
+        Debug.Log($"001. {Manager.Inven.database.Items[item.item.Id].name}");
+    }
+    [PunRPC]
+    private void RequestGuestDropItem(int id, string name)
+    {
+        Debug.Log($"002. {id}");
+        Debug.Log($"003. {name}");
+
+        if (PhotonNetwork.InRoom)
+        {
+            Debug.Log("dropItem roomObject");
+
+            // 룸 오브젝트 프리팹 인스턴스화
+            GameObject roomObject = PhotonNetwork.InstantiateRoomObject("dropItemPrefab", transform.position, Quaternion.identity);
+
+            roomObject.GetComponent<DropItem>().photonView.RPC("SetItemObject", RpcTarget.All, id, name);
+        }
+        //photonView.RPC("ResultGuestDropItem", RpcTarget.AllViaServer, id, name);
+        /*else
+        {
+            Debug.Log("dropItem in offline");
+
+            // 룸 오브젝트 프리팹 인스턴스화
+            GameObject roomObject = PhotonNetwork.InstantiateRoomObject("dropItemPrefab", Manager.Inven.dropPosition, Quaternion.identity);
+
+
+            // 룸 오브젝트 내 DropItem 컴포넌트에 액세스해서 변경
+            //DropItem 에 MonoBehaviourPun 달면 바로 답나오는 문제를 이래 헤매면 어떡하니 나야
+            roomObject.GetComponent<DropItem>().photonView.RPC("SetItemObject", RpcTarget.All, item.item.Id, database.Items[item.item.Id].name);
+        }*/
+    }
+    [PunRPC]
+    private void ResultGuestDropItem(int id, string name)
+    {
+        Debug.Log($"004. {id}");
+        Debug.Log($"005. {name}");
+        
+    }
+
+
+    [PunRPC]
     private void OnDisable()
     {
         Debug.Log("Clear slot");

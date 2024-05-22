@@ -7,6 +7,8 @@ public class InventoryManager : Singleton<InventoryManager>
     [SerializeField] InventoryObject inven;
     [SerializeField] InventoryObject equip;
 
+    [SerializeField] public ItemDatabaseObject database;
+    // why dont work
     [SerializeField] Inventory inventory;
     //[SerializeField] DynamicInterface inventory;
     //[SerializeField] StaticInterface equipment;
@@ -172,7 +174,7 @@ public class InventoryManager : Singleton<InventoryManager>
         FirebaseManager.Auth.SignOut();
         //StopSaveRoutine();
     }
-
+    
     public void DropPositioning()
     {
         Debug.Log("Repositioning");

@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inven: {fileID: 11400000, guid: 073066803168bf84ca271e5d2cfd98d6, type: 2}
   equip: {fileID: 11400000, guid: d6c623f3adeed934bb315cd88cf5b86e, type: 2}
+  database: {fileID: 11400000, guid: e5773ff066782d9478d6afd83b993c43, type: 2}
   inventory:
     Items:
     - AllowedItems: 
@@ -192,7 +193,7 @@ MonoBehaviour:
         Id: -1
         buffs: []
       amount: 0
-  player: {fileID: 0}
-  dropPotision: {x: 0, y: 0, z: 0}
+  HSHplayer: {fileID: 0}
+  dropPosition: {x: 0, y: 0, z: 0}
   email: qwer24632@gmail.com
   pass: asdasd

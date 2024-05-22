@@ -51,10 +51,6 @@ public class InventoryObject : ScriptableObject/*, IPunObservable*/
         SetEmptySlot(_item, _amount);*/
 
     }
-    public void Myposition()
-    {
-        
-    }
     public InventorySlot FindItemOnInventory(Item _item)
     {
         for (int i = 0; i < Container.Items.Length; i++)
@@ -112,24 +108,38 @@ public class InventoryObject : ScriptableObject/*, IPunObservable*/
             item1.UpdateSlot(temp.item, temp.amount);
         }
     }
-    public void DropItem(InventorySlot item) // 아이텝 드랍하는 함수
+    [PunRPC]
+    public void GuestDropItem(InventorySlot item) // 아이텝 드랍하는 함수, 게스트는 이걸 씀
     {
-        if (PhotonNetwork.InRoom)
+        if (PhotonNetwork.InRoom /*&& PhotonNetwork.IsMasterClient*/)
         {
-            Debug.Log("dropItem");
-            
-            // 룸 오브젝트 프리팹 인스턴스화
-            GameObject roomObject = PhotonNetwork.Instantiate("dropItemPrefab", Manager.Inven.dropPosition, Quaternion.identity);
+            Debug.Log("dropItem roomObject");
 
+            // 룸 오브젝트 프리팹 인스턴스화
+            GameObject roomObject = PhotonNetwork.InstantiateRoomObject("dropItemPrefab", Manager.Inven.dropPosition, Quaternion.identity);
+
+            //Debug.Log($"000. {roomObject.name}");
             // 룸 오브젝트 내 DropItem 컴포넌트에 액세스해서 변경
             //DropItem 에 MonoBehaviourPun 달면 바로 답나오는 문제를 이래 헤매면 어떡하니 나야
             roomObject.GetComponent<DropItem>().photonView.RPC("SetItemObject", RpcTarget.All, item.item.Id, database.Items[item.item.Id].name);
+            roomObject.GetComponent<DropItem>().photonView.RPC("changeRoomObject", RpcTarget.All);
+            //Debug.Log($"001. {roomObject.GetComponent<DropItem>().itemObject.name}");
+            //Debug.Log($"002. {roomObject.GetComponent<DropItem>().photonView.ViewID}");
+            //Debug.Log($"003. {roomObject.GetComponent<DropItem>().photonView.AmOwner}");
         }
-        else
-        {
-            return;
-        }
-            
+        //else
+        //{
+        //    Debug.Log("dropItem in offline");
+
+        //    // 룸 오브젝트 프리팹 인스턴스화
+        //    GameObject roomObject = PhotonNetwork.InstantiateRoomObject("dropItemPrefab", Manager.Inven.dropPosition, Quaternion.identity);
+
+
+        //    // 룸 오브젝트 내 DropItem 컴포넌트에 액세스해서 변경
+        //    //DropItem 에 MonoBehaviourPun 달면 바로 답나오는 문제를 이래 헤매면 어떡하니 나야
+        //    roomObject.GetComponent<DropItem>().photonView.RPC("SetItemObject", RpcTarget.All, item.item.Id, database.Items[item.item.Id].name);
+        //}
+
         /*// 싱글판
         for (int i = 0; i < Container.Items.Length; i++)
         {
@@ -149,7 +159,27 @@ public class InventoryObject : ScriptableObject/*, IPunObservable*/
             }
         }*/
     }
-    
+    public void MasterDropItem(InventorySlot item) // 마스터는 이걸 씀
+    {
+        if (PhotonNetwork.InRoom)
+        {
+            Debug.Log("dropItem roomObject");
+
+            // 룸 오브젝트 프리팹 인스턴스화
+            GameObject roomObject = PhotonNetwork.InstantiateRoomObject("dropItemPrefab", Manager.Inven.dropPosition, Quaternion.identity);
+            // 룸 오브젝트 내 DropItem 컴포넌트에 액세스해서 변경
+            //DropItem 에 MonoBehaviourPun 달면 바로 답나오는 문제를 이래 헤매면 어떡하니 나야
+            roomObject.GetComponent<DropItem>().photonView.RPC("SetItemObject", RpcTarget.All, item.item.Id, database.Items[item.item.Id].name);
+        }
+    }
+    //[PunRPC]
+    //public void ResultDropItem(InventorySlot item)// 요청받은 함수
+    //{
+    //    GameObject roomObject = PhotonNetwork.InstantiateRoomObject("dropItemPrefab", Manager.Inven.dropPosition, Quaternion.identity);
+
+    //    roomObject.GetComponent<DropItem>().photonView.RPC("SetItemObject", RpcTarget.AllViaServer, item.item.Id, database.Items[item.item.Id].name); // 결과줄
+    //}
+
 
 
     // 아이템 제거
@@ -174,11 +204,11 @@ public class InventoryObject : ScriptableObject/*, IPunObservable*/
     {
         if (stream.IsWriting) // photonView.IsMine 일때
         {
-            
+
         }
         else // photonView.IsReading || photonView.InMine == false 일때
         {
-            
+
         }
     }
     //public void OnAfterDeserialize()
