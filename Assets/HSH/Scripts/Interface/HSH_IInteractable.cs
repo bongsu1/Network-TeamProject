@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public interface HSH_IInteractable
+public interface HSH_IInteractable<T> where T : class
 {
-    public void Interact();
+    public void Interact(T someClass);
 }

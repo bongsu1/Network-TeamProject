@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -137,7 +138,7 @@ public abstract class UserInterface : MonoBehaviour
     {
         GameObject tempItem = null;
 
-        if (slotsOnInterface[obj].item.Id>= 0)
+        if (slotsOnInterface[obj].item.Id >= 0)
         {
             tempItem = new GameObject();
 
@@ -151,63 +152,43 @@ public abstract class UserInterface : MonoBehaviour
             img.raycastTarget = false;
         }
         return tempItem;
-        
+
     }
 
     public void OnDragEnd(GameObject obj)
     {
         Destroy(MouseData.tempItemBeingDragged);
-        if(MouseData.interfaceMouseIsOver == null)
+        if (MouseData.interfaceMouseIsOver == null)
         {
-            slotsOnInterface[obj].RemoveItem();
-            return;
+            if (PhotonNetwork.IsMasterClient == false)
+            {
+                Debug.Log("to guest");
+                Manager.Inven.DropPositioning();
+                //inventory.GuestDropItem(slotsOnInterface[obj]);
+                Manager.Inven.HSHplayer.GuestDropItem(slotsOnInterface[obj]);
+                slotsOnInterface[obj].RemoveItem();
+            }
+            else
+            {
+                Manager.Inven.DropPositioning();
+                inventory.MasterDropItem(slotsOnInterface[obj]);
+                slotsOnInterface[obj].RemoveItem();
+            }
+
         }
-        if(MouseData.slotHoveredOver)
+        if (MouseData.slotHoveredOver)
         {
             InventorySlot mouseHoverSlotData = MouseData.interfaceMouseIsOver.slotsOnInterface[MouseData.slotHoveredOver];
-            //inventory.SwapItems
             inventory.SwapItems(slotsOnInterface[obj], mouseHoverSlotData);
         }
-        //var itemOnMouse = practicePlayer.mouseItem;
-        //var mouseHoverItem = itemOnMouse.hoverItem;
-        //var mouseHoverObj = itemOnMouse.hoverObj;
-        //var GetItemObject = inventory.database.GetItem;
-
-
-
-        //Debug.Log(itemOnMouse.hoverItem.ID);
-        //if (itemOnMouse.ui != null)
-        //{
-        //    if (mouseHoverObj)
-        //    {
-        //        if (mouseHoverItem.CanPlaceInSlot(GetItemObject[itemsDisplayed[obj].ID]) && (mouseHoverItem.item.Id <= -1 ||
-        //            (mouseHoverItem.item.Id >= 0) && itemsDisplayed[obj].CanPlaceInSlot(GetItemObject[mouseHoverItem.item.Id]))) // 뒷조건 추가해서 실수로 파괴되는 일 없도록
-        //        {
-        //            inventory.MoveItem(itemsDisplayed[obj], mouseHoverItem.parent.itemsDisplayed[itemOnMouse.hoverObj]); // 아이템 슬롯 이동
-        //        }
-        //    }
-        //}
-        //else
-        //{
-        //    inventory.RemoveItem(itemsDisplayed[obj].item); // 아이템 드래그해서 드롭시 파괴.
-        //}
-        //Destroy(practicePlayer.mouseItem.obj);
-        //itemOnMouse.item = null;
     }
     public void OnDrag(GameObject obj)
     {
-        Debug.Log("Ondrag 는 작동하나");
         if (MouseData.tempItemBeingDragged != null)
         {
             MouseData.tempItemBeingDragged.GetComponent<RectTransform>().position = Input.mousePosition;
         }
     }
-    // 여기까지 아이템 드래그앤 드랍
-    //public Vector3 GetPositon(int i) // 인벤토리 슬롯 위치 잡는 부분
-    //{
-    //    return new Vector3(X_START + (X_SPACE_BETWEEN_ITEM * (i % NUMBER_OF_COLUMN)), Y_START + (-Y_SPACE_BETWEEN_ITEMS * (i / NUMBER_OF_COLUMN)), 0f);
-    //}
-
 }
 public static class MouseData
 {
@@ -225,17 +206,17 @@ public static class ExtentionMethods // 이렇게 나눌 이유가 있나?
     {
         foreach (KeyValuePair<GameObject, InventorySlot> _slot in _slotsOnInterface)
         {
-            Debug.Log($"00. {_slotsOnInterface}");
-            Debug.Log($"01. {_slot}");
-            Debug.Log($"02. {_slot.Value.item.Id}"); // 보통 땐 잘 된다. json 으로 로드 했을 때만 기능이 반응을 안한다....돌아가고는 있는데 스크립터블 오브젝트에서 읽지를 않는다.
-            Debug.Log($"03. {_slot.Value.item.Name}"); // 이게 널값인것까지 확인
-            Debug.Log($"위 버그는 유니티 엔진 내에서 플레이어 인벤토리 인스펙터창을 고정하고 재실행하면 해결됨, updateSlotDisplay");
+            /*//Debug.Log($"00. {_slotsOnInterface}");
+            //Debug.Log($"01. {_slot}");
+            //Debug.Log($"02. {_slot.Value.item.Id}"); // 보통 땐 잘 된다. json 으로 로드 했을 때만 기능이 반응을 안한다....돌아가고는 있는데 스크립터블 오브젝트에서 읽지를 않는다.
+            //Debug.Log($"03. {_slot.Value.item.Name}"); // 이게 널값인것까지 확인
+            //Debug.Log($"위 버그는 유니티 엔진 내에서 플레이어 인벤토리 인스펙터창을 고정하고 재실행하면 해결됨, updateSlotDisplay");
             // 참조는 깨진거 아님. 
             // 스크립터블 오브젝트(인벤토리)는 정상적으로 변경됨
-            // 스크립터블 오브젝트도 변경되고 참조가 끊어진것도 아니고 업데이트도 무사히 돌아가는데 왜 안될까
+            // 스크립터블 오브젝트도 변경되고 참조가 끊어진것도 아니고 업데이트도 무사히 돌아가는데 왜 안될까*/
             if (_slot.Value.item.Id >= 0) //  슬롯의 ID 가 0보다 크면(아이템이 있으면)
             {
-                Debug.Log($"0.{_slot.Key.transform}");
+                //Debug.Log($"0.{_slot.Key.transform}");
                 _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = _slot.Value.ItemObject.uiDisplay;//inventory.database.GetItem[_slot.Value.item.Id].uiDisplay;
                 _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 1);
                 _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = _slot.Value.amount == 1 ? "" : _slot.Value.amount.ToString("n0");

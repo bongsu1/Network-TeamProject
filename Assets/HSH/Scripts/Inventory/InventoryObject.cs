@@ -1,15 +1,13 @@
+using Photon.Pun;
 using UnityEngine;
-using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "New Inventory", menuName = "Inventory System/Inventory")]
-public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceiver*/
+public class InventoryObject : ScriptableObject/*, IPunObservable*/
 {
     public string savePath;
     public ItemDatabaseObject database;
     public Inventory Container;
-
-    public GameObject DropitemPrefab;
-
+    public DropItem dropItemPrefab;
 
     /*  private void OnEnable()
       {
@@ -26,7 +24,7 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
         {
             return false;
         }
-        InventorySlot slot = FindItemOnInventory(_item); 
+        InventorySlot slot = FindItemOnInventory(_item);
         if (!database.Items[_item.Id].stackable || slot == null) // 합치기 가능한지 여부 체크되있는지 확인하고
         {
             SetEmptySlot(_item, _amount);
@@ -110,6 +108,80 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
             item1.UpdateSlot(temp.item, temp.amount);
         }
     }
+    [PunRPC]
+    public void GuestDropItem(InventorySlot item) // 아이텝 드랍하는 함수, 게스트는 이걸 씀
+    {
+        if (PhotonNetwork.InRoom /*&& PhotonNetwork.IsMasterClient*/)
+        {
+            Debug.Log("dropItem roomObject");
+
+            // 룸 오브젝트 프리팹 인스턴스화
+            GameObject roomObject = PhotonNetwork.InstantiateRoomObject("dropItemPrefab", Manager.Inven.dropPosition, Quaternion.identity);
+
+            //Debug.Log($"000. {roomObject.name}");
+            // 룸 오브젝트 내 DropItem 컴포넌트에 액세스해서 변경
+            //DropItem 에 MonoBehaviourPun 달면 바로 답나오는 문제를 이래 헤매면 어떡하니 나야
+            roomObject.GetComponent<DropItem>().photonView.RPC("SetItemObject", RpcTarget.All, item.item.Id, database.Items[item.item.Id].name);
+            roomObject.GetComponent<DropItem>().photonView.RPC("changeRoomObject", RpcTarget.All);
+            //Debug.Log($"001. {roomObject.GetComponent<DropItem>().itemObject.name}");
+            //Debug.Log($"002. {roomObject.GetComponent<DropItem>().photonView.ViewID}");
+            //Debug.Log($"003. {roomObject.GetComponent<DropItem>().photonView.AmOwner}");
+        }
+        //else
+        //{
+        //    Debug.Log("dropItem in offline");
+
+        //    // 룸 오브젝트 프리팹 인스턴스화
+        //    GameObject roomObject = PhotonNetwork.InstantiateRoomObject("dropItemPrefab", Manager.Inven.dropPosition, Quaternion.identity);
+
+
+        //    // 룸 오브젝트 내 DropItem 컴포넌트에 액세스해서 변경
+        //    //DropItem 에 MonoBehaviourPun 달면 바로 답나오는 문제를 이래 헤매면 어떡하니 나야
+        //    roomObject.GetComponent<DropItem>().photonView.RPC("SetItemObject", RpcTarget.All, item.item.Id, database.Items[item.item.Id].name);
+        //}
+
+        /*// 싱글판
+        for (int i = 0; i < Container.Items.Length; i++)
+        {
+            Debug.Log($"02. {Container.Items[i].item.Id}");
+            if (Container.Items[i].item.Id != item.item.Id)
+            {
+                continue;
+            }
+            else
+            {
+                Debug.Log($"01. {database.Items[item.item.Id]}");
+                DropItem dropItem = PhotonNetwork.Instantiate("dropItemPrefab", Manager.Inven.dropPosition, Quaternion.identity).GetComponent<DropItem>(); //  생성하면서 바로 컴포넌트 할당
+                dropItem.itemObject = database.Items[item.item.Id]; // 내부 정보 변경
+                dropItem.gameObject.name = database.Items[item.item.Id].name; // 이름 넣어주는곳
+                break;
+              
+            }
+        }*/
+    }
+    public void MasterDropItem(InventorySlot item) // 마스터는 이걸 씀
+    {
+        if (PhotonNetwork.InRoom)
+        {
+            Debug.Log("dropItem roomObject");
+
+            // 룸 오브젝트 프리팹 인스턴스화
+            GameObject roomObject = PhotonNetwork.InstantiateRoomObject("dropItemPrefab", Manager.Inven.dropPosition, Quaternion.identity);
+            // 룸 오브젝트 내 DropItem 컴포넌트에 액세스해서 변경
+            //DropItem 에 MonoBehaviourPun 달면 바로 답나오는 문제를 이래 헤매면 어떡하니 나야
+            roomObject.GetComponent<DropItem>().photonView.RPC("SetItemObject", RpcTarget.AllBuffered, item.item.Id, database.Items[item.item.Id].name);
+        }
+    }
+    //[PunRPC]
+    //public void ResultDropItem(InventorySlot item)// 요청받은 함수
+    //{
+    //    GameObject roomObject = PhotonNetwork.InstantiateRoomObject("dropItemPrefab", Manager.Inven.dropPosition, Quaternion.identity);
+
+    //    roomObject.GetComponent<DropItem>().photonView.RPC("SetItemObject", RpcTarget.AllViaServer, item.item.Id, database.Items[item.item.Id].name); // 결과줄
+    //}
+
+
+
     // 아이템 제거
     public void RemoveItem(Item _item)
     {
@@ -122,90 +194,22 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
             }
         }
     }
-
-    //[ContextMenu("저장 (JSON)")]
-    //public void SaveToJson()
-    //{
-    //    Debug.Log("인벤토리 저장 (JSON)");
-
-    //    // 1. JSON 문자열 준비
-    //    string jsonData = JsonUtility.ToJson(new SaveInven(inven.Container, equip.Container), true); // 개인 필드 포함
-
-    //    // 2. 저장 경로 가져오기
-    //    string savePath = Path.Combine(Application.persistentDataPath, "inventory.json"); // 예시 경로
-
-    //    // 3. JSON 데이터를 파일에 쓰기
-    //    try
-    //    {
-    //        using (FileStream fileStream = File.Create(savePath))
-    //        {
-    //            byte[] data = Encoding.UTF8.GetBytes(jsonData);
-    //            fileStream.Write(data, 0, data.Length);
-    //        }
-    //        Debug.Log("인벤토리 JSON으로 성공적으로 저장됨!");
-    //    }
-    //    catch (Exception e)
-    //    {
-    //        Debug.LogError("인벤토리를 JSON으로 저장하는 중 오류 발생: " + e.Message);
-    //    }
-    //}
-
-
-    //[ContextMenu("로드 (JSON)")]
-    //public void LoadFromJson()
-    //{
-    //    Debug.Log("인벤토리 로드 (JSON)");
-
-    //    // 1. 저장 경로 가져오기
-    //    string savePath = Path.Combine(Application.persistentDataPath, "inventory.json"); // 예시 경로
-
-    //    // 2. 파일 존재 여부 확인
-    //    if (File.Exists(savePath))
-    //    {
-    //        // 3. JSON 데이터를 파일에 읽기
-    //        try
-    //        {
-    //            using (FileStream fileStream = File.OpenRead(savePath))
-    //            {
-    //                byte[] data = new byte[(int)fileStream.Length];
-    //                fileStream.Read(data, 0, data.Length);
-
-    //                string jsonData = Encoding.UTF8.GetString(data);
-
-    //                // 4. JSON 데이터를 Container 객체로 역직렬화
-    //                SaveInven newContainer = JsonUtility.FromJson<SaveInven>(jsonData);
-    //                inven.Container.Items = newContainer.invenSave.Items; // 직접 배열 복사
-    //                equip.Container.Items = newContainer.equipSave.Items;
-
-    //                for (int i = 0; i < inven.Container.Items.Length; i++)
-    //                {
-    //                    Debug.Log(newContainer.invenSave.Items[i]);
-    //                    inven.Container.Items[i].UpdateSlot(newContainer.invenSave.Items[i].item, newContainer.invenSave.Items[i].amount);
-    //                }
-    //                for (int i = 0; i < equip.Container.Items.Length; i++)
-    //                {
-    //                    Debug.Log(newContainer.equipSave.Items[i]);
-    //                    equip.Container.Items[i].UpdateSlot(newContainer.equipSave.Items[i].item, newContainer.equipSave.Items[i].amount);
-    //                }
-
-    //                Debug.Log("인벤토리 JSON에서 성공적으로 로드됨!");
-    //            }
-    //        }
-    //        catch (Exception e)
-    //        {
-    //            Debug.LogError("JSON에서 인벤토리를 로드하는 중 오류 발생: " + e.Message);
-    //        }
-    //    }
-    //    else
-    //    {
-    //        Debug.LogWarning("인벤토리 JSON 파일을 찾을 수 없음: " + savePath);
-    //    }
-    //}
-
     [ContextMenu("Clear")]
     public void Clear()
     {
         Container.Clear();
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting) // photonView.IsMine 일때
+        {
+
+        }
+        else // photonView.IsReading || photonView.InMine == false 일때
+        {
+
+        }
     }
     //public void OnAfterDeserialize()
     //{
@@ -221,12 +225,12 @@ public class InventoryObject : ScriptableObject/*, ISerializationCallbackReceive
     //}
 }
 [System.Serializable]
-public class SaveInven
+public class InvenData
 {
     public Inventory invenSave;
     public Inventory equipSave;
 
-    public SaveInven(Inventory invenSave, Inventory equipSave)
+    public InvenData(Inventory invenSave, Inventory equipSave)
     {
         this.invenSave = invenSave;
         this.equipSave = equipSave;
@@ -240,6 +244,7 @@ public class Inventory
     public InventorySlot[] Items = new InventorySlot[24];
     public void Clear()
     {
+        Debug.Log("이거구나");
         for (int i = 0; i < Items.Length; i++)
         {
             Items[i].RemoveItem();
@@ -318,9 +323,5 @@ public class InventorySlot
     {
         item = new Item();
         amount = 0;
-    }
-    public void DropItem()
-    {
-
     }
 }

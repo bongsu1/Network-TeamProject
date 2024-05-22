@@ -16,7 +16,7 @@ public class TotalData : MonoBehaviour
         Debug.Log("인벤토리 저장 (JSON)");
 
         // 1. JSON 문자열 준비
-        string jsonData = JsonUtility.ToJson(new SaveInven(inven.Container, equip.Container), true); // 개인 필드 포함
+        string jsonData = JsonUtility.ToJson(new InvenData(inven.Container, equip.Container), true); // 개인 필드 포함
         
         // 2. 저장 경로 가져오기
         string savePath = Path.Combine(Application.persistentDataPath, "inventory.json"); // 경로
@@ -58,7 +58,7 @@ public class TotalData : MonoBehaviour
                     string jsonData = Encoding.UTF8.GetString(data);
 
                     // 4. JSON 데이터를 Container 객체로 역직렬화
-                    SaveInven newContainer = JsonUtility.FromJson<SaveInven>(jsonData);
+                    InvenData newContainer = JsonUtility.FromJson<InvenData>(jsonData);
                     //inven.Container.Items = newContainer.invenSave.Items; // 직접 배열 복사
                     //equip.Container.Items = newContainer.equipSave.Items; // 이게 원인이었네~~~
 
