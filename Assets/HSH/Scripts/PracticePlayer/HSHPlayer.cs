@@ -153,11 +153,15 @@ public class HSHPlayer : MonoBehaviourPun
     }
 
 
-    [PunRPC]
     private void OnDisable()
     {
         Debug.Log("Clear slot");
-        inventory.Container.Clear();
-        equipment.Container.Clear();
+        if (photonView.IsMine)
+        {
+            Manager.Inven.HSHplayer = this;
+            inventory.Container.Clear();
+            equipment.Container.Clear();
+        }
+        
     }
 }
