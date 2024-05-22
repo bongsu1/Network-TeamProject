@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class Animal : MonoBehaviourPun, IPunObservable
+public class Animal : MonoBehaviourPun, IPunObservable, IDamageble
 {
     public enum State { Idle, Roam, Run }
     protected StateMachine<State> stateMachine = new StateMachine<State>();
@@ -22,6 +22,11 @@ public class Animal : MonoBehaviourPun, IPunObservable
     [SerializeField] LayerMask targetLayer;
     [SerializeField] float searchRadius;
     [SerializeField] float searchAngle;
+    [SerializeField] float onHitSearchRadius; // 맞았을때는 좀 더 넓은 범위를 탐색
+
+    [Header("Status")]
+    [SerializeField] protected int maxHP;
+    [SerializeField] protected int curHP;
 
     private float cosRange;
 
@@ -33,6 +38,7 @@ public class Animal : MonoBehaviourPun, IPunObservable
     protected virtual void Awake()
     {
         cosRange = Mathf.Cos(Mathf.Deg2Rad * searchAngle);
+        curHP = maxHP;
     }
 
     protected virtual void Update()
@@ -60,7 +66,7 @@ public class Animal : MonoBehaviourPun, IPunObservable
     }
 
     private Collider[] colliders = new Collider[10];
-    private void Search()
+    private void Search(float searchRadius, bool isHit = false)
     {
         int size = Physics.OverlapSphereNonAlloc(transform.position, searchRadius, colliders, targetLayer);
         if (size > 0)
@@ -74,9 +80,13 @@ public class Animal : MonoBehaviourPun, IPunObservable
                 if (target == null)
                     continue;
 
-                Vector3 toTargetDir = (target.transform.position - transform.position).normalized;
-                if (Vector3.Dot(toTargetDir, transform.forward) < cosRange)
-                    continue;
+                // 맞았을때는 시야와 상관없이 전범위 탐색
+                if (!isHit)
+                {
+                    Vector3 toTargetDir = (target.transform.position - transform.position).normalized;
+                    if (Vector3.Dot(toTargetDir, transform.forward) < cosRange)
+                        continue;
+                }
 
                 this.target = target.transform;
                 break;
@@ -88,7 +98,7 @@ public class Animal : MonoBehaviourPun, IPunObservable
     {
         while (true)
         {
-            Search();
+            Search(searchRadius); // 기본 범위만 탐색
             yield return new WaitForSeconds(1f);
         }
     }
@@ -98,11 +108,46 @@ public class Animal : MonoBehaviourPun, IPunObservable
         if (stream.IsWriting)
         {
             stream.SendNext(curState);
+            stream.SendNext(curHP);
         }
         else
         {
             curState = (State)(int)stream.ReceiveNext();
+            curHP = (int)stream.ReceiveNext();
         }
+    }
+
+    private bool onHit;
+    public void Damaged(int Damage)
+    {
+        if (onHit)
+            return;
+
+        curHP -= Damage;
+        onHit = true;
+
+        if (curHP <= 0)
+        {
+            curHP = 0;
+            Die();
+        }
+        else
+        {
+            Search(onHitSearchRadius, true);
+            StartCoroutine(HitRoutine());
+        }
+    }
+    IEnumerator HitRoutine()
+    {
+        yield return new WaitForSeconds(0.1f);
+        onHit = false;
+    }
+
+    private void Die()
+    {
+        Destroy(gameObject);
+        // 추가적인 것
+        // 아이템 드랍
     }
 
     // test..
@@ -112,8 +157,10 @@ public class Animal : MonoBehaviourPun, IPunObservable
         if (isRun)
             return;
 
+        float search = onHit ? onHitSearchRadius : searchRadius;
+
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, searchRadius);
+        Gizmos.DrawWireSphere(transform.position, search);
 
         Gizmos.color = Color.green;
         Vector3 angleDir1 = transform.TransformDirection(new Vector3(Mathf.Sin(Mathf.Deg2Rad * searchAngle),

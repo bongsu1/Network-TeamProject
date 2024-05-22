@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 7540007816922948150}
   - component: {fileID: 4502852190442346535}
   - component: {fileID: -7210939602306849248}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Chicken
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33,8 +33,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 3, y: 3, z: 3}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 2896788619545818663}
   - {fileID: 462145139155148138}
@@ -129,6 +129,9 @@ MonoBehaviour:
     m_Bits: 536870920
   searchRadius: 3
   searchAngle: 150
+  onHitSearchRadius: 10
+  maxHP: 30
+  curHP: 0
   isRun: 0
 --- !u!114 &7540007816922948150
 MonoBehaviour:
