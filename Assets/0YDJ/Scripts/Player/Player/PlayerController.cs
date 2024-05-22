@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviourPun
     [SerializeField] Rigidbody rigid;
     [SerializeField] PlayerInput playerInput;
     [SerializeField] Animator animator;
+    [SerializeField] Huntting huntting;
     [Header("Chat")]
     [SerializeField] Chat chat;
     [Header("Stat")]
@@ -49,6 +50,9 @@ public class PlayerController : MonoBehaviourPun
 
     private void Turn()
     {
+        if (huntting.TargetIn())
+            return;
+
         Vector3 inputDir = transform.position + moveDir; // 입력하는 방향
         Vector3 nextDir;                                 // 바라볼 방향
         if (-transform.forward == moveDir) // 바라보는 방향과 입력방향이 반대일때는 방향이 바뀌지 않아서 추가

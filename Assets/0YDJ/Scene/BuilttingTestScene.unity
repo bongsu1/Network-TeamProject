@@ -942,6 +942,8 @@ GameObject:
   - component: {fileID: 1181218873}
   - component: {fileID: 1181218872}
   - component: {fileID: 1181218876}
+  - component: {fileID: 1181218878}
+  - component: {fileID: 1181218877}
   m_Layer: 31
   m_Name: Ground
   m_TagString: Untagged
@@ -1062,6 +1064,56 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1181218877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181218871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.06666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: d95b30908fa74474ba0894af3c1997b8, type: 2}
+  m_BuildHeightMesh: 0
+--- !u!114 &1181218878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1181218871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e3fdca004f2d45fe8abbed571a8abd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_OverrideArea: 0
+  m_Area: 0
+  m_OverrideGenerateLinks: 0
+  m_GenerateLinks: 0
+  m_IgnoreFromBuild: 0
+  m_ApplyToChildren: 1
+  m_AffectedAgents: ffffffff
 --- !u!1 &1196352002
 GameObject:
   m_ObjectHideFlags: 0
@@ -1814,11 +1866,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1624637778}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f7f36b4bc0d8274f9b662405a2fc25a, type: 3}
+  m_Script: {fileID: 11500000, guid: 6f5bef7d3871b5540935ad2621917939, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   debugRoomName: 1111
+  playerPrefab: {fileID: 1039569658315238891, guid: 04a484af2ba66a442b18fdf297e99f76,
+    type: 3}
   playerFollowCamera: {fileID: 1799211360}
+  highAngleCamera: {fileID: 0}
   isDebug: 0
 --- !u!1 &1644019185
 GameObject:
