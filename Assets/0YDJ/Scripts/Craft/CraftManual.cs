@@ -17,7 +17,7 @@ public class CraftManual : MonoBehaviourPun
     private bool isActivated = false;  // CraftManual UI 활성 상태
     private bool isPreviewActivated = false; // 미리 보기 활성화 상태
 
-
+    [SerializeField] PopUpUI InvenView;
     [SerializeField] GameObject go_BaseUI; // 기본 베이스 UI
 
 
@@ -81,6 +81,11 @@ public class CraftManual : MonoBehaviourPun
 
 
         if (Input.GetKeyDown(KeyCode.Tab) && !isPreviewActivated) //인벤토리 창 열기
+        {
+            Manager.UI.ShowPopUpUI(InvenView);
+        }
+
+        if (Input.GetKeyDown(KeyCode.B) && !isPreviewActivated) //인벤토리 창 열기
             Window();
 
         if (isPreviewActivated) // 프리뷰 상태 중 프리뷰 프리펩 계속 업데이트

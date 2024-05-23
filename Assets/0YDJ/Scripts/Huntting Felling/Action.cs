@@ -24,7 +24,7 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
     [SerializeField] LayerMask layerMask;
     [SerializeField] WeaponType holdingItem; // 1은 총, 2는 도끼
     public WeaponType HoldingItem { set { holdingItem = value; } }
-
+    [SerializeField] InventoryObject Eqiupment;
 
     [Header("holdObject")]
     [SerializeField] GameObject gun;
@@ -52,6 +52,8 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
 
         if (photonView.IsMine) // 조준
             SetItem();
+
+        Debug.Log(Eqiupment.Container.Items[3].item.weaponType);
     }
 
     private void OnDrawGizmos()
@@ -62,7 +64,7 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
 
     private void SetItem() // 들고 있는 아이템에 따라 맞는 함수 호출
     {
-        switch (holdingItem)
+        switch (Eqiupment.Container.Items[3].item.weaponType)
         {
             case WeaponType.Gun: //총
                 SetGun();
@@ -187,6 +189,7 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
     // 도끼 구역 *************************************************************************************************************************************************************************************
     private void SetAx() //도끼 조준
     {
+        Debug.Log("SetAx");
         photonView.RPC("SetAnimationParameter", RpcTarget.All, Parameter.SetBool, "AxIsSetReady", isSetReady);
 
         ax.SetActive(isSetReady);

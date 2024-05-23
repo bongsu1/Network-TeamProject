@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: YDJ_Inventory
   m_EditorClassIdentifier: 
   savePath: 
-  database: {fileID: 0}
+  database: {fileID: 11400000, guid: bf04c2fc18e932b47bba4df1e4837ea1, type: 2}
   Container:
     Items:
     - AllowedItems: 
@@ -21,143 +21,167 @@ MonoBehaviour:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
+      amount: 0
+    - AllowedItems: 02000000
+      item:
+        Name: 
+        Id: -1
+        buffs: []
+        weaponType: 0
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
-      amount: 0
-    - AllowedItems: 
-      item:
-        Name: 
-        Id: -1
-        buffs: []
+        weaponType: 0
       amount: 0
   dropItemPrefab: {fileID: 0}
