@@ -222,7 +222,7 @@ public class HSHPlayer : MonoBehaviourPun
     private bool isActivated = false;  // CraftManual UI 활성 상태
     private bool isPreviewActivated = false; // 미리 보기 활성화 상태
 
-    [SerializeField] GameObject go_BaseUI; // 기본 베이스 UI
+    [SerializeField] PopUpUI invenUI; // 기본 베이스 UI
 
     private GameObject go_Preview; // 미리 보기 프리팹을 담을 변수
     private GameObject go_Prefab; // 실제 생성될 프리팹을 담을 변수 
@@ -266,15 +266,18 @@ public class HSHPlayer : MonoBehaviourPun
             Pointer.y = hitInfo.transform.position.y + go_Preview.transform.localScale.y + (hitInfo.transform.localScale.y * 0.5f - 0.5f);
         }
     }
-    public void SlotClick(int _slotNumber) //슬럿 클릭시 프리뷰 프리펩 생성
+    public void SlotClick() //슬럿 클릭시 프리뷰 프리펩 생성
     {
+        GameObject go_preview = Manager.Build.go_preview;
+        GameObject go_prefab = Manager.Build.go_prefab;
         go_Preview = Manager.Build.go_preview;
         go_Prefab = Manager.Build.go_prefab;
+        Debug.Log($"00. {go_prefab}");
+        Debug.Log($"01. {go_preview}");
         isPreviewActivated = Manager.Build.isPreviewActivated;
-        Instantiate(go_Preview, Pointer, Quaternion.Euler(0, 0, 0));
+        Instantiate(go_preview, Pointer, Quaternion.Euler(0, 0, 0));
         go_Prefab = Manager.Build.go_prefab;
         isPreviewActivated = true;
-        go_BaseUI.SetActive(false);
     }
 
 
@@ -289,7 +292,7 @@ public class HSHPlayer : MonoBehaviourPun
         {
             go_Preview.transform.Rotate(0, 2f, 0);
         }
-
+        Debug.Log(go_Preview.name);
         go_Preview.transform.position = Pointer;
 
     }
@@ -325,13 +328,13 @@ public class HSHPlayer : MonoBehaviourPun
     private void OpenWindow()
     {
         isActivated = true;
-        go_BaseUI.SetActive(true);
+        Manager.UI.ShowPopUpUI(invenUI);
     }
 
     private void CloseWindow()
     {
         isActivated = false;
-        go_BaseUI.SetActive(false);
+        Manager.UI.ClosePopUpUI();
     }
 
     private void Cancel()
@@ -345,6 +348,6 @@ public class HSHPlayer : MonoBehaviourPun
         go_Preview = null;
         go_Prefab = null;
 
-        go_BaseUI.SetActive(false);
+        Manager.UI.ClosePopUpUI();
     }
 }

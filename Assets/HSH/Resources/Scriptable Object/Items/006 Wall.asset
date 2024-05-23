@@ -21,5 +21,7 @@ MonoBehaviour:
     Id: 6
     buffs: []
     weaponType: 0
-    go_prefab: {fileID: 0}
-    go_PreviewPrefab: {fileID: 0}
+    go_prefab: {fileID: 8412207588287068176, guid: b31848f5ab0911549bfd71d91365e7bc,
+      type: 3}
+    go_PreviewPrefab: {fileID: 8412207588287068176, guid: abca48fbd858b094980d656b77464f77,
+      type: 3}

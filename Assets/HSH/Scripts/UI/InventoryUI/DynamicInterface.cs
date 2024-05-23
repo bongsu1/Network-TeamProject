@@ -1,3 +1,4 @@
+using ExitGames.Client.Photon;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -40,9 +41,11 @@ public class DynamicInterface : UserInterface
         {
             Manager.Build.go_preview = Manager.Inven.database.Items[slotsOnInterface[obj].item.Id].data.go_PreviewPrefab;
             Manager.Build.go_prefab = Manager.Inven.database.Items[slotsOnInterface[obj].item.Id].data.go_prefab;
+            Debug.Log(Manager.Build.go_prefab);
+            Manager.Inven.HSHplayer.SlotClick();
             Manager.UI.ClosePopUpUI();
+            return;
         }
-
         else if (Manager.Inven.database.Items[slotsOnInterface[obj].item.Id].type == ItemType.Weapon)
         {
             for (int i = 0; i < equipment.Container.Items.Length; i++)

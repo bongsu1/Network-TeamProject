@@ -112,26 +112,31 @@ public abstract class UserInterface : MonoBehaviour
     //여기부터
     public void OnEnter(GameObject obj)
     {
+        Debug.Log("Onenter");
         MouseData.slotHoveredOver = obj;
     }
 
     public void OnExit(GameObject obj) // 마우스가 위치를 벗어나면 null 값으로 초기화 해주는 부분
     {
+        Debug.Log("Onenter");
         MouseData.slotHoveredOver = null;
 
     }
     // 실수로 파괴되는 일 없도록
     public void OnEnterInterface(GameObject obj)
     {
+        Debug.Log("Onenter");
         MouseData.interfaceMouseIsOver = obj.GetComponent<UserInterface>();
     }
     public void OnExitInterface(GameObject obj)
     {
+        Debug.Log("Onenter");
         MouseData.interfaceMouseIsOver = null;
     }
     // 이 위 두개 수식 추가, 각 인벤토리에 event trigger 추가
     public void OnDragStart(GameObject obj)
     {
+        Debug.Log("Onenter");
         MouseData.tempItemBeingDragged = CreateTempItem(obj);
     }
     public GameObject CreateTempItem(GameObject obj) // 
@@ -157,6 +162,7 @@ public abstract class UserInterface : MonoBehaviour
 
     public void OnDragEnd(GameObject obj)
     {
+        Debug.Log("Onenter");
         Destroy(MouseData.tempItemBeingDragged);
         if (MouseData.interfaceMouseIsOver == null)
         {
@@ -184,6 +190,7 @@ public abstract class UserInterface : MonoBehaviour
     }
     public void OnDrag(GameObject obj)
     {
+        Debug.Log("Onenter");
         if (MouseData.tempItemBeingDragged != null)
         {
             MouseData.tempItemBeingDragged.GetComponent<RectTransform>().position = Input.mousePosition;

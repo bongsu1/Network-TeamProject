@@ -54,146 +54,219 @@ MonoBehaviour:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
       item:
         Name: 
         Id: -1
         buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
       amount: 0
-  HSHplayer: {fileID: 0}
+  HSHplayer: {fileID: 2293612343811189131, guid: f3e0a16e1a8c52541abcfd1208f25a17,
+    type: 3}
   dropPosition: {x: 0, y: 0, z: 0}
   email: qwer24632@gmail.com
   pass: asdasd

@@ -6322,16 +6322,15 @@ MonoBehaviour:
   OnChangeWalking:
     m_PersistentCalls:
       m_Calls: []
-  InvenView: {fileID: 0}
-  go_BaseUI: {fileID: 0}
+  invenUI: {fileID: 6262705808033643312, guid: 012eea582164cec449d8715fc92ab5e6, type: 3}
   Pointer: {x: 0, y: 0, z: 0}
   GroundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2147483648
   IgnoreLayer:
     serializedVersion: 2
-    m_Bits: 0
-  range: 0
+    m_Bits: 1073741824
+  range: 1000
 --- !u!54 &6898931000670180689
 Rigidbody:
   m_ObjectHideFlags: 0
