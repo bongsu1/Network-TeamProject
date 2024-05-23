@@ -784,6 +784,7 @@ GameObject:
   - component: {fileID: -8866939236604534016}
   - component: {fileID: 5868642693686715482}
   - component: {fileID: 1297998311972322796}
+  - component: {fileID: 4753937972908912414}
   m_Layer: 29
   m_Name: YDJ_Player
   m_TagString: Untagged
@@ -1029,6 +1030,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   holdingItem: 2
+  Eqiupment: {fileID: 11400000, guid: 2b5bb1ec609809c4f912c4d035ecded9, type: 2}
   gun: {fileID: 1947625352534494409}
   ax: {fileID: 4337537868216749436}
 --- !u!114 &1297998311972322796
@@ -1044,6 +1046,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerDataController: {fileID: -8866939236604534016}
+--- !u!114 &4753937972908912414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1039569658315238891}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c44b996024a447a46a15cc6f096f7f29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interactRadius: 1
+  interactAngle: 90
+  inventory: {fileID: 11400000, guid: b39298cf4dc1d4240805c8cffeebe7e2, type: 2}
+  interactableLayer:
+    serializedVersion: 2
+    m_Bits: 268435456
+  select: 0
 --- !u!1 &1149018669013974627
 GameObject:
   m_ObjectHideFlags: 0

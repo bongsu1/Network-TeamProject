@@ -9,15 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 193171459f484b840bf5daa82208e308, type: 3}
-  m_Name: 000 Chainsaw
+  m_Script: {fileID: 11500000, guid: 10523cae29a59784796658cc8337afea, type: 3}
+  m_Name: YDJ_DataBase
   m_EditorClassIdentifier: 
-  uiDisplay: {fileID: 21300000, guid: e192d0276be844506b9177fc754b0372, type: 3}
-  stackable: 0
-  type: 2
-  description: Chainsaw
-  data:
-    Name: 
-    Id: 0
-    buffs: []
-    weaponType: 2
+  Items:
+  - {fileID: 11400000, guid: 614d99d7da2e3f34cb20eba578440fdd, type: 2}
