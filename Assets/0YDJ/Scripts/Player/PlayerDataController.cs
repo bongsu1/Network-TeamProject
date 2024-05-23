@@ -16,26 +16,18 @@ public class PlayerDataController : MonoBehaviourPun
 
     private void OnEnable()
     {
-        // test..
-        if (DebugDataManager.Instance != null)
+        // 내것이 아니면 UI도 생성하지 않고 삭제
+        if (photonView.IsMine)
         {
-            // 내것이 아니면 UI도 생성하지 않고 삭제
-            if (photonView.IsMine)
-            {
-                healthUI = Instantiate(healthUI);
-                OnChangeHealth.AddListener(healthUI.UpdateHealthBar);                // 생성하자 마자 이벤트에 추가
-                healthUI.UpdateHealthBar(DebugDataManager.Instance.RoomData.health); // 시작했을때 체력과 UI동기화
+            healthUI = Instantiate(healthUI);
+            OnChangeHealth.AddListener(healthUI.UpdateHealthBar);        // 생성하자 마자 이벤트에 추가
+            healthUI.UpdateHealthBar(Manager.Data.RoomData.health);      // 시작했을때 체력과 UI동기화
 
-                playerController.OnChangeWalking.AddListener(StartHealthConsumptionRoutine);
-                playerController.OnChangeWalking.AddListener(StopHealthConsumptionRoutine);
-            }
-            else
-                Destroy(this);
+            playerController.OnChangeWalking.AddListener(StartHealthConsumptionRoutine);
+            playerController.OnChangeWalking.AddListener(StopHealthConsumptionRoutine);
         }
         else
-        {
             Destroy(this);
-        }
     }
 
     private void OnDisable()
@@ -58,12 +50,12 @@ public class PlayerDataController : MonoBehaviourPun
     private void HealthConsumption() // TODO.. 로직을변경해야함 움직일때만 체력소모가 되도록
     {
         // 체력이 1칸 남았을때는 지속 소모 없음
-        if (DebugDataManager.Instance.RoomData.health < 10)
+        if (Manager.Data.RoomData.health < 10)
             return;
 
         // test.. 2씩 소모
-        DebugDataManager.Instance.RoomData.health -= 2;
-        OnChangeHealth.Invoke(DebugDataManager.Instance.RoomData.health);
+        Manager.Data.RoomData.health -= 2;
+        OnChangeHealth.Invoke(Manager.Data.RoomData.health);
     }
     #region HealthConsumptionRoutine
     Coroutine healthConsumptionRoutine;
@@ -106,31 +98,31 @@ public class PlayerDataController : MonoBehaviourPun
     // 체력 회복
     public void RecoveryHealth(int recovery)
     {
-        DebugDataManager.Instance.RoomData.health += recovery;
+        Manager.Data.RoomData.health += recovery;
 
         // 최대 체력을 넘으면 최대 체력으로
-        if (DebugDataManager.Instance.RoomData.health > 90)
-            DebugDataManager.Instance.RoomData.health = 90;
+        if (Manager.Data.RoomData.health > 90)
+            Manager.Data.RoomData.health = 90;
 
-        OnChangeHealth.Invoke(DebugDataManager.Instance.RoomData.health);
+        OnChangeHealth.Invoke(Manager.Data.RoomData.health);
     }
 
     // 데미지 받는 함수
     public void TakeDamage(int damage)
     {
-        DebugDataManager.Instance.RoomData.health -= damage;
+        Manager.Data.RoomData.health -= damage;
 
         // 체력이 0보다 작아지면 체력을 0으로
-        if (DebugDataManager.Instance.RoomData.health < 0)
-            DebugDataManager.Instance.RoomData.health = 0;
+        if (Manager.Data.RoomData.health < 0)
+            Manager.Data.RoomData.health = 0;
 
-        OnChangeHealth.Invoke(DebugDataManager.Instance.RoomData.health);
+        OnChangeHealth.Invoke(Manager.Data.RoomData.health);
     }
 
     // 플레이어 위치 데이터 저장
     private void PositionUpdate(Vector3 position)
     {
-        DebugDataManager.Instance.RoomData.position = position;
+        Manager.Data.RoomData.position = position;
     }
 
     // test.. 

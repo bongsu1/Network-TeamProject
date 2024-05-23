@@ -16,7 +16,7 @@ public class Chicken : Animal
         StartCoroutine(WaitMasterChangeRoutine());
     }
 
-    // 마스터가 바뀌면 닭들을 다시 리프레쉬 해준다, 마스터 클라에서만 스테이트머신이 돌아가고 있는 상태라서 해주는 작업
+    // 마스터가 바뀌면 닭을 다시 동작하게 해준다, 마스터 클라에서만 스테이트머신이 돌아가고 있는 상태라서 해주는 작업
     IEnumerator WaitMasterChangeRoutine()
     {
         yield return new WaitUntil(() => PhotonNetwork.IsMasterClient);
