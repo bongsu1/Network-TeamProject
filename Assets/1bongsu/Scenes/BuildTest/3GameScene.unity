@@ -1027,7 +1027,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BindingMode: 4
-  m_FollowOffset: {x: 0, y: 10, z: -10}
+  m_FollowOffset: {x: 0, y: 11, z: -9}
   m_XDamping: 0
   m_YDamping: 0
   m_ZDamping: 0
@@ -3759,6 +3759,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   chickenPrefab: {fileID: 72190140060450555, guid: 049a8014a9a3b284f8a31fd9a6a08647,
     type: 3}
+  count: 0
 --- !u!1001 &2122654587
 PrefabInstance:
   m_ObjectHideFlags: 0

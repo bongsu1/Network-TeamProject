@@ -2,6 +2,7 @@ using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class Animal : MonoBehaviourPun, IPunObservable, IDamageble
 {
@@ -34,6 +35,8 @@ public class Animal : MonoBehaviourPun, IPunObservable, IDamageble
     public Transform Target { get { return target; } set { target = value; } }
 
     protected bool isMaster; // stateMachine.CurState에 할당해주는 속도가 조금 늦어서 추가하는 조건
+
+    public UnityEvent OnDie;
 
     protected virtual void Awake()
     {
@@ -99,7 +102,7 @@ public class Animal : MonoBehaviourPun, IPunObservable, IDamageble
         while (true)
         {
             Search(searchRadius); // 기본 범위만 탐색
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(.5f);
         }
     }
 
@@ -143,11 +146,14 @@ public class Animal : MonoBehaviourPun, IPunObservable, IDamageble
         onHit = false;
     }
 
+    [ContextMenu("Die")]
     private void Die()
     {
         Destroy(gameObject);
         // 추가적인 것
         // 아이템 드랍
+        OnDie?.Invoke();
+        OnDie.RemoveAllListeners();
     }
 
     // test..

@@ -97,7 +97,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.2
-  m_Speed: 0.5
+  m_Speed: 1.5
   m_Acceleration: 50
   avoidancePriority: 50
   m_AngularSpeed: 500
@@ -132,6 +132,9 @@ MonoBehaviour:
   onHitSearchRadius: 10
   maxHP: 30
   curHP: 0
+  OnDie:
+    m_PersistentCalls:
+      m_Calls: []
   isRun: 0
 --- !u!114 &7540007816922948150
 MonoBehaviour:

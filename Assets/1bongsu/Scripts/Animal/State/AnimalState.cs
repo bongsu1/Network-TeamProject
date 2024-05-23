@@ -91,7 +91,7 @@ public class C_RoamState : AnimalState
         do
         {
             nextPoint = owner.transform.position +
-                new Vector3(Random.Range(-3f, 3f), owner.transform.position.y, Random.Range(-3f, 3f));
+                new Vector3(Random.Range(-5f, 5f), owner.transform.position.y, Random.Range(-5f, 5f));
 
             if (count++ == 2) // 두번 찾아도 안나오면 제자리
                 nextPoint = owner.transform.position;
@@ -147,9 +147,9 @@ public class C_RunState : AnimalState
 
         Vector3 toRunDir = (owner.transform.position - owner.Target.position); // 타겟으로 부터 반대방향으로 도망
         toRunDir = new Vector3(toRunDir.x, 0, toRunDir.z).normalized;
-        SetDestination(owner.transform.position + toRunDir * 4f);
+        SetDestination(owner.transform.position + toRunDir * 10f);
         originSpd = owner.Agent.speed;
-        owner.Agent.speed = 2f;
+        owner.Agent.speed = 4f;
     }
 
     public override void Transition()
