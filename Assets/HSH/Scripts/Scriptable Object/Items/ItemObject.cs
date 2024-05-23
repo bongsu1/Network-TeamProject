@@ -55,6 +55,7 @@ public class Item
         Name = itemobject.name;
         Id = itemobject.data.Id;
         buffs = new ItemBuff[itemobject.data.buffs.Length];
+        weaponType = itemobject.data.weaponType;
         for (int i = 0; i < buffs.Length; i++)
         {
             buffs[i] = new ItemBuff(itemobject.data.buffs[i].min, itemobject.data.buffs[i].max)
