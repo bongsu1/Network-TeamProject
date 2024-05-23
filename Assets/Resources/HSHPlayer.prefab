@@ -6451,6 +6451,9 @@ MonoBehaviour:
   playerInput: {fileID: 6047580820950230064}
   chatUI: {fileID: 3771608326580240896}
   chattingImage: {fileID: 7930179179198743940}
+  OnChatting:
+    m_PersistentCalls:
+      m_Calls: []
   OnGreeting:
     m_PersistentCalls:
       m_Calls: []

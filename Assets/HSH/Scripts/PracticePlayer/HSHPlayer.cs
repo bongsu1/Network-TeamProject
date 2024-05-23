@@ -127,6 +127,7 @@ public class HSHPlayer : MonoBehaviourPun
             Debug.Log("dropItem roomObject");
 
             object[] instantiationData = { id, name };
+            // Allbuffered로 해결 안되면 photonView.InstantiationData 
             // 룸 오브젝트 프리팹 인스턴스화
             GameObject roomObject = PhotonNetwork.InstantiateRoomObject("dropItemPrefab", transform.position, Quaternion.identity);
 
