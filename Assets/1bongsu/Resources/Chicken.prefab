@@ -199,7 +199,7 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: IsRoaming
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 1
     Name: IsRun
   m_SynchronizeLayers:
   - SynchronizeType: 1

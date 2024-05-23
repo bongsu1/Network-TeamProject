@@ -146,11 +146,9 @@ public class Animal : MonoBehaviourPun, IPunObservable, IDamageble
         onHit = false;
     }
 
-    [ContextMenu("Die")]
     private void Die()
     {
         Destroy(gameObject);
-        // 추가적인 것
         // 아이템 드랍
         OnDie?.Invoke();
         OnDie.RemoveAllListeners();
