@@ -2,6 +2,14 @@ using Photon.Pun;
 using UnityEngine;
 
 
+public enum WeaponType
+{
+    None,
+    Gun,
+    Ax,
+    Fishing,
+}
+
 public class Action : MonoBehaviourPun //총쏘기, 벌목
 {
     [Header("Component")]
@@ -14,7 +22,9 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
     [SerializeField] float gunRange;
     [SerializeField] float spinSpeed;
     [SerializeField] LayerMask layerMask;
-    [SerializeField] int holdingItem; // 1은 총, 2는 도끼
+    [SerializeField] WeaponType holdingItem; // 1은 총, 2는 도끼
+    public WeaponType HoldingItem { set { holdingItem = value; } }
+
 
     [Header("holdObject")]
     [SerializeField] GameObject gun;
@@ -22,6 +32,7 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
     private GameObject holdObject = null;
     private float lastFireTime = float.MinValue;
     private bool isSetReady;
+    private bool axFire;
     private Transform Target = null;
 
     private ObjectPool pool;
@@ -37,6 +48,8 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
 
     private void Update()
     {
+        isSetReady = Input.GetButton("Fire2");
+
         if (photonView.IsMine) // 조준
             SetItem();
     }
@@ -51,27 +64,40 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
     {
         switch (holdingItem)
         {
-            case 1:
+            case WeaponType.Gun: //총
                 SetGun();
                 if (isSetReady && Input.GetButton("Fire1")) // 총 발사
                     GunFire();
                 break;
 
-            case 2:
+            case WeaponType.Ax://도끼
                 SetAx();
-                if (isSetReady && Input.GetButtonDown("Fire1")) // 도끼 스윙
-                    AxFire();
                 break;
+
+            case WeaponType.Fishing:
+                break;
+
+            case WeaponType.None: // 나중에 장비 풀기 추가
+                break;
+
+                //case 1:
+                //    SetGun();
+                //    if (isSetReady && Input.GetButton("Fire1")) // 총 발사
+                //        GunFire();
+                //    break;
+
+                //case 2:
+                //    SetAx();
+                //    if (isSetReady && Input.GetButtonDown("Fire1")) // 도끼 스윙
+                //        AxFire();
+                //    break;
         }
     }
 
 
     // 총 구역 *************************************************************************************************************************************************************************************
-    private void SetGun()
+    private void SetGun() // 총 조준
     {
-        Debug.Log("총 조준");
-        isSetReady = Input.GetButton("Fire2");
-
         //photonView.RPC("GunChangeSetReadyAnimation", RpcTarget.All, isSetReady); // 애니메이션 작동
         photonView.RPC("SetAnimationParameter", RpcTarget.All, Parameter.SetBool, "GunIsSetReady", isSetReady);
 
@@ -91,14 +117,7 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
         }
     }
 
-    //[PunRPC]
-    //private void GunChangeSetReadyAnimation(bool isSetReady, PhotonMessageInfo info)
-    //{
-    //    animator.SetBool("GunIsSetReady", isSetReady);
-    //}
-
-
-    private void SearchEnemy()
+    private void SearchEnemy() // 제일 가까운 타켓 찾기
     {
         Collider[] targets = Physics.OverlapSphere(transform.position, gunRange, layerMask);
         Transform shortestTarget = null;
@@ -166,33 +185,28 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
 
 
     // 도끼 구역 *************************************************************************************************************************************************************************************
-    private void SetAx()
+    private void SetAx() //도끼 조준
     {
-        Debug.Log("도끼 조준");
-        isSetReady = Input.GetButton("Fire2");
-
-        //photonView.RPC("AxChangeSetReadyAnimation", RpcTarget.All, isSetReady); // 애니메이션 작동
         photonView.RPC("SetAnimationParameter", RpcTarget.All, Parameter.SetBool, "AxIsSetReady", isSetReady);
 
         ax.SetActive(isSetReady);
+
+        Target = null;
+
+        AxFire();
     }
 
-    //[PunRPC]
-    //private void AxChangeSetReadyAnimation(bool isSetReady, PhotonMessageInfo info)
-    //{
-    //    animator.SetBool("AxIsSetReady", isSetReady);
-    //}
 
     private void AxFire() // 도끼 스윙
     {
-        //animator.SetBool("AxIsSetReady", isSetReady);
-        photonView.RPC("SetAnimationParameter", RpcTarget.All, Parameter.SetBool, "AxSwing", isSetReady);
+        axFire = (isSetReady && Input.GetButton("Fire1"));
+
+        photonView.RPC("SetAnimationParameter", RpcTarget.All, Parameter.SetBool, "AxSwing", axFire);
     }
 
     //if (Time.time < lastFireTime + fireCoolTime) //쿨타임
     //    return;
     //lastFireTime = Time.time;
-
 }
 
 
