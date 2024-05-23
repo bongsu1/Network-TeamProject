@@ -25,7 +25,7 @@ public class InventoryObject : ScriptableObject/*, IPunObservable*/
             return false;
         }
         InventorySlot slot = FindItemOnInventory(_item);
-        if (!database.Items[_item.Id].stackable || slot == null) // 합치기 가능한지 여부 체크되있는지 확인하고
+        if (!database.Items[_item.Id].stackable || slot == null) // 합치기 가능한지 여부 체크되있는지 확인하고//
         {
             SetEmptySlot(_item, _amount);
             return true;

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
 
 public class DynamicInterface : UserInterface
 {
@@ -35,21 +36,35 @@ public class DynamicInterface : UserInterface
     }
     public void OnClickpointer(GameObject obj) // 인벤토리 슬롯 클릭 시 ID 같은 칸 찾아서 장비칸에 자동 장착
     {
-        for( int i = 0; i < equipment.Container.Items.Length;i++)
+        if (Manager.Inven.database.Items[slotsOnInterface[obj].item.Id].type == ItemType.Build)
         {
-            for (int j = 0; j < equipment.Container.Items[i].AllowedItems.Length; j++)
+            Manager.Build.go_preview = Manager.Inven.database.Items[slotsOnInterface[obj].item.Id].data.go_PreviewPrefab;
+            Manager.Build.go_prefab = Manager.Inven.database.Items[slotsOnInterface[obj].item.Id].data.go_prefab;
+            Manager.UI.ClosePopUpUI();
+        }
+
+        else if (Manager.Inven.database.Items[slotsOnInterface[obj].item.Id].type == ItemType.Weapon)
+        {
+            for (int i = 0; i < equipment.Container.Items.Length; i++)
             {
-                if ( Manager.Inven.database.Items[slotsOnInterface[obj].item.Id].type != equipment.Container.Items[i].AllowedItems[j])
+                for (int j = 0; j < equipment.Container.Items[i].AllowedItems.Length; j++)
                 {
-                    continue;
+                    if (Manager.Inven.database.Items[slotsOnInterface[obj].item.Id].type != equipment.Container.Items[i].AllowedItems[j])
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        inventory.SwapItems(slotsOnInterface[obj], equipment.Container.Items[i]);
+                        return;
+                    }
                 }
-                else
-                {
-                    inventory.SwapItems(slotsOnInterface[obj], equipment.Container.Items[i]);
-                    return;
-                }
+
             }
-            
+        }
+        else
+        {
+            return;
         }
     }
     public Vector3 GetPositon(int i) // 인벤토리 슬롯 위치 잡는 부분
