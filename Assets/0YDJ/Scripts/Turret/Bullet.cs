@@ -24,13 +24,13 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 3 || other.gameObject.layer == 29) // 플레이어 레이어에 닿았다
+        if (other.gameObject.layer == 28 ||  other.gameObject.layer == 3 || other.gameObject.layer == 29) // 나무, 플레이어 , 닭
         {
             IDamageble damageble = other.gameObject.GetComponent<IDamageble>();
             if (damageble != null) // 데미지 인터페이스가 있다면 데미지 함수 실행
             {
-                Debug.Log($" 총 {other.name}맞음");
-                damageble.Damaged(1);
+                Debug.Log($" 총알에 {other.name} 맞음");
+                damageble.Damaged(3);
             }
             //damageble?.Damaged(1); // 이렇게 쓸 수도 있다
             poolObject.Release();

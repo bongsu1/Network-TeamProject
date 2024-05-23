@@ -48,6 +48,8 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
 
     private void Update()
     {
+        isSetReady = Input.GetButton("Fire2");
+
         if (photonView.IsMine) // 조준
             SetItem();
     }
@@ -62,19 +64,14 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
     {
         switch (holdingItem)
         {
-            case WeaponType.Gun:
+            case WeaponType.Gun: //총
                 SetGun();
                 if (isSetReady && Input.GetButton("Fire1")) // 총 발사
                     GunFire();
                 break;
 
-            case WeaponType.Ax:
+            case WeaponType.Ax://도끼
                 SetAx();
-                if (isSetReady && Input.GetButtonDown("Fire1")) // 도끼 스윙
-                {
-                    AxFire();
-                }
-
                 break;
 
             case WeaponType.Fishing:
@@ -99,11 +96,8 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
 
 
     // 총 구역 *************************************************************************************************************************************************************************************
-    private void SetGun()
+    private void SetGun() // 총 조준
     {
-        Debug.Log("총 조준");
-        isSetReady = Input.GetButton("Fire2");
-
         //photonView.RPC("GunChangeSetReadyAnimation", RpcTarget.All, isSetReady); // 애니메이션 작동
         photonView.RPC("SetAnimationParameter", RpcTarget.All, Parameter.SetBool, "GunIsSetReady", isSetReady);
 
@@ -123,16 +117,8 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
         }
     }
 
-    //[PunRPC]
-    //private void GunChangeSetReadyAnimation(bool isSetReady, PhotonMessageInfo info)
-    //{
-    //    animator.SetBool("GunIsSetReady", isSetReady);
-    //}
-
-
     private void SearchEnemy() // 제일 가까운 타켓 찾기
     {
-        Debug.Log("SearchEnemy");
         Collider[] targets = Physics.OverlapSphere(transform.position, gunRange, layerMask);
         Transform shortestTarget = null;
 
@@ -199,36 +185,28 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
 
 
     // 도끼 구역 *************************************************************************************************************************************************************************************
-    private void SetAx()
+    private void SetAx() //도끼 조준
     {
-        Debug.Log("도끼 조준");
-        isSetReady = Input.GetButton("Fire2");
-
-        //photonView.RPC("AxChangeSetReadyAnimation", RpcTarget.All, isSetReady); // 애니메이션 작동
         photonView.RPC("SetAnimationParameter", RpcTarget.All, Parameter.SetBool, "AxIsSetReady", isSetReady);
 
         ax.SetActive(isSetReady);
 
         Target = null;
+
+        AxFire();
     }
 
-    //[PunRPC]
-    //private void AxChangeSetReadyAnimation(bool isSetReady, PhotonMessageInfo info)
-    //{
-    //    animator.SetBool("AxIsSetReady", isSetReady);
-    //}
 
     private void AxFire() // 도끼 스윙
     {
-        Debug.Log("AxFire");
-        axFire = (isSetReady && Input.GetButtonDown("Fire1"));
-            photonView.RPC("SetAnimationParameter", RpcTarget.All, Parameter.SetTrigger, "AxSwing", axFire);
+        axFire = (isSetReady && Input.GetButton("Fire1"));
+
+        photonView.RPC("SetAnimationParameter", RpcTarget.All, Parameter.SetBool, "AxSwing", axFire);
     }
 
     //if (Time.time < lastFireTime + fireCoolTime) //쿨타임
     //    return;
     //lastFireTime = Time.time;
-
 }
 
 
