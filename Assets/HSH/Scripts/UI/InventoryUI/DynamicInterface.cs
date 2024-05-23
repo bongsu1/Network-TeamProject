@@ -17,7 +17,7 @@ public class DynamicInterface : UserInterface
     public override void CreateSlots()
     {
         Debug.Log("dynamic createslots");
-        slotsOnInterface = new Dictionary<GameObject, InventorySlot>(); // 굳이 게임오브젝트일 이유가 있었나? 스크립터블 오브젝트라서?
+        slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
         for (int i = 0; i < inventory.Container.Items.Length; i++)
         {
             var obj = Instantiate(inventoryPrefab, Vector3.zero, Quaternion.identity, transform);
@@ -33,7 +33,7 @@ public class DynamicInterface : UserInterface
             slotsOnInterface.Add(obj, inventory.Container.Items[i]);
         }
     }
-    public void OnClickpointer(GameObject obj)
+    public void OnClickpointer(GameObject obj) // 인벤토리 슬롯 클릭 시 ID 같은 칸 찾아서 장비칸에 자동 장착
     {
         for( int i = 0; i < equipment.Container.Items.Length;i++)
         {

@@ -244,7 +244,6 @@ public class Inventory
     public InventorySlot[] Items = new InventorySlot[24];
     public void Clear()
     {
-        Debug.Log("이거구나");
         for (int i = 0; i < Items.Length; i++)
         {
             Items[i].RemoveItem();
