@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 public class DynamicInterface : UserInterface
 {
     public GameObject inventoryPrefab;
+    public InventoryObject equipment;
 
     public int X_START;
     public int Y_START;
@@ -27,13 +28,29 @@ public class DynamicInterface : UserInterface
             AddEvent(obj, EventTriggerType.BeginDrag, delegate { OnDragStart(obj); });
             AddEvent(obj, EventTriggerType.EndDrag, delegate { OnDragEnd(obj); });
             AddEvent(obj, EventTriggerType.Drag, delegate { OnDrag(obj); });
+            AddEvent(obj, EventTriggerType.PointerClick, delegate { OnClickpointer(obj); });
 
             slotsOnInterface.Add(obj, inventory.Container.Items[i]);
         }
     }
-    public void OnClickpointer()
+    public void OnClickpointer(GameObject obj)
     {
-        Debug.Log("mouse Onclick");
+        for( int i = 0; i < equipment.Container.Items.Length;i++)
+        {
+            for (int j = 0; j < equipment.Container.Items[i].AllowedItems.Length; j++)
+            {
+                if ( Manager.Inven.database.Items[slotsOnInterface[obj].item.Id].type != equipment.Container.Items[i].AllowedItems[j])
+                {
+                    continue;
+                }
+                else
+                {
+                    inventory.SwapItems(slotsOnInterface[obj], equipment.Container.Items[i]);
+                    return;
+                }
+            }
+            
+        }
     }
     public Vector3 GetPositon(int i) // 인벤토리 슬롯 위치 잡는 부분
     {
