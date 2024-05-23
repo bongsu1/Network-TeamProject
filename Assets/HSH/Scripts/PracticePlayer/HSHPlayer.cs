@@ -275,8 +275,8 @@ public class HSHPlayer : MonoBehaviourPun
         Debug.Log($"00. {go_prefab}");
         Debug.Log($"01. {go_preview}");
         isPreviewActivated = Manager.Build.isPreviewActivated;
-        Instantiate(go_preview, Pointer, Quaternion.Euler(0, 0, 0));
-        go_Prefab = Manager.Build.go_prefab;
+        go_Preview = Instantiate(go_Preview, Pointer, Quaternion.Euler(0, 0, 0));
+        //go_Prefab = Manager.Build.go_prefab;
         isPreviewActivated = true;
     }
 
