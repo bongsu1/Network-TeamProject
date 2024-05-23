@@ -1,21 +1,19 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class InventoryScene : BaseScene
 {
-    [SerializeField] PopUpUI InventoryUI;
-    [SerializeField] PopUpUI EquipmentUI;
+    [SerializeField] PopUpUI InventoryUIViewer;
     public override IEnumerator LoadingRoutine()
     {
         yield return null;
     }
-
-    public void TurnOnInventory()
+    private void Update()
     {
-        Manager.UI.ShowPopUpUI(InventoryUI);
-    }
-    public void TurnOnEquipMent()
-    {
-        Manager.UI.ShowPopUpUI(EquipmentUI);
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            Manager.UI.ShowPopUpUI(InventoryUIViewer);
+        }
     }
 }
