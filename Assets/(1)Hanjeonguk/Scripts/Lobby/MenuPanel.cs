@@ -3,8 +3,6 @@ using Firebase.Database;
 using Firebase.Extensions;
 using Photon.Pun;
 using Photon.Realtime;
-using System.Collections;
-using System.Security.Cryptography;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,9 +22,9 @@ public class MenuPanel : MonoBehaviour
     [SerializeField] Button quitButton;
 
     [SerializeField] FirebaseUser currentUser;
-    [SerializeField] GameObject LoginErrorPanel;
+
     [SerializeField] GameObject OptionsCanvas;
-    [SerializeField] Button downButton;
+
 
     private void Awake()
     {
@@ -37,25 +35,20 @@ public class MenuPanel : MonoBehaviour
 
         inputFieldTabMrg = new InputFieldTabManager();
         inputFieldTabMrg.Add(nickNameInputField);
-        downButton.onClick.AddListener(DownButton);
+
     }
     private void Start()
     {
         inputFieldTabMrg.SetFocus();
-
     }
 
-    private void OnEnable()
-    {
-        StartCoroutine(ValueChangedDelay());
-    }
     public void QuickStart()
     {
         NickNameCheck();
 
         string name = $"새로운 섬 {Random.Range(1, 1000)}";
         RoomOptions options = new RoomOptions();
-        
+
 
         ExitGames.Client.Photon.Hashtable table = new ExitGames.Client.Photon.Hashtable();
         table.Add("roomName", name);
@@ -105,82 +98,25 @@ public class MenuPanel : MonoBehaviour
 
                 if (snapShot.Exists) //닉네임 있을 때 기존 닉네임 사용
                 {
-                    Debug.Log("1");
                     json = snapShot.Value.ToString();
 
 
                     if (json == "") //닉네임 있지만 공란일 때 랜덤 닉네임 사용
                     {
-                        Debug.Log("3");
-                        nickNameInputField.text = ($"마을사람{Random.Range(1, 10000)}");
+                        nickNameInputField.text = ($"섬 주민{Random.Range(1, 10000)}");
                         userPanel.ChangeNickName();
+                    }
+                    else
+                    {
+                        nickNameInputField.text = json;
                     }
                 }
 
                 else  //닉네임 없을 때 랜덤 닉네임 사용
                 {
-                    Debug.Log("2");
-                    nickNameInputField.text = ($"마을사람{Random.Range(1, 10000)}");
+                    nickNameInputField.text = ($"섬 주민{Random.Range(1, 10000)}");
                     userPanel.ChangeNickName();
                 }
-
-                
-
-               
-
-                nickNameInputField.text = json;
-
             });
-    }
-
-    private void LoginCheck(object sender, ValueChangedEventArgs args) //같은 아이디 로그인 체크
-    {
-
-        FirebaseManager.DB 
-                .GetReference("UserData")
-                .Child(FirebaseManager.Auth.CurrentUser.UserId)
-                .Child("isLogin")
-                .GetValueAsync()
-                .ContinueWithOnMainThread(task =>
-                {
-                    if (task.IsCanceled || task.IsFaulted)
-                    {
-                        Debug.Log("Get userdata canceled");
-                        return;
-                    }
-
-                    DataSnapshot snapShot = task.Result;
-
-                    bool json = (bool)snapShot.Value;
-
-                    if (json == false) 
-                    {
-                        LoginErrorPanel.SetActive(true);
-                    }
-                });
-    }
-    
-    IEnumerator ValueChangedDelay() 
-    {
-        yield return new WaitForSeconds(1f);
-
-        FirebaseManager.DB
-           .GetReference("UserData")
-           .Child(FirebaseManager.Auth.CurrentUser.UserId)
-           .OrderByChild("isLogin")
-           .ValueChanged += LoginCheck;
-
-        FirebaseManager.DB
-                        .GetReference("UserData")
-                        .Child(FirebaseManager.Auth.CurrentUser.UserId)
-                        .Child("isLogin")
-                        .SetValueAsync(true);
-    }
-
-    public void DownButton()
-    {
-        LoginErrorPanel.SetActive(false);
-        FirebaseManager.Auth.SignOut();
-        PhotonNetwork.LoadLevel("AuthScene");
     }
 }

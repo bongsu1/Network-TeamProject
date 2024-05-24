@@ -57,7 +57,6 @@ public class LoginPanel : MonoBehaviour
 
         FirebaseManager.Auth.SignInWithEmailAndPasswordAsync(email, pass).ContinueWithOnMainThread(task =>
         {
-            Debug.Log("SignInWithEmailAndPasswordAsync 통과 ");
 
             if (task.IsCanceled) 
             {
@@ -82,12 +81,17 @@ public class LoginPanel : MonoBehaviour
                 .ContinueWithOnMainThread(task =>
                 {
 
-                    if (task.IsCanceled || task.IsFaulted)
+                    if (task.IsCanceled)
                     {
                         Debug.Log("Get userdata canceled");
                         return;
                     }
-                    
+                    else if (task.IsFaulted)
+                    {
+                        Debug.Log($"Get userdata failed : {task.Exception.Message}");
+                        return;
+                    }
+
                     DataSnapshot snapShot = task.Result;
 
                     bool json = false;
@@ -160,7 +164,10 @@ public class LoginPanel : MonoBehaviour
                          .Child("isLogin")
                          .SetValueAsync(true);
 
-        PhotonNetwork.LoadLevel("LobbyScene");
-    }
+        yield return new WaitForSeconds(0.5f);
 
+       // PanelManager.Instance.ValueChangeCheck();
+
+        PhotonNetwork.LoadLevel("LobbyScene"); 
+    }
 }
