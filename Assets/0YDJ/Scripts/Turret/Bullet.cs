@@ -5,6 +5,7 @@ public class Bullet : MonoBehaviour
     [SerializeField] PooledObject poolObject;
     [SerializeField] string poolItemName = "Bullet";//오브젝트 풀에 저장된 bullet 오브젝트의 이름
     [SerializeField] float moveSpeed = 10f;//총알의 이동 속도
+    [SerializeField] LayerMask BulletTarget;
 
     private Rigidbody rigid;
     private ObjectPool pool;
@@ -14,7 +15,6 @@ public class Bullet : MonoBehaviour
     private void Awake()
     {
         rigid = GetComponent<Rigidbody>();
-
     }
 
     void Update()
@@ -24,7 +24,7 @@ public class Bullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == 28 ||  other.gameObject.layer == 3 || other.gameObject.layer == 29) // 나무, 플레이어 , 닭
+        if (BulletTarget.Contain(other.gameObject.layer)) // 나무, 플레이어 , 닭
         {
             IDamageble damageble = other.gameObject.GetComponent<IDamageble>();
             if (damageble != null) // 데미지 인터페이스가 있다면 데미지 함수 실행

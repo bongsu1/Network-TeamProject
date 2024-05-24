@@ -9,6 +9,9 @@ public class PooledObject : MonoBehaviour
     private ObjectPool pool;
     public ObjectPool Pool { get { return pool; } set { pool = value; } }
 
+    private Rigidbody rigid;
+    public Vector3 Velocity { get { return rigid.velocity; } set { rigid.velocity = value; } }
+
     private void OnEnable()
     {
         if (autoRelease)

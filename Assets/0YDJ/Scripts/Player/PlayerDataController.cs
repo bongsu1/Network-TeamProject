@@ -11,7 +11,7 @@ public class PlayerDataController : MonoBehaviourPun
     [SerializeField] HealthUI healthUI;
     [Header("Player")]
     //[SerializeField] PlayerController playerController; // 플레이어가 걷는지 확인용
-    [SerializeField] HSHPlayer hSHPlayer; // 플레이어가 걷는지 확인용
+    [SerializeField] PlayerController hSHPlayer; // 플레이어가 걷는지 확인용
 
     public UnityEvent<int> OnChangeHealth; // 체력이 바뀔때 보내려는 이벤트
 

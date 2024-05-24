@@ -1,10 +1,9 @@
 using Photon.Pun;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public class HSHPlayer : MonoBehaviourPun
+public class PlayerController : MonoBehaviourPun
 {
     [Header("Componet")]
     [SerializeField] Rigidbody rigid;
@@ -105,6 +104,9 @@ public class HSHPlayer : MonoBehaviourPun
 
     private void Turn()
     {
+        if (action.TargetIn())
+            return;
+
         Vector3 inputDir = transform.position + moveDir; // 입력하는 방향
         Vector3 nextDir;                                 // 바라볼 방향
         if (-transform.forward == moveDir) // 바라보는 방향과 입력방향이 반대일때는 방향이 바뀌지 않아서 추가
@@ -184,7 +186,6 @@ public class HSHPlayer : MonoBehaviourPun
     {
         Debug.Log($"004. {id}");
         Debug.Log($"005. {name}");
-
     }
 
 
@@ -242,9 +243,7 @@ public class HSHPlayer : MonoBehaviourPun
 
     private RaycastHit hitInfo;
 
-    [SerializeField] LayerMask GroundLayer;
-
-    [SerializeField] LayerMask IgnoreLayer;
+    [SerializeField] LayerMask ableLayer;
 
     [SerializeField] float range;
 
@@ -254,27 +253,42 @@ public class HSHPlayer : MonoBehaviourPun
     private void PointerPosition()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //카메라에서 레이 쏘기
-        if (Physics.Raycast(ray, out hitInfo, range, IgnoreLayer | GroundLayer)) //레이캐스트로 그라운드 체크(range로 범위 조정 가능)                      
+        if (Physics.Raycast(ray, out hitInfo, range, ableLayer)) //레이캐스트로 그라운드 체크(range로 범위 조정 가능)                      
         {
             Pointer = hitInfo.point;
 
             if (hitInfo.transform.gameObject.layer == 31) // 바닥에 둘 때 오차 보정
             {
-                Pointer.y = hitInfo.transform.position.y + go_Preview.transform.localScale.y - 0.5f;
+                Pointer.y = hitInfo.transform.position.y;
+                return;
+            }
+            else
+            {
+                Pointer.y = hitInfo.transform.position.y + go_Preview.transform.localScale.y;
                 return;
             }
 
-            if (go_Preview.transform.localScale.y > 1) // 두 칸 이상 전용
-            {
-                if (hitInfo.transform.localScale.y > 1) // 두 칸 이상이 두 칸 이상 위에 쌓을 때
-                {
-                    Pointer.y = hitInfo.transform.position.y + go_Preview.transform.localScale.y;
-                    return;
-                }
-                Pointer.y = hitInfo.transform.position.y + go_Preview.transform.localScale.y - (go_Preview.transform.localScale.y * 0.5f - 0.5f);  // 두 칸이 땅에 닿을 때 -0.5f
-                return;
-            }
-            Pointer.y = hitInfo.transform.position.y + go_Preview.transform.localScale.y + (hitInfo.transform.localScale.y * 0.5f - 0.5f);
+            Debug.Log($"hitInfo.transform.position.y : {hitInfo.transform.position.y} , go_Preview.transform.localScale.y : {go_Preview.transform.localScale.y}");
+            //if (hitInfo.transform.gameObject.layer == 31) // 바닥에 둘 때 오차 보정
+            //{
+            //    Pointer.y = hitInfo.transform.position.y + go_Preview.transform.localScale.y - 0.5f;
+            //    return;
+            //}
+
+            //if (go_Preview.transform.localScale.y > 1) // 두 칸 이상 전용
+            //{
+            //    if (hitInfo.transform.localScale.y > 1) // 두 칸 이상이 두 칸 이상 위에 쌓을 때
+            //    {
+            //        Pointer.y = hitInfo.transform.position.y + go_Preview.transform.localScale.y;
+            //        return;
+            //    }
+            //    Pointer.y = hitInfo.transform.position.y + go_Preview.transform.localScale.y - (go_Preview.transform.localScale.y * 0.5f - 0.5f);  // 두 칸이 땅에 닿을 때 -0.5f
+            //    return;
+            //}
+            //Pointer.y = hitInfo.transform.position.y + go_Preview.transform.localScale.y + (hitInfo.transform.localScale.y * 0.5f - 0.5f);
+
+            //Pointer.y = hitInfo.transform.position.y + go_Preview.transform.localScale.y;
+
         }
     }
     public void SlotClick(InventorySlot Slot) //슬럿 클릭시 프리뷰 프리펩 생성

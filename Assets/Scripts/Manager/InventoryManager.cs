@@ -14,7 +14,7 @@ public class InventoryManager : Singleton<InventoryManager>
     //[SerializeField] StaticInterface equipment;
     [Header("Drop")]
     //[SerializeField] public PracticePlayer player;
-    [SerializeField] public HSHPlayer HSHplayer;
+    [SerializeField] public PlayerController HSHplayer;
     [SerializeField] public Vector3 dropPosition;
 
     [Header("Auth")]
