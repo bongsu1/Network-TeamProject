@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,10 +31,12 @@ public class InventoryUIViewer : PopUpUI
     }
     public void TurnOnInventory()
     {
+        Manager.UI.ClosePopUpUI();
         Manager.UI.ShowPopUpUI(InventoryViewer);
     }
     public void TurnOnEquipMent()
     {
+        Manager.UI.ClosePopUpUI();
         Manager.UI.ShowPopUpUI(EquipmentViewer);
     }
 }

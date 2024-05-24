@@ -1287,7 +1287,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa83fabf547d237468647c1263bc77fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugRoomName: room3345
+  debugRoomName: room2211
   playerFollowCamera: {fileID: 1230969697}
   highAngleCamera: {fileID: 95066400}
   isDebug: 0

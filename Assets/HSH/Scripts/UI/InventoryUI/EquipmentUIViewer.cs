@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EquipmentUIViewer : PopUpUI
@@ -8,10 +6,12 @@ public class EquipmentUIViewer : PopUpUI
     [SerializeField] PopUpUI EquipmentViewer;
     public void TurnOnInventory()
     {
+        Manager.UI.ClosePopUpUI();
         Manager.UI.ShowPopUpUI(InventoryViewer);
     }
     public void TurnOnEquipMent()
     {
+        Manager.UI.ClosePopUpUI();
         Manager.UI.ShowPopUpUI(EquipmentViewer);
     }
 }

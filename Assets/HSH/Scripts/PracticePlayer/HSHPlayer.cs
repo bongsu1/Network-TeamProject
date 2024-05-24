@@ -49,7 +49,7 @@ public class HSHPlayer : MonoBehaviourPun
         Turn();
         if (Input.GetKeyDown(KeyCode.B))
         {
-            Manager.UI.ShowPopUpUI(InventoryUIViewer);
+            Window();
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
@@ -337,7 +337,7 @@ public class HSHPlayer : MonoBehaviourPun
     private void OpenWindow()
     {
         isActivated = true;
-        Manager.UI.ShowPopUpUI(invenUI);
+        Manager.UI.ShowPopUpUI(InventoryUIViewer);
     }
 
     private void CloseWindow()
