@@ -17,6 +17,7 @@ public class HSHPlayer : MonoBehaviourPun
     [Header("Inventory")]
     [SerializeField] InventoryObject inventory;
     [SerializeField] InventoryObject equipment;
+    [SerializeField] PopUpUI InventoryUIViewer;
 
     private Vector3 moveDir; // 입력받는 방향
     private bool isWalking; // 애니메이션 작동 변수
@@ -45,7 +46,10 @@ public class HSHPlayer : MonoBehaviourPun
     private void Update()
     {
         Turn();
-
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            Manager.UI.ShowPopUpUI(InventoryUIViewer);
+        }
         if (Input.GetKeyDown(KeyCode.I))
         {
             Debug.Log("Save");
@@ -348,6 +352,6 @@ public class HSHPlayer : MonoBehaviourPun
         go_Preview = null;
         go_Prefab = null;
 
-        Manager.UI.ClosePopUpUI();
+        //Manager.UI.ClosePopUpUI();
     }
 }

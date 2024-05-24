@@ -6319,6 +6319,8 @@ MonoBehaviour:
   moveSpeed: 4
   inventory: {fileID: 11400000, guid: 073066803168bf84ca271e5d2cfd98d6, type: 2}
   equipment: {fileID: 11400000, guid: d6c623f3adeed934bb315cd88cf5b86e, type: 2}
+  InventoryUIViewer: {fileID: 6262705808033643312, guid: 012eea582164cec449d8715fc92ab5e6,
+    type: 3}
   OnChangeWalking:
     m_PersistentCalls:
       m_Calls: []

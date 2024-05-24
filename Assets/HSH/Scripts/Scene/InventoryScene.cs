@@ -9,11 +9,11 @@ public class InventoryScene : BaseScene
     {
         yield return null;
     }
-    private void Update()
+    /*private void Update()
     {
         if (Input.GetKeyDown(KeyCode.B))
         {
             Manager.UI.ShowPopUpUI(InventoryUIViewer);
         }
-    }
+    }*/
 }
