@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 7041138633696791928}
   - component: {fileID: 1380052822520109696}
   - component: {fileID: 2975726639179322048}
-  m_Layer: 15
+  m_Layer: 28
   m_Name: dropItemPrefab
   m_TagString: Item
   m_Icon: {fileID: 0}

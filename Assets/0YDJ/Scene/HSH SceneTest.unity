@@ -320,6 +320,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: dropItemPrefab (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 3827633198487540712, guid: af6e48d3bd7098049b448c15386d301b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 28
+      objectReference: {fileID: 0}
     - target: {fileID: 7031544756977351957, guid: af6e48d3bd7098049b448c15386d301b,
         type: 3}
       propertyPath: sceneViewId
@@ -333,7 +338,7 @@ PrefabInstance:
     - target: {fileID: 7257856296045194535, guid: af6e48d3bd7098049b448c15386d301b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7257856296045194535, guid: af6e48d3bd7098049b448c15386d301b,
         type: 3}
@@ -561,6 +566,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: dropItemPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 3827633198487540712, guid: af6e48d3bd7098049b448c15386d301b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 28
+      objectReference: {fileID: 0}
     - target: {fileID: 7031544756977351957, guid: af6e48d3bd7098049b448c15386d301b,
         type: 3}
       propertyPath: sceneViewId
@@ -574,7 +584,7 @@ PrefabInstance:
     - target: {fileID: 7257856296045194535, guid: af6e48d3bd7098049b448c15386d301b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7257856296045194535, guid: af6e48d3bd7098049b448c15386d301b,
         type: 3}
@@ -640,6 +650,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: dropItemPrefab (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3827633198487540712, guid: af6e48d3bd7098049b448c15386d301b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 28
+      objectReference: {fileID: 0}
     - target: {fileID: 7031544756977351957, guid: af6e48d3bd7098049b448c15386d301b,
         type: 3}
       propertyPath: sceneViewId
@@ -653,7 +668,7 @@ PrefabInstance:
     - target: {fileID: 7257856296045194535, guid: af6e48d3bd7098049b448c15386d301b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7257856296045194535, guid: af6e48d3bd7098049b448c15386d301b,
         type: 3}
@@ -1305,8 +1320,8 @@ MonoBehaviour:
   debugRoomName: 2222
   playerFollowCamera: {fileID: 1230969697}
   highAngleCamera: {fileID: 95066400}
-  email: 
-  pass: 
+  email: rlaqhdtn22@gmail.com
+  pass: qwe123
   isDebug: 0
 --- !u!1001 &1346430772
 PrefabInstance:
@@ -1327,6 +1342,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: dropItemPrefab (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 3827633198487540712, guid: af6e48d3bd7098049b448c15386d301b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 28
+      objectReference: {fileID: 0}
     - target: {fileID: 7031544756977351957, guid: af6e48d3bd7098049b448c15386d301b,
         type: 3}
       propertyPath: sceneViewId
@@ -1340,7 +1360,7 @@ PrefabInstance:
     - target: {fileID: 7257856296045194535, guid: af6e48d3bd7098049b448c15386d301b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7257856296045194535, guid: af6e48d3bd7098049b448c15386d301b,
         type: 3}
@@ -1578,6 +1598,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: dropItemPrefab (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 3827633198487540712, guid: af6e48d3bd7098049b448c15386d301b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 28
+      objectReference: {fileID: 0}
     - target: {fileID: 7031544756977351957, guid: af6e48d3bd7098049b448c15386d301b,
         type: 3}
       propertyPath: sceneViewId
@@ -1591,7 +1616,7 @@ PrefabInstance:
     - target: {fileID: 7257856296045194535, guid: af6e48d3bd7098049b448c15386d301b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7257856296045194535, guid: af6e48d3bd7098049b448c15386d301b,
         type: 3}
@@ -1657,6 +1682,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: dropItemPrefab (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3827633198487540712, guid: af6e48d3bd7098049b448c15386d301b,
+        type: 3}
+      propertyPath: m_Layer
+      value: 28
+      objectReference: {fileID: 0}
     - target: {fileID: 7031544756977351957, guid: af6e48d3bd7098049b448c15386d301b,
         type: 3}
       propertyPath: sceneViewId
@@ -1670,7 +1700,7 @@ PrefabInstance:
     - target: {fileID: 7257856296045194535, guid: af6e48d3bd7098049b448c15386d301b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7257856296045194535, guid: af6e48d3bd7098049b448c15386d301b,
         type: 3}

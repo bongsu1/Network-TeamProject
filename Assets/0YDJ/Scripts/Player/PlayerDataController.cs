@@ -24,16 +24,12 @@ public class PlayerDataController : MonoBehaviourPun
             OnChangeHealth.AddListener(healthUI.UpdateHealthBar);        // 생성하자 마자 이벤트에 추가
             healthUI.UpdateHealthBar(Manager.Data.RoomData.health);      // 시작했을때 체력과 UI동기화
 
-                hSHPlayer.OnChangeWalking.AddListener(StartHealthConsumptionRoutine);
-                hSHPlayer.OnChangeWalking.AddListener(StopHealthConsumptionRoutine);
-            }
-            else
-                Destroy(this);
+            hSHPlayer.OnChangeWalking.AddListener(StartHealthConsumptionRoutine);
+            hSHPlayer.OnChangeWalking.AddListener(StopHealthConsumptionRoutine);
         }
         else
-        {
             Destroy(this);
-        }
+
     }
 
     private void OnDisable()

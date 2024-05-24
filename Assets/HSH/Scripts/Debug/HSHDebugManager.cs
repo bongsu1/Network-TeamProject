@@ -1,4 +1,5 @@
 using Cinemachine;
+using Firebase.Extensions;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
@@ -16,6 +17,7 @@ public class HSHDebugManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+
         PhotonNetwork.LocalPlayer.NickName = $"player {Random.Range(1000, 10000)}";
         PhotonNetwork.ConnectUsingSettings();
     }
@@ -35,24 +37,39 @@ public class HSHDebugManager : MonoBehaviourPunCallbacks
         if (!isDebug)
             StartCoroutine(GameStartDelay());
     }
-
+    bool isLogin;
     IEnumerator GameStartDelay()
     {
         yield return new WaitForSeconds(1f);
+
         // test..
-        if (DebugDataManager.Instance != null)
+        FirebaseManager.Auth.SignInWithEmailAndPasswordAsync(email, pass).ContinueWithOnMainThread(task =>
         {
-            DebugDataManager.Instance.Login();
-            yield return new WaitUntil(() => DebugDataManager.Instance.RoomData != null);
-        }
+            if (task.IsCanceled)
+            {
+                return;
+            }
+            else if (task.IsFaulted)
+            {
+                return;
+            }
+
+            isLogin = true;
+        }); ;
+
+
+        yield return new WaitUntil(() => isLogin);
+        Manager.Data.LoadRoomData();
+        yield return new WaitUntil(() => Manager.Data.RoomData != null);
+        
         GameStart();
     }
     private void GameStart()
     {
         // test..
-        Vector3 spawnPosition = DebugDataManager.Instance == null ? Vector3.zero : DebugDataManager.Instance.RoomData.position;
+        Vector3 spawnPosition = Manager.Data.RoomData == null ? Vector3.zero : Manager.Data.RoomData.position;
 
-        GameObject player = PhotonNetwork.Instantiate("HSHPlayer", spawnPosition, Quaternion.identity);
+        GameObject player = PhotonNetwork.Instantiate("YDJ_Player_Test", spawnPosition, Quaternion.identity);
         if (playerFollowCamera != null)
         {
             playerFollowCamera.gameObject.SetActive(true);

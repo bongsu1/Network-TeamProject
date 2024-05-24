@@ -15,6 +15,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Pointer",
+                    "type": "Value",
+                    "id": "d8aac42e-0e28-42bc-8b84-498f793e8a0e",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Chat",
                     "type": "Button",
                     "id": "14619022-b2b6-4031-9d56-41c256f4978a",
@@ -128,6 +137,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "SetReady",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ea72bb8f-9d7f-4371-9984-f4ea9c9291c3",
+                    "path": "<Pointer>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Pointer",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
