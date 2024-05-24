@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
+
 public class Rebinding : MonoBehaviour
 {
     [SerializeField] InputActionReference currentAction;
@@ -95,23 +96,30 @@ public class Rebinding : MonoBehaviour
         {
             foreach (InputBinding binding in actionMap.bindings) //binding 수만큼 반복
             {
-                Debug.Log($"{binding.action} / {newBinding.action}");
-                if (binding.action == newBinding.action) //자신과 같은 값일 때 무시하고 진행
-                    
-                    continue;
 
-                Debug.Log($"{binding.effectivePath} / {newBinding.effectivePath}");
-                if (binding.effectivePath == newBinding.effectivePath) //경로가 같은 값이 있을 때 중복으로 판단
+                if (binding.action == newBinding.action) //자신과 같은 액션이면서
                 {
-                    duplicationError.SetActive(true);
-                    Debug.Log($"이미 존재하는 키 입니다. {binding.action} {newBinding.effectivePath} ");
+                    Debug.Log($"{binding.action}/{newBinding.action}");
 
+                    //if (binding.id == newBinding.id) //자신과 같은 Id
+                    //{
+                    //    Debug.Log($"{binding.id}/{newBinding.id}");
+
+                        
+                    //}
+                    continue; // 자신과 동일한 바인딩은 건너뜀
+                }
+                
+                if (binding.effectivePath == newBinding.effectivePath) //자신과 같은 키일 때 중복으로 판단
+                {
+                    Debug.Log($"{binding.effectivePath}/{binding.effectivePath}");
+
+                    duplicationError.SetActive(true);
                     return true;
                 }
             }
         }
-
-        return false;
+        return false; //중복X
     }
 
     public void DuplicationErrorClose()
