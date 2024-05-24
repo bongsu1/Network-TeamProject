@@ -18,6 +18,7 @@ public class HSHPlayer : MonoBehaviourPun
     [SerializeField] InventoryObject inventory;
     [SerializeField] InventoryObject equipment;
     [SerializeField] PopUpUI InventoryUIViewer;
+    [SerializeField] DynamicInterface inventorySlots;
 
     private Vector3 moveDir; // 입력받는 방향
     private bool isWalking; // 애니메이션 작동 변수
@@ -243,6 +244,8 @@ public class HSHPlayer : MonoBehaviourPun
 
     [SerializeField] float range;
 
+    public InventorySlot inventorySlot;
+
 
     private void PointerPosition()
     {
@@ -270,10 +273,11 @@ public class HSHPlayer : MonoBehaviourPun
             Pointer.y = hitInfo.transform.position.y + go_Preview.transform.localScale.y + (hitInfo.transform.localScale.y * 0.5f - 0.5f);
         }
     }
-    public void SlotClick() //슬럿 클릭시 프리뷰 프리펩 생성
+    public void SlotClick(InventorySlot Slot) //슬럿 클릭시 프리뷰 프리펩 생성
     {
         GameObject go_preview = Manager.Build.go_preview;
         GameObject go_prefab = Manager.Build.go_prefab;
+        inventorySlot = Slot;
         go_Preview = Manager.Build.go_preview;
         go_Prefab = Manager.Build.go_prefab;
         Debug.Log($"00. {go_prefab}");
@@ -312,6 +316,7 @@ public class HSHPlayer : MonoBehaviourPun
             isPreviewActivated = false;
             go_Preview = null;
             go_Prefab = null;
+            inventorySlot.RemoveItem();
         }
     }
 

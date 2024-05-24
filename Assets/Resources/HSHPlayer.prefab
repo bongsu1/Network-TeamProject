@@ -6321,6 +6321,8 @@ MonoBehaviour:
   equipment: {fileID: 11400000, guid: d6c623f3adeed934bb315cd88cf5b86e, type: 2}
   InventoryUIViewer: {fileID: 6262705808033643312, guid: 012eea582164cec449d8715fc92ab5e6,
     type: 3}
+  inventorySlots: {fileID: 1837885943050330827, guid: c30640841e326f64b89021dcc19a5411,
+    type: 3}
   OnChangeWalking:
     m_PersistentCalls:
       m_Calls: []
@@ -6333,6 +6335,16 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1073741824
   range: 1000
+  inventorySlot:
+    AllowedItems: 
+    item:
+      Name: 
+      Id: -1
+      buffs: []
+      weaponType: 0
+      go_prefab: {fileID: 0}
+      go_PreviewPrefab: {fileID: 0}
+    amount: 0
 --- !u!54 &6898931000670180689
 Rigidbody:
   m_ObjectHideFlags: 0

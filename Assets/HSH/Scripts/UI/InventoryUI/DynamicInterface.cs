@@ -42,7 +42,7 @@ public class DynamicInterface : UserInterface
             Manager.Build.go_preview = Manager.Inven.database.Items[slotsOnInterface[obj].item.Id].data.go_PreviewPrefab;
             Manager.Build.go_prefab = Manager.Inven.database.Items[slotsOnInterface[obj].item.Id].data.go_prefab;
             Debug.Log(Manager.Build.go_prefab);
-            Manager.Inven.HSHplayer.SlotClick();
+            Manager.Inven.HSHplayer.SlotClick(slotsOnInterface[obj]);
             Manager.UI.ClosePopUpUI();
             return;
         }
