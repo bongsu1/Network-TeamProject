@@ -10,7 +10,7 @@ public class UserData
     public UserData()
     {
         this.nickName = "";
-        this.isLogin = false;
+        this.isLogin = true;
     }
 
     public UserData(string name, bool isLogin)

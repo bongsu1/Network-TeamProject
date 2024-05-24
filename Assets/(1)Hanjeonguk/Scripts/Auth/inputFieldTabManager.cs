@@ -25,11 +25,11 @@ public class InputFieldTabManager
 
         if (idx >= 0 && idx < list.Count)
         {
-            list[idx].Select(); //Select
+            list[idx].ActivateInputField(); //Select
         }
         else
         {
-            list[0].Select();
+            list[0].ActivateInputField();
         }
       
     }

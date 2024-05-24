@@ -41,11 +41,13 @@ public class ResetPassPanel : MonoBehaviour
             if (task.IsCanceled)
             {
                 panelController.ShowInfo("SendPasswordResetEmailAsync canceled");
+                SetInteractable(true);
                 return;
             }
             else if (task.IsFaulted)
             {
                 panelController.ShowInfo($"SendPasswordResetEmailAsync failed: {task.Exception.Message}");
+                SetInteractable(true);
                 return;
             }
 

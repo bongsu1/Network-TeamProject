@@ -23,7 +23,7 @@ public class ResolutionOption : MonoBehaviour
         //resolutions.AddRange(Screen.resolutions); //지원 가능한 해상도 리스트에 추가
         for (int i = 0; i < Screen.resolutions.Length; i++)
         {
-            if (Screen.resolutions[i].refreshRate >= 60f && Screen.resolutions[i].width >=800f)
+            if (Screen.resolutions[i].refreshRateRatio.value >= 60f && Screen.resolutions[i].width >= 800f)
                 resolutions.Add(Screen.resolutions[i]);
         }
         dropdown.options.Clear(); //드롭다운 청소
@@ -33,7 +33,7 @@ public class ResolutionOption : MonoBehaviour
         foreach (Resolution resolution in resolutions) 
         {
             Dropdown.OptionData optionData = new Dropdown.OptionData();
-            optionData.text = $"{resolution.width}X{resolution.height} {resolution.refreshRate}hz";
+            optionData.text = $"{resolution.width}X{resolution.height} {resolution.refreshRateRatio.value}hz";
             dropdown.options.Add(optionData);
 
             if (resolution.width == Screen.width && resolution.height == Screen.height)
