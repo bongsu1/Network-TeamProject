@@ -10,6 +10,7 @@ public class HSHPlayer : MonoBehaviourPun
     [SerializeField] Rigidbody rigid;
     [SerializeField] PlayerInput playerInput;
     [SerializeField] Animator animator;
+    [SerializeField] Action action;
     [Header("Chat")]
     [SerializeField] Chat chat;
     [Header("Stat")]
@@ -46,6 +47,9 @@ public class HSHPlayer : MonoBehaviourPun
     }
     private void Update()
     {
+        //if (action.TargetIn())
+        //    return;
+
         Turn();
         if (Input.GetKeyDown(KeyCode.B))
         {

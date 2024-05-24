@@ -6315,6 +6315,7 @@ MonoBehaviour:
   rigid: {fileID: 6898931000670180689}
   playerInput: {fileID: 6047580820950230064}
   animator: {fileID: 7859192418116998817}
+  action: {fileID: 0}
   chat: {fileID: 6122317142881158914}
   moveSpeed: 4
   inventory: {fileID: 11400000, guid: 073066803168bf84ca271e5d2cfd98d6, type: 2}
