@@ -82,7 +82,7 @@ public class Chat : MonoBehaviourPun
         playerInput.actions["Greet"].Disable(); // 인사가 끝날때 까지 다시 누르지 못하게
         playerInput.actions["Move"].Disable(); // 인사가 끝날때 까지 움직이지 못하게
 
-        photonView.RPC("Greeting", RpcTarget.AllViaServer, DebugDataManager.Instance.UserData.nickName);
+        photonView.RPC("Greeting", RpcTarget.AllViaServer, Manager.Data.UserData.nickName);
         StartCoroutine(GreetingRoutine());
     }
     IEnumerator GreetingRoutine()
