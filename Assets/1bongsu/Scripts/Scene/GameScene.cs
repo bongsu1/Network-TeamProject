@@ -1,9 +1,10 @@
 using Cinemachine;
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using UnityEngine;
 
-public class GameScene : MonoBehaviour
+public class GameScene : MonoBehaviourPunCallbacks
 {
     [SerializeField] GameObject playerPrefab;
     [SerializeField] CinemachineVirtualCamera playerFollowCamera;
@@ -13,6 +14,9 @@ public class GameScene : MonoBehaviour
     {
         LoadRoomData();
         yield return new WaitUntil(() => Manager.Data.RoomData != null);
+
+        if (PhotonNetwork.IsMasterClient)
+            TextFilter.LoadData();
         GameStart();
     }
 
@@ -24,6 +28,9 @@ public class GameScene : MonoBehaviour
 
     private void GameStart()
     {
+        if (playerPrefab == null)
+            return;
+
         GameObject player = PhotonNetwork.Instantiate(playerPrefab.name, Manager.Data.RoomData.position, Quaternion.identity);
         if (playerFollowCamera != null)
         {
@@ -39,8 +46,18 @@ public class GameScene : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+    public override void OnMasterClientSwitched(Player newMasterClient)
     {
+        if (newMasterClient.IsLocal)
+        {
+            TextFilter.LoadData();
+        }
+    }
+
+    public override void OnDisable()
+    {
+        base.OnDisable();
+
         Manager.Data.SaveRoomData();
     }
 }
