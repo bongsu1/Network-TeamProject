@@ -9,6 +9,7 @@ public enum ItemType
     Boots,
     Chest,
     Tool,
+    Build,
     Default
 }
 public enum Attributes
@@ -45,6 +46,8 @@ public class Item
     public int Id = -1;
     public ItemBuff[] buffs;
     public WeaponType weaponType;
+    public GameObject go_prefab;
+    public GameObject go_PreviewPrefab;
     public Item()
     {
         Name = "";
@@ -55,6 +58,9 @@ public class Item
         Name = itemobject.name;
         Id = itemobject.data.Id;
         buffs = new ItemBuff[itemobject.data.buffs.Length];
+        weaponType = itemobject.data.weaponType;
+        go_prefab = itemobject.data.go_prefab;
+        go_PreviewPrefab = itemobject.data.go_PreviewPrefab;
         for (int i = 0; i < buffs.Length; i++)
         {
             buffs[i] = new ItemBuff(itemobject.data.buffs[i].min, itemobject.data.buffs[i].max)

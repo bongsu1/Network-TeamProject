@@ -21,6 +21,8 @@ public class InventoryManager : Singleton<InventoryManager>
     [SerializeField] string email;
     [SerializeField] string pass;
 
+    [SerializeField] public CraftManual craftManual;
+
     [Header("Firebase")]
     private InvenData invenData;
     public InvenData InvenData { get { return invenData; } }
@@ -186,7 +188,7 @@ public class InventoryManager : Singleton<InventoryManager>
         {
             dropPosition = HSHplayer.transform.position + new Vector3(0, 0, 0);
         }
-    } // 자꾸 이러네ㅇㅇㅇ
+    }
     
     //private void StartSaveRoutine()
     //{

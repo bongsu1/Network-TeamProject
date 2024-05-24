@@ -6315,13 +6315,37 @@ MonoBehaviour:
   rigid: {fileID: 6898931000670180689}
   playerInput: {fileID: 6047580820950230064}
   animator: {fileID: 7859192418116998817}
+  action: {fileID: 0}
   chat: {fileID: 6122317142881158914}
   moveSpeed: 4
   inventory: {fileID: 11400000, guid: 073066803168bf84ca271e5d2cfd98d6, type: 2}
   equipment: {fileID: 11400000, guid: d6c623f3adeed934bb315cd88cf5b86e, type: 2}
+  InventoryUIViewer: {fileID: 6262705808033643312, guid: 012eea582164cec449d8715fc92ab5e6,
+    type: 3}
+  inventorySlots: {fileID: 1837885943050330827, guid: c30640841e326f64b89021dcc19a5411,
+    type: 3}
   OnChangeWalking:
     m_PersistentCalls:
       m_Calls: []
+  invenUI: {fileID: 6262705808033643312, guid: 012eea582164cec449d8715fc92ab5e6, type: 3}
+  Pointer: {x: 0, y: 0, z: 0}
+  GroundLayer:
+    serializedVersion: 2
+    m_Bits: 2147483648
+  IgnoreLayer:
+    serializedVersion: 2
+    m_Bits: 1073741824
+  range: 1000
+  inventorySlot:
+    AllowedItems: 
+    item:
+      Name: 
+      Id: -1
+      buffs: []
+      weaponType: 0
+      go_prefab: {fileID: 0}
+      go_PreviewPrefab: {fileID: 0}
+    amount: 0
 --- !u!54 &6898931000670180689
 Rigidbody:
   m_ObjectHideFlags: 0

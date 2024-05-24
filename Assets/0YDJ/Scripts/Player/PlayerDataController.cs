@@ -10,7 +10,8 @@ public class PlayerDataController : MonoBehaviourPun
     [Header("Health")]
     [SerializeField] HealthUI healthUI;
     [Header("Player")]
-    [SerializeField] PlayerController playerController; // 플레이어가 걷는지 확인용
+    //[SerializeField] PlayerController playerController; // 플레이어가 걷는지 확인용
+    [SerializeField] HSHPlayer hSHPlayer; // 플레이어가 걷는지 확인용
 
     public UnityEvent<int> OnChangeHealth; // 체력이 바뀔때 보내려는 이벤트
 
@@ -23,11 +24,16 @@ public class PlayerDataController : MonoBehaviourPun
             OnChangeHealth.AddListener(healthUI.UpdateHealthBar);        // 생성하자 마자 이벤트에 추가
             healthUI.UpdateHealthBar(Manager.Data.RoomData.health);      // 시작했을때 체력과 UI동기화
 
-            playerController.OnChangeWalking.AddListener(StartHealthConsumptionRoutine);
-            playerController.OnChangeWalking.AddListener(StopHealthConsumptionRoutine);
+                hSHPlayer.OnChangeWalking.AddListener(StartHealthConsumptionRoutine);
+                hSHPlayer.OnChangeWalking.AddListener(StopHealthConsumptionRoutine);
+            }
+            else
+                Destroy(this);
         }
         else
+        {
             Destroy(this);
+        }
     }
 
     private void OnDisable()
@@ -37,8 +43,8 @@ public class PlayerDataController : MonoBehaviourPun
 
         OnChangeHealth.RemoveListener(healthUI.UpdateHealthBar);
 
-        playerController.OnChangeWalking.RemoveListener(StartHealthConsumptionRoutine);
-        playerController.OnChangeWalking.RemoveListener(StopHealthConsumptionRoutine);
+        hSHPlayer.OnChangeWalking.RemoveListener(StartHealthConsumptionRoutine);
+        hSHPlayer.OnChangeWalking.RemoveListener(StopHealthConsumptionRoutine);
     }
 
     private void Update()

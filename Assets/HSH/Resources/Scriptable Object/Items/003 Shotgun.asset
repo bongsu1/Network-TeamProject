@@ -14,11 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiDisplay: {fileID: 21300000, guid: c102de5c1a36345d493bf540d2ab1c63, type: 3}
   stackable: 0
-  dropItem: {fileID: 3827633198487540712, guid: 7e82daae06c6af24fb07804023662565,
-    type: 3}
   type: 2
   description: 
   data:
     Name: 
     Id: 3
     buffs: []
+    weaponType: 1
