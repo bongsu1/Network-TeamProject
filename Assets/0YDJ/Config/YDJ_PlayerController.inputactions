@@ -15,15 +15,6 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Pointer",
-                    "type": "Value",
-                    "id": "d8aac42e-0e28-42bc-8b84-498f793e8a0e",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                },
-                {
                     "name": "Chat",
                     "type": "Button",
                     "id": "14619022-b2b6-4031-9d56-41c256f4978a",
@@ -49,6 +40,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Greet",
+                    "type": "Button",
+                    "id": "0a77444f-ff28-4bbf-b38d-29da19430bf4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -142,12 +142,12 @@
                 },
                 {
                     "name": "",
-                    "id": "ea72bb8f-9d7f-4371-9984-f4ea9c9291c3",
-                    "path": "<Pointer>/position",
+                    "id": "8015c7e3-448d-4673-95bd-70aeb23ac328",
+                    "path": "<Keyboard>/c",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Pointer",
+                    "action": "Greet",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

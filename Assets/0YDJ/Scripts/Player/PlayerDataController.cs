@@ -116,7 +116,10 @@ public class PlayerDataController : MonoBehaviourPun
 
         // 체력이 0보다 작아지면 체력을 0으로
         if (Manager.Data.RoomData.health < 0)
+        {
             Manager.Data.RoomData.health = 0;
+            PhotonNetwork.Destroy(gameObject);
+        }
 
         OnChangeHealth.Invoke(Manager.Data.RoomData.health);
     }

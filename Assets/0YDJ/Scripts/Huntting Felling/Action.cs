@@ -95,7 +95,7 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
     {
         photonView.RPC("SetAnimationParameter", RpcTarget.All, Parameter.SetBool, "GunIsSetReady", isSetReady);
 
-        gun.SetActive(isSetReady);
+        photonView.RPC("WeaponSetActive", RpcTarget.All, WeaponType.Gun, isSetReady);
 
         if (isSetReady)
         {
@@ -109,6 +109,26 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
             Vector3 euler = Quaternion.RotateTowards(transform.rotation, lookRotation, spinSpeed * Time.deltaTime).eulerAngles;
             transform.rotation = Quaternion.Euler(0, euler.y, 0);
         }
+    }
+
+    [PunRPC]
+    private void WeaponSetActive(WeaponType type, bool isSetReady)
+    {
+        switch (type)
+        {
+            case WeaponType.None:
+                break;
+            case WeaponType.Gun:
+                gun.SetActive(isSetReady);
+                break;
+            case WeaponType.Ax:
+                ax.SetActive(isSetReady);
+                break;
+            case WeaponType.Fishing:
+                break;
+        }
+
+
     }
 
     private void SearchEnemy() // 제일 가까운 타켓 찾기
@@ -193,7 +213,8 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
         Debug.Log("SetAx");
         photonView.RPC("SetAnimationParameter", RpcTarget.All, Parameter.SetBool, "AxIsSetReady", isSetReady);
 
-        ax.SetActive(isSetReady);
+        //ax.SetActive(isSetReady);
+        photonView.RPC("WeaponSetActive", RpcTarget.All, WeaponType.Ax, isSetReady);
 
         Target = null;
 

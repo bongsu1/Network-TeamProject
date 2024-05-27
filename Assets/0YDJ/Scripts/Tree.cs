@@ -1,8 +1,9 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Tree : MonoBehaviour, IDamageble
+public class Tree : MonoBehaviourPun, IDamageble
 {
     [SerializeField] Rigidbody rigid;
     [SerializeField] int hp = 10;
@@ -31,6 +32,6 @@ public class Tree : MonoBehaviour, IDamageble
     {
         TreeDiedSound.Play();
         yield return new WaitForSeconds(5f);
-        Destroy(gameObject);
+        PhotonNetwork.Destroy(gameObject);
     }
 }
