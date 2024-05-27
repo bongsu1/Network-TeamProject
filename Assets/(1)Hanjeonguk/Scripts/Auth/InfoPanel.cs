@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class InfoPanel : MonoBehaviour
@@ -19,7 +17,7 @@ public class InfoPanel : MonoBehaviour
         gameObject.SetActive(true);
         infoText.text = message;
     }
-    public void Close() 
+    public void Close()
     {
         gameObject.SetActive(false);
     }

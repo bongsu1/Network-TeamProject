@@ -6,7 +6,6 @@ using Photon.Realtime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-//using static System.Net.Mime.MediaTypeNames;
 
 public class MenuPanel : MonoBehaviour
 {
@@ -59,7 +58,6 @@ public class MenuPanel : MonoBehaviour
         options.CustomRoomPropertiesForLobby = new string[] { "roomName" };
 
         PhotonNetwork.JoinRandomOrCreateRoom(roomName: name, roomOptions: options);
-        Debug.Log("방생성");
     }
 
     public void JoinLobby()

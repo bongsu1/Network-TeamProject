@@ -16,8 +16,8 @@ public class ButtonController : MonoBehaviour
     private void ButtonClick() //버튼 클릭했을 때 전체 버튼 비활성화
     {
         foreach (Button button in buttons)
-        { 
-            button.interactable = false; 
+        {
+            button.interactable = false;
         }
     }
 

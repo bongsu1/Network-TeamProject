@@ -1,4 +1,3 @@
-using Firebase.Extensions;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
@@ -16,7 +15,7 @@ public class RoomEntry : MonoBehaviour
     [SerializeField] GameObject passwordPopPanel;
 
     [SerializeField] TMP_InputField passwordInputField;
-    
+
     [SerializeField] GameObject image;
 
     [SerializeField] Button joinRoomButton;
@@ -72,7 +71,7 @@ public class RoomEntry : MonoBehaviour
 
     public void ConnectButton()
     {
-        PhotonNetwork.LeaveLobby();
+        //PhotonNetwork.LeaveLobby();
         PhotonNetwork.JoinRoom($"{roomName.text}{passwordInputField.text}");
     }
 

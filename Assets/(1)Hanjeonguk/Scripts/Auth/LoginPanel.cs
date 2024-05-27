@@ -1,13 +1,9 @@
-using Firebase.Auth;
 using Firebase.Database;
 using Firebase.Extensions;
 using Photon.Pun;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Tilemaps;
 using UnityEngine.UI;
 
 public class LoginPanel : MonoBehaviour
@@ -58,13 +54,13 @@ public class LoginPanel : MonoBehaviour
         FirebaseManager.Auth.SignInWithEmailAndPasswordAsync(email, pass).ContinueWithOnMainThread(task =>
         {
 
-            if (task.IsCanceled) 
+            if (task.IsCanceled)
             {
                 panelController.ShowInfo("SignInWithEmailAndPasswordAsync canceled");
                 SetInteractable(true);
                 return;
             }
-            else if (task.IsFaulted) 
+            else if (task.IsFaulted)
             {
                 panelController.ShowInfo($"SignInWithEmailAndPasswordAsync failed : {task.Exception.Message}");
                 SetInteractable(true);
@@ -98,10 +94,10 @@ public class LoginPanel : MonoBehaviour
 
                     if (snapShot.Exists)
                     {
-                       json = (bool)snapShot.Value;
+                        json = (bool)snapShot.Value;
                     }
-                    
-                    if(json == false) //로그인중이 아닌 경우, 로그인 상태로 전환
+
+                    if (json == false) //로그인중이 아닌 경우, 로그인 상태로 전환
                     {
                         FirebaseManager.DB
                          .GetReference("UserData")
@@ -118,7 +114,7 @@ public class LoginPanel : MonoBehaviour
                     }
                 });
             }
-                
+
             else //이메일 미인증 계정
             {
                 panelController.ShowVerify();
@@ -166,8 +162,8 @@ public class LoginPanel : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
-       // PanelManager.Instance.ValueChangeCheck();
+        // PanelManager.Instance.ValueChangeCheck();
 
-        PhotonNetwork.LoadLevel("LobbyScene"); 
+        PhotonNetwork.LoadLevel("LobbyScene");
     }
 }

@@ -2,6 +2,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,6 +22,10 @@ public class LobbyPanel : MonoBehaviour
     [SerializeField] TMP_InputField passwordInputField;
 
     [SerializeField] InputFieldTabManager inputFieldTabMrg;
+
+    [SerializeField] string roomName;
+
+    public string RoomName => roomName;
 
     private Dictionary<string, RoomEntry> roomDictionary;
 
@@ -77,7 +82,7 @@ public class LobbyPanel : MonoBehaviour
         options.MaxPlayers = maxPlayer;
         options.CustomRoomProperties = table;
 
-        options.CustomRoomPropertiesForLobby = new string[] { "roomName", "password"};
+        options.CustomRoomPropertiesForLobby = new string[] { "roomName", "password" };
 
         PhotonNetwork.CreateRoom($"{roomName}{passwordInputField.text}", options);
     }

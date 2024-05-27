@@ -1,8 +1,6 @@
 using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
-using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine;
 
 public class FirebaseManager : MonoBehaviour

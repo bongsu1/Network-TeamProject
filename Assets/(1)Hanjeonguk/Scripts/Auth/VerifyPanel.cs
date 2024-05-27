@@ -1,7 +1,6 @@
 using Firebase.Extensions;
 using Photon.Pun;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,7 +40,7 @@ public class VerifyPanel : MonoBehaviour
     }
     public void SendEmail()
     {
-        FirebaseManager.Auth.CurrentUser.SendEmailVerificationAsync().ContinueWithOnMainThread(task =>  
+        FirebaseManager.Auth.CurrentUser.SendEmailVerificationAsync().ContinueWithOnMainThread(task =>
         {
             if (task.IsCanceled)
             {
@@ -64,7 +63,7 @@ public class VerifyPanel : MonoBehaviour
         {
             yield return new WaitForSeconds(3f);
 
-            FirebaseManager.Auth.CurrentUser.ReloadAsync().ContinueWithOnMainThread(task => 
+            FirebaseManager.Auth.CurrentUser.ReloadAsync().ContinueWithOnMainThread(task =>
             {
                 if (task.IsCanceled)
                 {
@@ -77,7 +76,7 @@ public class VerifyPanel : MonoBehaviour
                     return;
                 }
 
-                if (FirebaseManager.Auth.CurrentUser.IsEmailVerified) 
+                if (FirebaseManager.Auth.CurrentUser.IsEmailVerified)
                 {
                     PhotonNetwork.LoadLevel("LobbyScene");
                 }

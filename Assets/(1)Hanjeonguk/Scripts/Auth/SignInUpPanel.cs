@@ -1,6 +1,4 @@
 using Firebase.Extensions;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -40,37 +38,37 @@ public class SignInUpPanel : MonoBehaviour
 
     public void SignUp()
     {
-        SetInteractable(false); 
+        SetInteractable(false);
 
         string email = emailInputField.text;
         string pass = passInputField.text;
         string confirm = confirmInputField.text;
 
-        if (pass != confirm) 
+        if (pass != confirm)
         {
-            panelController.ShowInfo("Password doesn't matched"); 
-            SetInteractable(true); 
+            panelController.ShowInfo("Password doesn't matched");
+            SetInteractable(true);
             return;
         }
 
         FirebaseManager.Auth.CreateUserWithEmailAndPasswordAsync(email, pass).ContinueWithOnMainThread(task =>
         {
-            if (task.IsCanceled) 
+            if (task.IsCanceled)
             {
-                panelController.ShowInfo("CreateUserWithEmailAndPasswordAsync canceled"); 
-                SetInteractable(true); 
+                panelController.ShowInfo("CreateUserWithEmailAndPasswordAsync canceled");
+                SetInteractable(true);
                 return;
             }
-            else if (task.IsFaulted) 
+            else if (task.IsFaulted)
             {
-                panelController.ShowInfo($"CreateUserWithEmailAndPasswordAsync failed : {task.Exception.Message}"); 
-                SetInteractable(true); 
+                panelController.ShowInfo($"CreateUserWithEmailAndPasswordAsync failed : {task.Exception.Message}");
+                SetInteractable(true);
                 return;
             }
 
-            panelController.ShowInfo("CreateUserWithEmailAndPasswordAsync success"); 
-            panelController.SetActivePanel(PanelController.Panel.Login); 
-            SetInteractable(true); 
+            panelController.ShowInfo("CreateUserWithEmailAndPasswordAsync success");
+            panelController.SetActivePanel(PanelController.Panel.Login);
+            SetInteractable(true);
         });
     }
 
@@ -79,7 +77,7 @@ public class SignInUpPanel : MonoBehaviour
         panelController.SetActivePanel(PanelController.Panel.Login);
     }
 
-    private void SetInteractable(bool interactable) 
+    private void SetInteractable(bool interactable)
     {
         emailInputField.interactable = interactable;
         passInputField.interactable = interactable;
@@ -88,4 +86,3 @@ public class SignInUpPanel : MonoBehaviour
         signUpButton.interactable = interactable;
     }
 }
-    
