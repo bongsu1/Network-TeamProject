@@ -1,5 +1,6 @@
 using Photon.Pun;
 using System.Collections;
+using System.Text.RegularExpressions;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -68,6 +69,28 @@ public class Chat : MonoBehaviourPun
             string chat = chatInput.textComponent.text.Replace("<u>", "");
 
             //string chat = chatInput.text;
+
+            #region TextFilter addText
+            // 명령어로 비속어 추가 하기 "/add 비속어,패턴,(대체될 단어 -선택사항-)"
+            // 추가 명령어는 마스터클라이언트만 가능
+            Match addCommand = Regex.Match(chat, @"^/add\s[\w\W]+");
+            if (addCommand.Success && PhotonNetwork.IsMasterClient)
+            {
+                string[] group = chat.Split(',', ' ');
+                switch (group.Length)
+                {
+                    case 3:
+                        TextFilter.AddText(group[1], group[2]);
+                        break;
+                    case 4:
+                        TextFilter.AddText(group[1], group[2], group[3]);
+                        break;
+                    default:
+                        break;
+                }
+                return;
+            }
+            #endregion
 
             // 비속어 필터를 사용하기 위해 마스터에게만 송신
             photonView.RPC("ChatFilter", RpcTarget.MasterClient, chat);
