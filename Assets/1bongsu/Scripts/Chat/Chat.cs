@@ -88,6 +88,8 @@ public class Chat : MonoBehaviourPun
                     default:
                         break;
                 }
+
+                chatInput.text = "";
                 return;
             }
             #endregion
