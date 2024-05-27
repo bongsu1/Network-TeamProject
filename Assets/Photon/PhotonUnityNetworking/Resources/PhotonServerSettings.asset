@@ -54,6 +54,14 @@ MonoBehaviour:
   - SetItemObject
   - WeaponSetActive
   - SoundPlay
+  - EndTrade
+  - OpponentCheckCancel
+  - OpponentCheckOK
+  - RequestOpenTradeUI
+  - RequestTrade
+  - RequestUpdateOpponent
+  - ResultUpdateOpponent
+  - ReturnItem
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

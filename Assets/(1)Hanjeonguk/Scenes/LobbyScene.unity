@@ -1626,7 +1626,7 @@ PrefabInstance:
         type: 3}
       propertyPath: actionAsset
       value: 
-      objectReference: {fileID: -944628639613478452, guid: 0b98d056289264f47943593788fc72df,
+      objectReference: {fileID: -944628639613478452, guid: d50dddbaa28d8254a8f6d509a7ed10b3,
         type: 3}
     - target: {fileID: 6196639266675287431, guid: 60c80f47c72032443b66f1b2650ae010,
         type: 3}
@@ -1637,7 +1637,7 @@ PrefabInstance:
         type: 3}
       propertyPath: currentAction
       value: 
-      objectReference: {fileID: -1087009386286408577, guid: 0b98d056289264f47943593788fc72df,
+      objectReference: {fileID: -8058032551418797865, guid: d50dddbaa28d8254a8f6d509a7ed10b3,
         type: 3}
     - target: {fileID: 6196639266675287431, guid: 60c80f47c72032443b66f1b2650ae010,
         type: 3}
@@ -3512,7 +3512,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea92024395e0fbc42813e361df97c773, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  actions: {fileID: -944628639613478452, guid: 0b98d056289264f47943593788fc72df, type: 3}
+  actions: {fileID: -944628639613478452, guid: d50dddbaa28d8254a8f6d509a7ed10b3, type: 3}
   resetButton: {fileID: 629237445}
   rebindings:
   - {fileID: 1678613735}
@@ -5096,7 +5096,7 @@ PrefabInstance:
         type: 3}
       propertyPath: actionAsset
       value: 
-      objectReference: {fileID: -944628639613478452, guid: 0b98d056289264f47943593788fc72df,
+      objectReference: {fileID: -944628639613478452, guid: d50dddbaa28d8254a8f6d509a7ed10b3,
         type: 3}
     - target: {fileID: 6196639266675287431, guid: 60c80f47c72032443b66f1b2650ae010,
         type: 3}
@@ -5107,7 +5107,7 @@ PrefabInstance:
         type: 3}
       propertyPath: currentAction
       value: 
-      objectReference: {fileID: -4438558053922522427, guid: 0b98d056289264f47943593788fc72df,
+      objectReference: {fileID: 3035411548415442189, guid: d50dddbaa28d8254a8f6d509a7ed10b3,
         type: 3}
     - target: {fileID: 6196639266675287431, guid: 60c80f47c72032443b66f1b2650ae010,
         type: 3}
@@ -16039,7 +16039,7 @@ PrefabInstance:
         type: 3}
       propertyPath: actionAsset
       value: 
-      objectReference: {fileID: -944628639613478452, guid: 0b98d056289264f47943593788fc72df,
+      objectReference: {fileID: -944628639613478452, guid: d50dddbaa28d8254a8f6d509a7ed10b3,
         type: 3}
     - target: {fileID: 6196639266675287431, guid: 60c80f47c72032443b66f1b2650ae010,
         type: 3}
@@ -16050,7 +16050,7 @@ PrefabInstance:
         type: 3}
       propertyPath: currentAction
       value: 
-      objectReference: {fileID: -1087009386286408577, guid: 0b98d056289264f47943593788fc72df,
+      objectReference: {fileID: -8058032551418797865, guid: d50dddbaa28d8254a8f6d509a7ed10b3,
         type: 3}
     - target: {fileID: 6196639266675287431, guid: 60c80f47c72032443b66f1b2650ae010,
         type: 3}
@@ -19653,7 +19653,7 @@ PrefabInstance:
         type: 3}
       propertyPath: actionAsset
       value: 
-      objectReference: {fileID: -944628639613478452, guid: 0b98d056289264f47943593788fc72df,
+      objectReference: {fileID: -944628639613478452, guid: d50dddbaa28d8254a8f6d509a7ed10b3,
         type: 3}
     - target: {fileID: 6196639266675287431, guid: 60c80f47c72032443b66f1b2650ae010,
         type: 3}
@@ -19664,7 +19664,7 @@ PrefabInstance:
         type: 3}
       propertyPath: currentAction
       value: 
-      objectReference: {fileID: -1087009386286408577, guid: 0b98d056289264f47943593788fc72df,
+      objectReference: {fileID: -8058032551418797865, guid: d50dddbaa28d8254a8f6d509a7ed10b3,
         type: 3}
     - target: {fileID: 6196639266675287431, guid: 60c80f47c72032443b66f1b2650ae010,
         type: 3}
@@ -21228,6 +21228,8 @@ MonoBehaviour:
   playerInput: {fileID: 1559322069}
   lobbySceneBGM: {fileID: 8300000, guid: 95fdada27424c4fb08da35ae38bacf31, type: 3}
   gameSceneBGM: {fileID: 8300000, guid: 8d392e6fa1ccb423c8254f88312ec102, type: 3}
+  optionPop: {fileID: 607800430}
+  optionPopBool: 1
 --- !u!4 &1559322067
 Transform:
   m_ObjectHideFlags: 0
@@ -21260,8 +21262,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 1559322069}
-  optionPop: {fileID: 607800430}
-  optionPopBool: 1
 --- !u!114 &1559322069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21274,7 +21274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 0b98d056289264f47943593788fc72df,
+  m_Actions: {fileID: -944628639613478452, guid: d50dddbaa28d8254a8f6d509a7ed10b3,
     type: 3}
   m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
@@ -21289,9 +21289,45 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 1c0eb401-df82-44db-a988-71c4a5f069f0
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e561d726-fedf-4e48-875d-48acb1639581
+    m_ActionName: Player/Inventory[/Keyboard/b]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bf6853a4-9d8b-4fcd-9deb-b27ed06566d6
+    m_ActionName: Player/ObjectRotation[/Keyboard/r]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 14619022-b2b6-4031-9d56-41c256f4978a
+    m_ActionName: Player/Chat[/Keyboard/enter]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3d2add10-eafb-409c-aa34-265cb43222ca
+    m_ActionName: Player/Interact[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 649f90be-fbb5-46e5-9004-07fcf6542be1
+    m_ActionName: Player/Greet[/Keyboard/c]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3d886b85-59c4-418e-b5f0-cf9595fefb87
+    m_ActionName: Player/SetReady[/Mouse/rightButton]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 319ec449-e5c5-43d8-a4af-6d9db6c42566
+    m_ActionName: Camera/Scroll[/Mouse/scroll/y]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 496a8061-7465-4fc0-994d-5b8514d97330
+    m_ActionName: Camera/ChangeAngle[/Keyboard/q]
+  - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1559322068}
-        m_TargetAssemblyTypeName: TestController, Assembly-CSharp
+      - m_Target: {fileID: 1559322066}
+        m_TargetAssemblyTypeName: PanelManager, Assembly-CSharp
         m_MethodName: Option
         m_Mode: 0
         m_Arguments:
@@ -21302,79 +21338,11 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 8e53cc00-2db8-4ac3-951a-1768d56fe713
-    m_ActionName: Key/Option[/Keyboard/escape]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1559322068}
-        m_TargetAssemblyTypeName: TestController, Assembly-CSharp
-        m_MethodName: CameraUp
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: ace6ef1f-93e9-47e7-9aed-eaa249b501e8
-    m_ActionName: Key/CameraUp[/Keyboard/q]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1559322068}
-        m_TargetAssemblyTypeName: TestController, Assembly-CSharp
-        m_MethodName: Greeting
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 0a6aaf28-1228-4d59-b39a-b70b174a081b
-    m_ActionName: Key/Greeting[/Keyboard/c]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1559322068}
-        m_TargetAssemblyTypeName: TestController, Assembly-CSharp
-        m_MethodName: Inventory
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 5fc3af94-73dd-45a0-b815-e182f96dd816
-    m_ActionName: Key/Inventory[/Keyboard/tab]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 72cf0afe-3834-418a-bb4b-e986597c4470
-    m_ActionName: Key/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: b7ff3db9-4e8f-41ce-8507-5aba92ce3191
-    m_ActionName: 123/New action[/Keyboard/p]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 5b2c5727-32d4-45e7-8e03-6042b1db8bc0
-    m_ActionName: Key/Chat[/Keyboard/enter]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 64a6fb58-e19b-4676-8b5f-ca752b77d3ef
-    m_ActionName: Key/ObjectRotation[/Keyboard/r]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 0cdc64b5-e41e-42a7-b747-a8bcd93c7e87
-    m_ActionName: Key/Interactive[/Keyboard/space]
+    m_ActionId: e9e4d4cb-a563-407f-bb0f-519268d7818a
+    m_ActionName: UI/Option[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Key
+  m_DefaultActionMap: UI
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &1559322070
@@ -23049,7 +23017,7 @@ PrefabInstance:
         type: 3}
       propertyPath: actionAsset
       value: 
-      objectReference: {fileID: -944628639613478452, guid: 0b98d056289264f47943593788fc72df,
+      objectReference: {fileID: -944628639613478452, guid: d50dddbaa28d8254a8f6d509a7ed10b3,
         type: 3}
     - target: {fileID: 6196639266675287431, guid: 60c80f47c72032443b66f1b2650ae010,
         type: 3}
@@ -23060,7 +23028,7 @@ PrefabInstance:
         type: 3}
       propertyPath: currentAction
       value: 
-      objectReference: {fileID: 5864510622980465481, guid: 0b98d056289264f47943593788fc72df,
+      objectReference: {fileID: -2769411683545601425, guid: d50dddbaa28d8254a8f6d509a7ed10b3,
         type: 3}
     - target: {fileID: 6196639266675287431, guid: 60c80f47c72032443b66f1b2650ae010,
         type: 3}
@@ -24462,7 +24430,7 @@ PrefabInstance:
         type: 3}
       propertyPath: actionAsset
       value: 
-      objectReference: {fileID: -944628639613478452, guid: 0b98d056289264f47943593788fc72df,
+      objectReference: {fileID: -944628639613478452, guid: d50dddbaa28d8254a8f6d509a7ed10b3,
         type: 3}
     - target: {fileID: 6196639266675287431, guid: 60c80f47c72032443b66f1b2650ae010,
         type: 3}
@@ -24473,7 +24441,7 @@ PrefabInstance:
         type: 3}
       propertyPath: currentAction
       value: 
-      objectReference: {fileID: -5695629040845275748, guid: 0b98d056289264f47943593788fc72df,
+      objectReference: {fileID: -7742241257887108920, guid: d50dddbaa28d8254a8f6d509a7ed10b3,
         type: 3}
     - target: {fileID: 6196639266675287431, guid: 60c80f47c72032443b66f1b2650ae010,
         type: 3}
@@ -26535,7 +26503,7 @@ PrefabInstance:
         type: 3}
       propertyPath: actionAsset
       value: 
-      objectReference: {fileID: -944628639613478452, guid: 0b98d056289264f47943593788fc72df,
+      objectReference: {fileID: -944628639613478452, guid: d50dddbaa28d8254a8f6d509a7ed10b3,
         type: 3}
     - target: {fileID: 6196639266675287431, guid: 60c80f47c72032443b66f1b2650ae010,
         type: 3}
@@ -26546,7 +26514,7 @@ PrefabInstance:
         type: 3}
       propertyPath: currentAction
       value: 
-      objectReference: {fileID: -198652440217565076, guid: 0b98d056289264f47943593788fc72df,
+      objectReference: {fileID: -175454986480105360, guid: d50dddbaa28d8254a8f6d509a7ed10b3,
         type: 3}
     - target: {fileID: 6196639266675287431, guid: 60c80f47c72032443b66f1b2650ae010,
         type: 3}
@@ -27990,7 +27958,7 @@ PrefabInstance:
         type: 3}
       propertyPath: actionAsset
       value: 
-      objectReference: {fileID: -944628639613478452, guid: 0b98d056289264f47943593788fc72df,
+      objectReference: {fileID: -944628639613478452, guid: d50dddbaa28d8254a8f6d509a7ed10b3,
         type: 3}
     - target: {fileID: 6196639266675287431, guid: 60c80f47c72032443b66f1b2650ae010,
         type: 3}
@@ -28001,7 +27969,7 @@ PrefabInstance:
         type: 3}
       propertyPath: currentAction
       value: 
-      objectReference: {fileID: -1087009386286408577, guid: 0b98d056289264f47943593788fc72df,
+      objectReference: {fileID: -8058032551418797865, guid: d50dddbaa28d8254a8f6d509a7ed10b3,
         type: 3}
     - target: {fileID: 6196639266675287431, guid: 60c80f47c72032443b66f1b2650ae010,
         type: 3}
@@ -28882,7 +28850,7 @@ PrefabInstance:
         type: 3}
       propertyPath: actionAsset
       value: 
-      objectReference: {fileID: -944628639613478452, guid: 0b98d056289264f47943593788fc72df,
+      objectReference: {fileID: -944628639613478452, guid: d50dddbaa28d8254a8f6d509a7ed10b3,
         type: 3}
     - target: {fileID: 6196639266675287431, guid: 60c80f47c72032443b66f1b2650ae010,
         type: 3}
@@ -28893,7 +28861,7 @@ PrefabInstance:
         type: 3}
       propertyPath: currentAction
       value: 
-      objectReference: {fileID: 6188374330557123555, guid: 0b98d056289264f47943593788fc72df,
+      objectReference: {fileID: 3933442676907952142, guid: d50dddbaa28d8254a8f6d509a7ed10b3,
         type: 3}
     - target: {fileID: 6196639266675287431, guid: 60c80f47c72032443b66f1b2650ae010,
         type: 3}

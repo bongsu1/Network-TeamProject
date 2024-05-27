@@ -34,8 +34,16 @@ public class PanelManager : MonoBehaviourPunCallbacks
     [SerializeField] AudioClip gameSceneBGM;
 
     private static PanelManager instance;
-
     // public static PanelManager Instance { get { return instance; } }
+
+    [SerializeField] GameObject optionPop;
+    [SerializeField] bool optionPopBool = true;
+
+    public void Option(InputAction.CallbackContext value)
+    {
+        optionPop.SetActive(optionPopBool);
+        optionPopBool = !optionPopBool;
+    }
 
 
     private void Awake()
