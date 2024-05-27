@@ -22,6 +22,9 @@ public class Chat : MonoBehaviourPun
 
     public UnityEvent OnGreeting;
 
+    [Header("Sound")]
+    [SerializeField] AudioSource ChatSound;
+
     private void Start()
     {
         chatInput = chatUI.GetUI<TMP_InputField>("ChatInputField");
@@ -139,6 +142,7 @@ public class Chat : MonoBehaviourPun
     {
         chatUI.SendChat(chat);
         chattingImage.transform.SetAsLastSibling();
+        ChatSound.Play();
     }
 
     [PunRPC]

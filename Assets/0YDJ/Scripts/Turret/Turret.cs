@@ -81,7 +81,7 @@ public class Turret : MonoBehaviour
                     //Instantiate(bulletPre, transform.position, lookRotation);
                     pool.GetPool(GunMuzzle.transform.position, lookRotation);
                     ShottingSound.Play();
-                    Debug.Log("발사");
+                    //Debug.Log("발사");
                 }
             }
         }

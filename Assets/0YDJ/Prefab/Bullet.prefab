@@ -139,7 +139,7 @@ MonoBehaviour:
   moveSpeed: 30
   BulletTarget:
     serializedVersion: 2
-    m_Bits: 268435528
+    m_Bits: 805306440
 --- !u!54 &1583007164792447314
 Rigidbody:
   m_ObjectHideFlags: 0

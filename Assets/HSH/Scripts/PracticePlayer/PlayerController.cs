@@ -24,7 +24,33 @@ public class PlayerController : MonoBehaviourPun
 
     private Vector3 moveDir; // 입력받는 방향
     private bool isWalking; // 애니메이션 작동 변수
-    public bool IsWalking { get { return isWalking; } set { isWalking = value; OnChangeWalking?.Invoke(value); } }
+    public bool IsWalking
+    {
+        get
+        {
+            return isWalking;
+        }
+        set
+        {
+            isWalking = value; OnChangeWalking?.Invoke(value);
+
+            photonView.RPC("SoundPlay", RpcTarget.All, isWalking);
+            
+        }
+    }
+
+    [PunRPC]
+    private void SoundPlay(bool isWalking)
+    {
+        if (isWalking)
+        {
+            walkingSound.Play();
+        }
+        else
+        {
+            walkingSound.Stop();
+        }
+    }
 
     public UnityEvent<bool> OnChangeWalking;
 
@@ -35,6 +61,8 @@ public class PlayerController : MonoBehaviourPun
         {
             // 플레이어인풋 삭제
             Destroy(playerInput);
+            // 다른 플레이어들 레이어 변경 (총으로 타겟 정할 때 겹침 문제 해결)
+            gameObject.layer = 3;
         }
 
         chat.OnGreeting.AddListener(Greeting); // 인사트리거를 이벤트로 받는다
@@ -128,12 +156,8 @@ public class PlayerController : MonoBehaviourPun
             IsWalking = value.Get<Vector2>() != Vector2.zero;
             //photonView.RPC("ChangeWalkingAnimation", RpcTarget.All, isWalking); // 애니메이션 작동
             photonView.RPC("SetAnimationParameter", RpcTarget.All, Parameter.SetBool, "IsWalking", isWalking);
-            walkingSound.Play();
         }
-        else if(!isWalking)
-        {
-            walkingSound.Stop();
-        }
+
         moveDir.x = value.Get<Vector2>().x;
         moveDir.z = value.Get<Vector2>().y;
     }
