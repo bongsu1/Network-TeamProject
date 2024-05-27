@@ -12,11 +12,8 @@ EditorBuildSettings:
     path: Assets/(1)Hanjeonguk/Scenes/LobbyScene.unity
     guid: 681477c61e723ca45bb0e31954878172
   - enabled: 1
-    path: Assets/(1)Hanjeonguk/Scenes/GameScene.unity
-    guid: 2a45892550ee0754c9a92c45ea1392c8
-  - enabled: 0
-    path: Assets/0YDJ/Scene/YDJ_3GameScene_Test.unity
-    guid: 5f57246a2cf37ba40bbde3dbe373b233
+    path: Assets/1bongsu/Scenes/BuildTest/GameScene.unity
+    guid: b1a55a711c98eb44a945079ff6059350
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: b12ad7cd245334f44af350266c203786,
       type: 2}
