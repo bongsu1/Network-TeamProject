@@ -15,6 +15,24 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Inventory",
+                    "type": "Button",
+                    "id": "e561d726-fedf-4e48-875d-48acb1639581",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ObjectRotation",
+                    "type": "Button",
+                    "id": "bf6853a4-9d8b-4fcd-9deb-b27ed06566d6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Chat",
                     "type": "Button",
                     "id": "14619022-b2b6-4031-9d56-41c256f4978a",
@@ -150,6 +168,28 @@
                     "action": "SetReady",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cfbaa134-be11-4067-a4e6-64cb3ffeea6b",
+                    "path": "<Keyboard>/b",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Inventory",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "642c44bd-5126-4b72-a1bb-cba7d75f54f2",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ObjectRotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
@@ -196,6 +236,34 @@
                     "processors": "",
                     "groups": "",
                     "action": "ChangeAngle",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "UI",
+            "id": "42b2f05d-dc64-4e72-ae5f-52e1de54fc10",
+            "actions": [
+                {
+                    "name": "Option",
+                    "type": "Button",
+                    "id": "e9e4d4cb-a563-407f-bb0f-519268d7818a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "28c428d7-7d41-41d7-bdac-d0fa0648d4cb",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Option",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

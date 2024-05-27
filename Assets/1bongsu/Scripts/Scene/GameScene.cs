@@ -10,9 +10,6 @@ public class GameScene : MonoBehaviourPunCallbacks
     [SerializeField] CinemachineVirtualCamera playerFollowCamera;
     [SerializeField] CinemachineVirtualCamera highAngleCamera;
 
-    [Header("Mosue Cursor")]
-    [SerializeField] Texture2D cursorImage;
-
     private IEnumerator Start()
     {
         LoadRoomData();
@@ -21,11 +18,6 @@ public class GameScene : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
             TextFilter.LoadData();
         GameStart();
-    }
-
-    private void Update()
-    {
-        Cursor.SetCursor(cursorImage, Vector2.zero, CursorMode.Auto);
     }
 
     private void LoadRoomData()
