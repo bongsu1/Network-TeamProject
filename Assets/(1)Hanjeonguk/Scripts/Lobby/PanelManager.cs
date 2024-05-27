@@ -113,7 +113,7 @@ public class PanelManager : MonoBehaviourPunCallbacks
     IEnumerator GameSceneLoadingRoutine() //게임씬 입장할 때 로딩씬 활성화
     {
         gameLodingScene.SetActive(true);
-        playerInput.enabled = false; //로딩 중 키 입력 비활성화
+        //playerInput.enabled = false; //로딩 중 키 입력 비활성화
 
         StartCoroutine(TextRoutine()); //텍스트 애니메이션
         StartCoroutine(ImageRoutine()); //이미지 애니메이션
@@ -128,7 +128,7 @@ public class PanelManager : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(3f);
 
         gameLodingScene.SetActive(false);
-        playerInput.enabled = true;
+        //playerInput.enabled = true;
         StopAllCoroutines();
 
     }
