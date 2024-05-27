@@ -2,17 +2,22 @@ using UnityEngine;
 
 public class Turret : MonoBehaviour
 {
-    [SerializeField] Transform GunBody = null;
+    [Header("Component")]
+    [SerializeField] Transform GunBody;
     [SerializeField] Transform GunMuzzle;
+
+    [Header("Property")]
     [SerializeField] float range = 0f;
     [SerializeField] LayerMask layerMask = 0;
     [SerializeField] float spinSpeed;
     [SerializeField] float fireRate = 0f;
-    private ObjectPool pool;
+
+    [Header("Sound")]
+    [SerializeField] AudioSource ShottingSound;
 
     float currentFireRate;
-
     Transform Target = null;
+    private ObjectPool pool;
 
     private void OnDrawGizmos()
     {
@@ -75,6 +80,7 @@ public class Turret : MonoBehaviour
                     currentFireRate = fireRate;
                     //Instantiate(bulletPre, transform.position, lookRotation);
                     pool.GetPool(GunMuzzle.transform.position, lookRotation);
+                    ShottingSound.Play();
                     Debug.Log("발사");
                 }
             }

@@ -16,13 +16,13 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
     [SerializeField] Animator animator;
     [SerializeField] Transform firePoint;
     [SerializeField] Bullet bulletPrefab;
+    [SerializeField] Collider axCollider;
 
     [Header("Property")]
     [SerializeField] float fireCoolTime;
     [SerializeField] float gunRange;
     [SerializeField] float spinSpeed;
-    [SerializeField] LayerMask layerMask;
-    [SerializeField] WeaponType holdingItem; // 1은 총, 2는 도끼
+    [SerializeField] WeaponType holdingItem;
     public WeaponType HoldingItem { set { holdingItem = value; } }
     [SerializeField] InventoryObject Eqiupment;
 
@@ -37,7 +37,12 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
 
     private ObjectPool pool;
 
+    [Header("TargetLayerMask")]
+    [SerializeField] LayerMask TargetMask;
 
+    [Header("Sound")]
+    [SerializeField] AudioSource ShottingSound;
+    //[SerializeField] AudioSource ReadySound;
 
 
     private void Start()
@@ -53,7 +58,7 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
         if (photonView.IsMine) // 조준
             SetItem();
 
-        Debug.Log(Eqiupment.Container.Items[3].item.weaponType);
+        //Debug.Log(Eqiupment.Container.Items[3].item.weaponType);
     }
 
     private void OnDrawGizmos()
@@ -81,18 +86,6 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
 
             case WeaponType.None: // 나중에 장비 풀기 추가
                 break;
-
-                //case 1:
-                //    SetGun();
-                //    if (isSetReady && Input.GetButton("Fire1")) // 총 발사
-                //        GunFire();
-                //    break;
-
-                //case 2:
-                //    SetAx();
-                //    if (isSetReady && Input.GetButtonDown("Fire1")) // 도끼 스윙
-                //        AxFire();
-                //    break;
         }
     }
 
@@ -100,7 +93,6 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
     // 총 구역 *************************************************************************************************************************************************************************************
     private void SetGun() // 총 조준
     {
-        //photonView.RPC("GunChangeSetReadyAnimation", RpcTarget.All, isSetReady); // 애니메이션 작동
         photonView.RPC("SetAnimationParameter", RpcTarget.All, Parameter.SetBool, "GunIsSetReady", isSetReady);
 
         gun.SetActive(isSetReady);
@@ -121,7 +113,7 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
 
     private void SearchEnemy() // 제일 가까운 타켓 찾기
     {
-        Collider[] targets = Physics.OverlapSphere(transform.position, gunRange, layerMask);
+        Collider[] targets = Physics.OverlapSphere(transform.position, gunRange, TargetMask);
         Transform shortestTarget = null;
 
         if (targets.Length > 0)
@@ -173,6 +165,8 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
     [PunRPC]
     private void CreateBullet(Vector3 position, Quaternion rotation, PhotonMessageInfo info)
     {
+
+
         float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime)); //서버 지연시간 보정
 
         //Quaternion gunShake = transform.rotation;
@@ -181,7 +175,14 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
         Bullet bullet = Instantiate(bulletPrefab, position, rotation);
         bullet.transform.position += bullet.Velocity * lag;
 
-        //ObjectPool pool = pool.GetPool(position, rotation);
+
+        //pool.GetPool(position, rotation);
+        //PooledObject pooledObject = pool.GetPool(position, rotation);
+        //pooledObject.GetComponent<Bullet>().transform.position += pooledObject.GetComponent<Bullet>().Velocity * lag;
+
+        //pooledObject.gameObject.transform.position += pooledObject.Velocity * lag;
+
+        ShottingSound.Play();
     }
 
 
@@ -206,6 +207,17 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
 
         photonView.RPC("SetAnimationParameter", RpcTarget.All, Parameter.SetBool, "AxSwing", axFire);
     }
+
+    public void EnableWeapon()
+    {
+        axCollider.enabled = true;
+    }
+
+    public void DisableWeapon()
+    {
+        axCollider.enabled = false;
+    }
+
 
     //if (Time.time < lastFireTime + fireCoolTime) //쿨타임
     //    return;

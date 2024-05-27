@@ -1,10 +1,9 @@
 using Photon.Pun;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
-public class HSHPlayer : MonoBehaviourPun
+public class PlayerController : MonoBehaviourPun
 {
     [Header("Componet")]
     [SerializeField] Rigidbody rigid;
@@ -20,6 +19,8 @@ public class HSHPlayer : MonoBehaviourPun
     [SerializeField] InventoryObject equipment;
     [SerializeField] PopUpUI InventoryUIViewer;
     [SerializeField] DynamicInterface inventorySlots;
+    [Header("Sound")]
+    [SerializeField] AudioSource walkingSound;
 
     private Vector3 moveDir; // 입력받는 방향
     private bool isWalking; // 애니메이션 작동 변수
@@ -47,9 +48,6 @@ public class HSHPlayer : MonoBehaviourPun
     }
     private void Update()
     {
-        //if (action.TargetIn())
-        //    return;
-
         Turn();
         if (Input.GetKeyDown(KeyCode.B))
         {
@@ -57,14 +55,14 @@ public class HSHPlayer : MonoBehaviourPun
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
-            Debug.Log("Save");
+            //Debug.Log("Save");
             //inventory.Save();
             //equipment.Save();
             Manager.Inven.SaveToJson();
         }
         if (Input.GetKeyDown(KeyCode.U))
         {
-            Debug.Log("Load");
+            //Debug.Log("Load");
             //inventory.Load();
             //equipment.Load();
             Manager.Inven.LoadFromJson();
@@ -96,6 +94,7 @@ public class HSHPlayer : MonoBehaviourPun
     private void FixedUpdate()
     {
         Move();
+
     }
 
     private void Move()
@@ -105,6 +104,9 @@ public class HSHPlayer : MonoBehaviourPun
 
     private void Turn()
     {
+        if (action.TargetIn())
+            return;
+
         Vector3 inputDir = transform.position + moveDir; // 입력하는 방향
         Vector3 nextDir;                                 // 바라볼 방향
         if (-transform.forward == moveDir) // 바라보는 방향과 입력방향이 반대일때는 방향이 바뀌지 않아서 추가
@@ -126,8 +128,12 @@ public class HSHPlayer : MonoBehaviourPun
             IsWalking = value.Get<Vector2>() != Vector2.zero;
             //photonView.RPC("ChangeWalkingAnimation", RpcTarget.All, isWalking); // 애니메이션 작동
             photonView.RPC("SetAnimationParameter", RpcTarget.All, Parameter.SetBool, "IsWalking", isWalking);
+            walkingSound.Play();
         }
-
+        else if(!isWalking)
+        {
+            walkingSound.Stop();
+        }
         moveDir.x = value.Get<Vector2>().x;
         moveDir.z = value.Get<Vector2>().y;
     }
@@ -145,19 +151,14 @@ public class HSHPlayer : MonoBehaviourPun
     public void GuestDropItem(InventorySlot item)
     {
         photonView.RPC("RequestGuestDropItem", RpcTarget.MasterClient, item.item.Id, Manager.Inven.database.Items[item.item.Id].name);
-        Debug.Log($"000. {item.item.Id}");
-        Debug.Log($"001. {Manager.Inven.database.Items[item.item.Id].name}");
+        //Debug.Log($"000. {item.item.Id}");
+        //Debug.Log($"001. {Manager.Inven.database.Items[item.item.Id].name}");
     }
     [PunRPC]
     private void RequestGuestDropItem(int id, string name)
     {
-        Debug.Log($"002. {id}");
-        Debug.Log($"003. {name}");
-
         if (PhotonNetwork.InRoom)
         {
-            Debug.Log("dropItem roomObject");
-
             object[] instantiationData = { id, name };
             // Allbuffered로 해결 안되면 photonView.InstantiationData 
             // 룸 오브젝트 프리팹 인스턴스화
@@ -182,15 +183,14 @@ public class HSHPlayer : MonoBehaviourPun
     [PunRPC]
     private void ResultGuestDropItem(int id, string name)
     {
-        Debug.Log($"004. {id}");
-        Debug.Log($"005. {name}");
-
+        //Debug.Log($"004. {id}");
+        //Debug.Log($"005. {name}");
     }
 
 
     private void OnDisable()
     {
-        Debug.Log("Clear slot");
+        //Debug.Log("Clear slot");
         if (photonView.IsMine)
         {
             Manager.Inven.HSHplayer = this;
@@ -242,9 +242,7 @@ public class HSHPlayer : MonoBehaviourPun
 
     private RaycastHit hitInfo;
 
-    [SerializeField] LayerMask GroundLayer;
-
-    [SerializeField] LayerMask IgnoreLayer;
+    [SerializeField] LayerMask ableLayer;
 
     [SerializeField] float range;
 
@@ -254,27 +252,42 @@ public class HSHPlayer : MonoBehaviourPun
     private void PointerPosition()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //카메라에서 레이 쏘기
-        if (Physics.Raycast(ray, out hitInfo, range, IgnoreLayer | GroundLayer)) //레이캐스트로 그라운드 체크(range로 범위 조정 가능)                      
+        if (Physics.Raycast(ray, out hitInfo, range, ableLayer)) //레이캐스트로 그라운드 체크(range로 범위 조정 가능)                      
         {
             Pointer = hitInfo.point;
 
             if (hitInfo.transform.gameObject.layer == 31) // 바닥에 둘 때 오차 보정
             {
-                Pointer.y = hitInfo.transform.position.y + go_Preview.transform.localScale.y - 0.5f;
+                Pointer.y = hitInfo.transform.position.y;
+                return;
+            }
+            else
+            {
+                Pointer.y = hitInfo.transform.position.y + go_Preview.transform.localScale.y;
                 return;
             }
 
-            if (go_Preview.transform.localScale.y > 1) // 두 칸 이상 전용
-            {
-                if (hitInfo.transform.localScale.y > 1) // 두 칸 이상이 두 칸 이상 위에 쌓을 때
-                {
-                    Pointer.y = hitInfo.transform.position.y + go_Preview.transform.localScale.y;
-                    return;
-                }
-                Pointer.y = hitInfo.transform.position.y + go_Preview.transform.localScale.y - (go_Preview.transform.localScale.y * 0.5f - 0.5f);  // 두 칸이 땅에 닿을 때 -0.5f
-                return;
-            }
-            Pointer.y = hitInfo.transform.position.y + go_Preview.transform.localScale.y + (hitInfo.transform.localScale.y * 0.5f - 0.5f);
+            //Debug.Log($"hitInfo.transform.position.y : {hitInfo.transform.position.y} , go_Preview.transform.localScale.y : {go_Preview.transform.localScale.y}");
+            //if (hitInfo.transform.gameObject.layer == 31) // 바닥에 둘 때 오차 보정
+            //{
+            //    Pointer.y = hitInfo.transform.position.y + go_Preview.transform.localScale.y - 0.5f;
+            //    return;
+            //}
+
+            //if (go_Preview.transform.localScale.y > 1) // 두 칸 이상 전용
+            //{
+            //    if (hitInfo.transform.localScale.y > 1) // 두 칸 이상이 두 칸 이상 위에 쌓을 때
+            //    {
+            //        Pointer.y = hitInfo.transform.position.y + go_Preview.transform.localScale.y;
+            //        return;
+            //    }
+            //    Pointer.y = hitInfo.transform.position.y + go_Preview.transform.localScale.y - (go_Preview.transform.localScale.y * 0.5f - 0.5f);  // 두 칸이 땅에 닿을 때 -0.5f
+            //    return;
+            //}
+            //Pointer.y = hitInfo.transform.position.y + go_Preview.transform.localScale.y + (hitInfo.transform.localScale.y * 0.5f - 0.5f);
+
+            //Pointer.y = hitInfo.transform.position.y + go_Preview.transform.localScale.y;
+
         }
     }
     public void SlotClick(InventorySlot Slot) //슬럿 클릭시 프리뷰 프리펩 생성
@@ -284,8 +297,8 @@ public class HSHPlayer : MonoBehaviourPun
         inventorySlot = Slot;
         go_Preview = Manager.Build.go_preview;
         go_Prefab = Manager.Build.go_prefab;
-        Debug.Log($"00. {go_prefab}");
-        Debug.Log($"01. {go_preview}");
+        //Debug.Log($"00. {go_prefab}");
+        //Debug.Log($"01. {go_preview}");
         isPreviewActivated = Manager.Build.isPreviewActivated;
         go_Preview = Instantiate(go_Preview, Pointer, Quaternion.Euler(0, 0, 0));
         //go_Prefab = Manager.Build.go_prefab;
@@ -304,7 +317,7 @@ public class HSHPlayer : MonoBehaviourPun
         {
             go_Preview.transform.Rotate(0, 2f, 0);
         }
-        Debug.Log(go_Preview.name);
+        //Debug.Log(go_Preview.name);
         go_Preview.transform.position = Pointer;
 
     }
