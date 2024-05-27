@@ -2568,6 +2568,7 @@ MonoBehaviour:
   roomNameInputField: {fileID: 1702533041}
   maxPlayerInputField: {fileID: 502180558}
   passwordInputField: {fileID: 676849994}
+  roomName: 
 --- !u!1 &203977700
 GameObject:
   m_ObjectHideFlags: 0
@@ -19769,6 +19770,7 @@ GameObject:
   - component: {fileID: 1421130117}
   - component: {fileID: 1421130121}
   - component: {fileID: 1421130122}
+  - component: {fileID: 1421130123}
   m_Layer: 5
   m_Name: PanelCanvas
   m_TagString: Untagged
@@ -19893,6 +19895,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuPanel: {fileID: 1231984393}
   lobbyPanel: {fileID: 203472653}
+--- !u!114 &1421130123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1421130116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaa84077218bf6b448e6e366d5e523af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClick: {fileID: 8300000, guid: 784ca8b5779b10949a57327acef4a8da, type: 3}
 --- !u!1 &1423119887
 GameObject:
   m_ObjectHideFlags: 0
@@ -21172,6 +21187,7 @@ GameObject:
   - component: {fileID: 1559322066}
   - component: {fileID: 1559322069}
   - component: {fileID: 1559322068}
+  - component: {fileID: 1559322070}
   m_Layer: 0
   m_Name: PanelManager
   m_TagString: Untagged
@@ -21210,6 +21226,8 @@ MonoBehaviour:
   downButton: {fileID: 486370562}
   logoutButton: {fileID: 832573463}
   playerInput: {fileID: 1559322069}
+  lobbySceneBGM: {fileID: 8300000, guid: 95fdada27424c4fb08da35ae38bacf31, type: 3}
+  gameSceneBGM: {fileID: 8300000, guid: 8d392e6fa1ccb423c8254f88312ec102, type: 3}
 --- !u!4 &1559322067
 Transform:
   m_ObjectHideFlags: 0
@@ -21359,6 +21377,19 @@ MonoBehaviour:
   m_DefaultActionMap: Key
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &1559322070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1559322065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaa84077218bf6b448e6e366d5e523af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClick: {fileID: 8300000, guid: 784ca8b5779b10949a57327acef4a8da, type: 3}
 --- !u!1 &1569550219
 GameObject:
   m_ObjectHideFlags: 0
@@ -21885,51 +21916,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1607508320}
   m_CullTransparentMesh: 0
---- !u!1 &1607990292
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1607990294}
-  - component: {fileID: 1607990293}
-  m_Layer: 0
-  m_Name: LobbySound
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1607990293
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1607990292}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a8e24e155ae9544c800cec928081037, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  loginBGM: {fileID: 8300000, guid: 95fdada27424c4fb08da35ae38bacf31, type: 3}
---- !u!4 &1607990294
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1607990292}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 968.9034, y: 500.53174, z: -3.2877593}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1614872768
 GameObject:
   m_ObjectHideFlags: 0
@@ -29010,4 +28996,3 @@ SceneRoots:
   - {fileID: 1654776410}
   - {fileID: 424849431}
   - {fileID: 1559322067}
-  - {fileID: 1607990294}

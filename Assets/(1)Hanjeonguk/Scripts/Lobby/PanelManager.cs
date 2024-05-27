@@ -30,6 +30,9 @@ public class PanelManager : MonoBehaviourPunCallbacks
 
     [SerializeField] PlayerInput playerInput;
 
+    [SerializeField] AudioClip lobbySceneBGM;
+    [SerializeField] AudioClip gameSceneBGM;
+
     private static PanelManager instance;
 
     // public static PanelManager Instance { get { return instance; } }
@@ -52,6 +55,7 @@ public class PanelManager : MonoBehaviourPunCallbacks
         FirebaseManager.DB
        .GetReference($"UserData/{FirebaseManager.Auth.CurrentUser.UserId}/isLogin")
        .ValueChanged += LoginCheck;
+        Manager.Sound.PlayBGM(lobbySceneBGM);
     }
 
     public override void OnDisable() //비활성화했을 때 포톤 종료
@@ -76,6 +80,12 @@ public class PanelManager : MonoBehaviourPunCallbacks
         GameSceneLoading(); //룸 입장 시 로딩씬 활성화 루틴
         currentServer.text = PhotonNetwork.CurrentRoom.Name; //로딩씬에 현재 접속한 서버이름 표기
         PhotonNetwork.LeaveLobby();
+        Manager.Sound.PlayBGM(gameSceneBGM);
+    }
+
+    public override void OnLeftRoom()
+    {
+        Manager.Sound.StopBGM();
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
@@ -111,7 +121,6 @@ public class PanelManager : MonoBehaviourPunCallbacks
 
         gameLodingScene.SetActive(false);
         playerInput.enabled = true;
-        Manager.Sound.StopBGM();
         StopAllCoroutines();
 
     }
