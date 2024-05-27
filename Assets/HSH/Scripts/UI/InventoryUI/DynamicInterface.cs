@@ -1,8 +1,6 @@
-using ExitGames.Client.Photon;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Rendering;
 
 public class DynamicInterface : UserInterface
 {
@@ -35,14 +33,18 @@ public class DynamicInterface : UserInterface
             slotsOnInterface.Add(obj, inventory.Container.Items[i]);
         }
     }
-    public void OnClickpointer(GameObject obj) // 인벤토리 슬롯 클릭 시 ID 같은 칸 찾아서 장비칸에 자동 장착
+    public void OnClickpointer(GameObject obj) // 인벤토리 슬롯 아이템 클릭 시 ID 타입별 명령 실행 일단 두개
     {
-        if (Manager.Inven.database.Items[slotsOnInterface[obj].item.Id].type == ItemType.Build)
+        if (slotsOnInterface[obj].item.Id < 0)
+        {
+            return;
+        }
+        else if (Manager.Inven.database.Items[slotsOnInterface[obj].item.Id].type == ItemType.Build)
         {
             Manager.Build.go_preview = Manager.Inven.database.Items[slotsOnInterface[obj].item.Id].data.go_PreviewPrefab;
             Manager.Build.go_prefab = Manager.Inven.database.Items[slotsOnInterface[obj].item.Id].data.go_prefab;
             Debug.Log(Manager.Build.go_prefab);
-            Manager.Inven.HSHplayer.SlotClick(slotsOnInterface[obj]);
+            Manager.Inven.playerController.SlotClick(slotsOnInterface[obj]);
             Manager.UI.ClosePopUpUI();
             return;
         }
@@ -62,7 +64,6 @@ public class DynamicInterface : UserInterface
                         return;
                     }
                 }
-
             }
         }
         else

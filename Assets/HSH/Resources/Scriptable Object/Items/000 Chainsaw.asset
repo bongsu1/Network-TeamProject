@@ -17,7 +17,9 @@ MonoBehaviour:
   type: 2
   description: Chainsaw
   data:
-    Name: 
+    Name: 000 Chainsaw
     Id: 0
     buffs: []
     weaponType: 2
+    go_prefab: {fileID: 0}
+    go_PreviewPrefab: {fileID: 0}

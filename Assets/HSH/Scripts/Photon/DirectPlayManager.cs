@@ -48,7 +48,7 @@ public class DirectPlay : MonoBehaviourPunCallbacks
         // test..
         Vector3 spawnPosition = DebugDataManager.Instance == null ? new Vector3(2, 2, 2) : DebugDataManager.Instance.RoomData.position;
 
-        GameObject player = PhotonNetwork.Instantiate("PlayerController", spawnPosition, Quaternion.identity);
+        GameObject player = PhotonNetwork.Instantiate("YDJ_Player_Test", spawnPosition, Quaternion.identity);
         if (playerFollowCamera != null)
         {
             playerFollowCamera.gameObject.SetActive(true);

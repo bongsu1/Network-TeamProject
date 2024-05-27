@@ -39,7 +39,7 @@ public class UIManager : Singleton<UIManager>
         }
         else
         {
-            popUpBlocker.gameObject.SetActive(true);
+            //popUpBlocker.gameObject.SetActive(true);
             //prevTimeScale = Time.timeScale;
             //Time.timeScale = 0f;
         }

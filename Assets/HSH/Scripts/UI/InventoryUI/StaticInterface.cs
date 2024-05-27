@@ -28,7 +28,7 @@ public class StaticInterface : UserInterface
     {
         for (int i = 0; i < invenOrigin.Container.Items.Length; i++)
         {
-            if(invenOrigin.Container.Items[i].item.Id < 0)
+            if (invenOrigin.Container.Items[i].item.Id < 0)
             {
                 inventory.SwapItems(slotsOnInterface[obj], invenOrigin.Container.Items[i]);
             }

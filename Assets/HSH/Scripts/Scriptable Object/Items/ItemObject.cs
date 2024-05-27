@@ -8,7 +8,6 @@ public enum ItemType
     Shield,
     Boots,
     Chest,
-    Tool,
     Build,
     Default
 }
