@@ -132,6 +132,7 @@ MonoBehaviour:
   onHitSearchRadius: 10
   maxHP: 30
   curHP: 0
+  DamagedSound: {fileID: 0}
   OnDie:
     m_PersistentCalls:
       m_Calls: []
