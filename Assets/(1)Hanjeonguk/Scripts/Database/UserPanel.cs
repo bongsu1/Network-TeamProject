@@ -12,9 +12,9 @@ public class UserPanel : MonoBehaviour //로비씬에서 닉네임 관리
     [SerializeField] Button nickNameChangeButton;
 
     [SerializeField] GameObject infoPanel;
-   
+
     [SerializeField] Button closeButton;
-   
+
 
     private UserData userData;
 
@@ -93,9 +93,8 @@ public class UserPanel : MonoBehaviour //로비씬에서 닉네임 관리
              {
                  string userName = (string)child.Child("nickName").Value;
 
-                 if (userName == nickName) 
+                 if (userName == nickName)
                  {
-                     Debug.Log("이미 존재하는 닉네임 입니다.");
                      infoPanel.SetActive(true);
                      return;
                  }
@@ -118,9 +117,8 @@ public class UserPanel : MonoBehaviour //로비씬에서 닉네임 관리
                      Debug.Log($"닉네임 재설정 오류");
                      return;
                  }
-
+       
                  nickNameText.text = nickName;
-                 Debug.Log($"닉네임 재설정 완료");
              });
 
              PhotonNetwork.LocalPlayer.NickName = nickNameInputField.text;

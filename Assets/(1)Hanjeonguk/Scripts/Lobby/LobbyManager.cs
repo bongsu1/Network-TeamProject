@@ -23,6 +23,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         SetActivePanel(Panel.Menu);
     }
+
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         lobbyPanel.UpdateRoomList(roomList);

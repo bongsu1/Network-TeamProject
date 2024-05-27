@@ -49,6 +49,33 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "Chat",
+                    "type": "Button",
+                    "id": "5b2c5727-32d4-45e7-8e03-6042b1db8bc0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ObjectRotation",
+                    "type": "Button",
+                    "id": "64a6fb58-e19b-4676-8b5f-ca752b77d3ef",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Interactive",
+                    "type": "Button",
+                    "id": "0cdc64b5-e41e-42a7-b747-a8bcd93c7e87",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -150,6 +177,39 @@
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "fae81e6a-4e39-45d4-a1b8-ba2da5be78dd",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Chat",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1ae61a5a-be82-405a-bb4d-b315f239c5ed",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ObjectRotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1104d14c-4f15-4fbc-a119-920d8138c3fa",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Interactive",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },

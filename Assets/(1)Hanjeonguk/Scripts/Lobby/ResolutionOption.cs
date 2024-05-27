@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,7 +29,7 @@ public class ResolutionOption : MonoBehaviour
 
         int optionNum = 0;
 
-        foreach (Resolution resolution in resolutions) 
+        foreach (Resolution resolution in resolutions)
         {
             Dropdown.OptionData optionData = new Dropdown.OptionData();
             optionData.text = $"{resolution.width}X{resolution.height} {resolution.refreshRateRatio.value}hz";
@@ -39,7 +38,7 @@ public class ResolutionOption : MonoBehaviour
             if (resolution.width == Screen.width && resolution.height == Screen.height)
                 dropdown.value = optionNum;
             optionNum++;
-            
+
         }
 
         dropdown.RefreshShownValue(); //새로고침

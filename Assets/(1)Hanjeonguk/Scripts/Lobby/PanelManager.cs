@@ -4,6 +4,7 @@ using Photon.Pun;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class PanelManager : MonoBehaviourPunCallbacks
@@ -25,10 +26,13 @@ public class PanelManager : MonoBehaviourPunCallbacks
     [SerializeField] Button optionCloseButton1;
     [SerializeField] Button optionCloseButton2;
     [SerializeField] Button downButton;
+    [SerializeField] Button logoutButton;
+
+    [SerializeField] PlayerInput playerInput;
 
     private static PanelManager instance;
 
-   // public static PanelManager Instance { get { return instance; } }
+    // public static PanelManager Instance { get { return instance; } }
 
 
     private void Awake()
@@ -38,16 +42,16 @@ public class PanelManager : MonoBehaviourPunCallbacks
         optionCloseButton1.onClick.AddListener(OptionCloseButton);
         optionCloseButton2.onClick.AddListener(OptionCloseButton);
         downButton.onClick.AddListener(DownButton);
-
+        logoutButton.onClick.AddListener(Logout);
     }
 
     public override void OnEnable() //활성화했을 때 같은 아이디로 로그인한 기존 유저 확인 후 로그아웃 적용
     {
         base.OnEnable();
 
-       FirebaseManager.DB
-      .GetReference($"UserData/{FirebaseManager.Auth.CurrentUser.UserId}/isLogin")
-      .ValueChanged += LoginCheck;
+        FirebaseManager.DB
+       .GetReference($"UserData/{FirebaseManager.Auth.CurrentUser.UserId}/isLogin")
+       .ValueChanged += LoginCheck;
     }
 
     public override void OnDisable() //비활성화했을 때 포톤 종료
@@ -67,10 +71,11 @@ public class PanelManager : MonoBehaviourPunCallbacks
         PhotonNetwork.Disconnect();
     }
 
-    public override void OnJoinedRoom() 
+    public override void OnJoinedRoom()
     {
         GameSceneLoading(); //룸 입장 시 로딩씬 활성화 루틴
         currentServer.text = PhotonNetwork.CurrentRoom.Name; //로딩씬에 현재 접속한 서버이름 표기
+        PhotonNetwork.LeaveLobby();
     }
 
     public override void OnJoinRoomFailed(short returnCode, string message)
@@ -81,7 +86,7 @@ public class PanelManager : MonoBehaviourPunCallbacks
         }
     }
 
-   
+
     public void GameSceneLoading()
     {
         StartCoroutine(GameSceneLoadingRoutine());
@@ -90,6 +95,7 @@ public class PanelManager : MonoBehaviourPunCallbacks
     IEnumerator GameSceneLoadingRoutine() //게임씬 입장할 때 로딩씬 활성화
     {
         gameLodingScene.SetActive(true);
+        playerInput.enabled = false; //로딩 중 키 입력 비활성화
 
         StartCoroutine(TextRoutine()); //텍스트 애니메이션
         StartCoroutine(ImageRoutine()); //이미지 애니메이션
@@ -104,8 +110,10 @@ public class PanelManager : MonoBehaviourPunCallbacks
         yield return new WaitForSeconds(3f);
 
         gameLodingScene.SetActive(false);
-
+        playerInput.enabled = true;
+        Manager.Sound.StopBGM();
         StopAllCoroutines();
+
     }
 
     IEnumerator TextRoutine() //텍스트 애니메이션
@@ -211,6 +219,22 @@ public class PanelManager : MonoBehaviourPunCallbacks
         {
             Destroy(gameObject);
         }
+    }
+    public void Logout()
+    {
+        StartCoroutine(LogoutRoutine());
+    }
+
+    IEnumerator LogoutRoutine()
+    {
+        OptionCloseButton();
+        FirebaseManager.Auth.SignOut();
+        PhotonNetwork.LoadLevel("AuthScene");
+        PhotonNetwork.LeaveRoom();
+
+        yield return new WaitForSeconds(1);
+
+        Destroy(gameObject);
     }
 
     //public void ValueChangeCheck()

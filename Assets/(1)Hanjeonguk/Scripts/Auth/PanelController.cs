@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class PanelController : MonoBehaviour
 {
-    public enum Panel { Login, SignUp}
+    public enum Panel { Login, SignUp }
 
     [SerializeField] LoginPanel loginPanel;
     [SerializeField] SignInUpPanel signInPanel;
@@ -29,7 +27,7 @@ public class PanelController : MonoBehaviour
         signInPanel.gameObject.SetActive(panel == Panel.SignUp);
     }
 
-    public void ShowInfo(string message) 
+    public void ShowInfo(string message)
     {
         infoPanel.ShowInfo(message);
     }
@@ -45,7 +43,7 @@ public class PanelController : MonoBehaviour
 
     public void Quit()
     {
-       FirebaseManager.Auth.SignOut();
+        FirebaseManager.Auth.SignOut();
         Application.Quit();
     }
 }

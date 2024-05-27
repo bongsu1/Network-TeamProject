@@ -22,7 +22,7 @@ public class Rebinding : MonoBehaviour
 
     private string path = null;
 
-    [SerializeField] int bindingIndex=0;
+    [SerializeField] int bindingIndex = 0;
     private void Awake()
     {
         duplicationErrorClose.onClick.AddListener(DuplicationErrorClose);
@@ -43,11 +43,11 @@ public class Rebinding : MonoBehaviour
             path = currentAction.action.bindings[bindingIndex].path; //기본 경로 가져오기
 
         operation = currentAction.action.PerformInteractiveRebinding(bindingIndex) //키변경 함수
-            .WithControlsExcluding("Mouse")  //해당 키 무시
+            .WithControlsExcluding("Mouse") //해당 키 무시
             .WithCancelingThrough("<Mouse>/rightButton") //키변경 취소
-            .OnMatchWaitForAnother(0.1f)   //키 변경 지연 시간
+            .OnMatchWaitForAnother(0.1f)   //키 변경 지연 시간 
             .OnCancel(Operation => RebindCancel()) //키변경 취소되었을 때 함수
-            .OnComplete(Operation => RebindComplate()) //키변경 완료되었을 때 함수s
+            .OnComplete(Operation => RebindComplate()) //키변경 완료되었을 때 함수
             .Start();
     }
 
@@ -67,20 +67,21 @@ public class Rebinding : MonoBehaviour
         button.SetActive(true);
         waitButton.SetActive(false);
         buttonController.EnableAllButtons();
-
-        currentAction.action.Enable(); //키를 변경한 뒤 inputaction 활성화 
+        currentAction.action.Enable(); //키를 변경한 뒤 inputaction 활성화                   
 
         operation.Dispose(); //인스턴스 삭제, 메모리 누수 방지
 
         if (CheckBindings(currentAction.action)) //중복 값이 존재할 때
         {
             if (path != null)
-                currentAction.action.ApplyBindingOverride(path); //기존 값 다시 적용
+                currentAction.action.ApplyBindingOverride(null); //기존 값 다시 적용
+
 
             return;
         }
 
-        ShowText(); 
+
+        ShowText();
     }
 
     public void ShowText() //버튼 텍스트 변경
@@ -99,20 +100,19 @@ public class Rebinding : MonoBehaviour
 
                 if (binding.action == newBinding.action) //자신과 같은 액션이면서
                 {
-                    Debug.Log($"{binding.action}/{newBinding.action}");
+                    //Debug.Log($"{binding.action}/{newBinding.action}");
 
-                    //if (binding.id == newBinding.id) //자신과 같은 Id
-                    //{
-                    //    Debug.Log($"{binding.id}/{newBinding.id}");
+                    if (binding.id == newBinding.id) //자신과 같은 Id
+                    {
+                        //Debug.Log($"{binding.id}/{newBinding.id}");
 
-                        
-                    //}
-                    continue; // 자신과 동일한 바인딩은 건너뜀
+                        continue; // 자신과 동일한 바인딩은 건너뜀
+                    }
                 }
-                
+
                 if (binding.effectivePath == newBinding.effectivePath) //자신과 같은 키일 때 중복으로 판단
                 {
-                    Debug.Log($"{binding.effectivePath}/{binding.effectivePath}");
+                    //Debug.Log($"{binding.effectivePath}/{binding.effectivePath}");
 
                     duplicationError.SetActive(true);
                     return true;
@@ -125,5 +125,7 @@ public class Rebinding : MonoBehaviour
     public void DuplicationErrorClose()
     {
         duplicationError.SetActive(false);
+        ShowText();
+        //this.buttonText.text = " - ";
     }
 }
