@@ -3753,6 +3753,7 @@ GameObject:
   - component: {fileID: 980167731}
   - component: {fileID: 980167730}
   - component: {fileID: 980167734}
+  - component: {fileID: 980167735}
   m_Layer: 5
   m_Name: PanelCanvas
   m_TagString: Untagged
@@ -3868,6 +3869,19 @@ MonoBehaviour:
   infoPanel: {fileID: 646798305}
   verifyPanel: {fileID: 605760389}
   shotdownButton: {fileID: 1739288749}
+--- !u!114 &980167735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 980167729}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaa84077218bf6b448e6e366d5e523af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buttonClick: {fileID: 8300000, guid: 784ca8b5779b10949a57327acef4a8da, type: 3}
 --- !u!1 &981554130
 GameObject:
   m_ObjectHideFlags: 0
