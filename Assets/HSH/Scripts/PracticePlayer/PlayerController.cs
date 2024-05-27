@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviourPun
     [SerializeField] InventoryObject equipment;
     [SerializeField] PopUpUI InventoryUIViewer;
     [SerializeField] DynamicInterface inventorySlots;
+    [Header("Sound")]
+    [SerializeField] AudioSource walkingSound;
 
     private Vector3 moveDir; // 입력받는 방향
     private bool isWalking; // 애니메이션 작동 변수
@@ -46,9 +48,6 @@ public class PlayerController : MonoBehaviourPun
     }
     private void Update()
     {
-        //if (action.TargetIn())
-        //    return;
-
         Turn();
         if (Input.GetKeyDown(KeyCode.B))
         {
@@ -56,14 +55,14 @@ public class PlayerController : MonoBehaviourPun
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
-            Debug.Log("Save");
+            //Debug.Log("Save");
             //inventory.Save();
             //equipment.Save();
             Manager.Inven.SaveToJson();
         }
         if (Input.GetKeyDown(KeyCode.U))
         {
-            Debug.Log("Load");
+            //Debug.Log("Load");
             //inventory.Load();
             //equipment.Load();
             Manager.Inven.LoadFromJson();
@@ -95,6 +94,7 @@ public class PlayerController : MonoBehaviourPun
     private void FixedUpdate()
     {
         Move();
+
     }
 
     private void Move()
@@ -128,8 +128,12 @@ public class PlayerController : MonoBehaviourPun
             IsWalking = value.Get<Vector2>() != Vector2.zero;
             //photonView.RPC("ChangeWalkingAnimation", RpcTarget.All, isWalking); // 애니메이션 작동
             photonView.RPC("SetAnimationParameter", RpcTarget.All, Parameter.SetBool, "IsWalking", isWalking);
+            walkingSound.Play();
         }
-
+        else if(!isWalking)
+        {
+            walkingSound.Stop();
+        }
         moveDir.x = value.Get<Vector2>().x;
         moveDir.z = value.Get<Vector2>().y;
     }
@@ -147,19 +151,14 @@ public class PlayerController : MonoBehaviourPun
     public void GuestDropItem(InventorySlot item)
     {
         photonView.RPC("RequestGuestDropItem", RpcTarget.MasterClient, item.item.Id, Manager.Inven.database.Items[item.item.Id].name);
-        Debug.Log($"000. {item.item.Id}");
-        Debug.Log($"001. {Manager.Inven.database.Items[item.item.Id].name}");
+        //Debug.Log($"000. {item.item.Id}");
+        //Debug.Log($"001. {Manager.Inven.database.Items[item.item.Id].name}");
     }
     [PunRPC]
     private void RequestGuestDropItem(int id, string name)
     {
-        Debug.Log($"002. {id}");
-        Debug.Log($"003. {name}");
-
         if (PhotonNetwork.InRoom)
         {
-            Debug.Log("dropItem roomObject");
-
             object[] instantiationData = { id, name };
             // Allbuffered로 해결 안되면 photonView.InstantiationData 
             // 룸 오브젝트 프리팹 인스턴스화
@@ -184,14 +183,14 @@ public class PlayerController : MonoBehaviourPun
     [PunRPC]
     private void ResultGuestDropItem(int id, string name)
     {
-        Debug.Log($"004. {id}");
-        Debug.Log($"005. {name}");
+        //Debug.Log($"004. {id}");
+        //Debug.Log($"005. {name}");
     }
 
 
     private void OnDisable()
     {
-        Debug.Log("Clear slot");
+        //Debug.Log("Clear slot");
         if (photonView.IsMine)
         {
             Manager.Inven.HSHplayer = this;
@@ -268,7 +267,7 @@ public class PlayerController : MonoBehaviourPun
                 return;
             }
 
-            Debug.Log($"hitInfo.transform.position.y : {hitInfo.transform.position.y} , go_Preview.transform.localScale.y : {go_Preview.transform.localScale.y}");
+            //Debug.Log($"hitInfo.transform.position.y : {hitInfo.transform.position.y} , go_Preview.transform.localScale.y : {go_Preview.transform.localScale.y}");
             //if (hitInfo.transform.gameObject.layer == 31) // 바닥에 둘 때 오차 보정
             //{
             //    Pointer.y = hitInfo.transform.position.y + go_Preview.transform.localScale.y - 0.5f;
@@ -298,8 +297,8 @@ public class PlayerController : MonoBehaviourPun
         inventorySlot = Slot;
         go_Preview = Manager.Build.go_preview;
         go_Prefab = Manager.Build.go_prefab;
-        Debug.Log($"00. {go_prefab}");
-        Debug.Log($"01. {go_preview}");
+        //Debug.Log($"00. {go_prefab}");
+        //Debug.Log($"01. {go_preview}");
         isPreviewActivated = Manager.Build.isPreviewActivated;
         go_Preview = Instantiate(go_Preview, Pointer, Quaternion.Euler(0, 0, 0));
         //go_Prefab = Manager.Build.go_prefab;
@@ -318,7 +317,7 @@ public class PlayerController : MonoBehaviourPun
         {
             go_Preview.transform.Rotate(0, 2f, 0);
         }
-        Debug.Log(go_Preview.name);
+        //Debug.Log(go_Preview.name);
         go_Preview.transform.position = Pointer;
 
     }

@@ -40,6 +40,10 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
     [Header("TargetLayerMask")]
     [SerializeField] LayerMask TargetMask;
 
+    [Header("Sound")]
+    [SerializeField] AudioSource ShottingSound;
+    //[SerializeField] AudioSource ReadySound;
+
 
     private void Start()
     {
@@ -54,7 +58,7 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
         if (photonView.IsMine) // 조준
             SetItem();
 
-        Debug.Log(Eqiupment.Container.Items[3].item.weaponType);
+        //Debug.Log(Eqiupment.Container.Items[3].item.weaponType);
     }
 
     private void OnDrawGizmos()
@@ -161,19 +165,24 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
     [PunRPC]
     private void CreateBullet(Vector3 position, Quaternion rotation, PhotonMessageInfo info)
     {
+
+
         float lag = Mathf.Abs((float)(PhotonNetwork.Time - info.SentServerTime)); //서버 지연시간 보정
 
         //Quaternion gunShake = transform.rotation;
         //gunShake.y = transform.rotation.y + Random.RandomRange(-0.03f, 0.03f);
 
-        //Bullet bullet = Instantiate(bulletPrefab, position, rotation);
-        //bullet.transform.position += bullet.Velocity * lag;
+        Bullet bullet = Instantiate(bulletPrefab, position, rotation);
+        bullet.transform.position += bullet.Velocity * lag;
 
 
         //pool.GetPool(position, rotation);
-        PooledObject pooledObject = pool.GetPool(position, rotation);
-        pooledObject.GetComponent<Bullet>().transform.position += pooledObject.GetComponent<Bullet>().Velocity * lag;
+        //PooledObject pooledObject = pool.GetPool(position, rotation);
+        //pooledObject.GetComponent<Bullet>().transform.position += pooledObject.GetComponent<Bullet>().Velocity * lag;
+
         //pooledObject.gameObject.transform.position += pooledObject.Velocity * lag;
+
+        ShottingSound.Play();
     }
 
 

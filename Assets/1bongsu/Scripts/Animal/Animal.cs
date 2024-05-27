@@ -29,6 +29,9 @@ public class Animal : MonoBehaviourPun, IPunObservable, IDamageble
     [SerializeField] protected int maxHP;
     [SerializeField] protected int curHP;
 
+    [Header("Sound")]
+    [SerializeField] AudioSource DamagedSound;
+
     private float cosRange;
 
     private Transform target;
@@ -129,6 +132,7 @@ public class Animal : MonoBehaviourPun, IPunObservable, IDamageble
         curHP -= Damage;
         onHit = true;
 
+        DamagedSound.Play();
         if (curHP <= 0)
         {
             curHP = 0;
