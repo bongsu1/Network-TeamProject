@@ -5,7 +5,6 @@ public class InterationTool : MonoBehaviour
     [SerializeField] float interactRadius;
     [SerializeField] float interactAngle;
     [SerializeField] InventoryObject inventory;
-    [SerializeField] AudioSource itemPickSound;
 
     private float cosRange;
 
@@ -20,11 +19,6 @@ public class InterationTool : MonoBehaviour
     {
         Debug.Log("상호작용함수 시작부분");
         int size = Physics.OverlapSphereNonAlloc(transform.position, interactRadius, colliders, interactableLayer);
-        Debug.Log(size);
-        Debug.Log(colliders.Length);
-        Debug.Log(interactRadius);
-        Debug.Log(colliders);
-        Debug.Log(interactableLayer);
         if (size > 0)
         {
             foreach (Collider collider in colliders)
@@ -32,16 +26,12 @@ public class InterationTool : MonoBehaviour
                 HSH_IInteractable<InventoryObject> interactable = collider.GetComponent<HSH_IInteractable<InventoryObject>>();
                 if (interactable == null)
                 {
-                    Debug.Log($"널값이래");
-                    Debug.Log($"{collider.name}");
                     return;
                 }
 
                 Vector3 toTargetDir = (collider.transform.position - transform.position).normalized; // 대상의 방향
                 if (Vector3.Dot(toTargetDir, transform.forward) < cosRange)
                     return;
-                Debug.Log("상호작용툴에서 작동");
-                itemPickSound.Play();   
                 interactable.Interact(inventory);
                 break;
             }

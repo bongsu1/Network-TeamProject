@@ -6,6 +6,8 @@ public class InventoryManager : Singleton<InventoryManager>
 {
     [SerializeField] InventoryObject inven;
     [SerializeField] InventoryObject equip;
+    [SerializeField] InventoryObject myTrade;
+    [SerializeField] InventoryObject OpponentTradeSlot;
 
     [SerializeField] public ItemDatabaseObject database;
     // why dont work
@@ -14,7 +16,7 @@ public class InventoryManager : Singleton<InventoryManager>
     //[SerializeField] StaticInterface equipment;
     [Header("Drop")]
     //[SerializeField] public PracticePlayer player;
-    [SerializeField] public PlayerController HSHplayer;
+    [SerializeField] public PlayerController playerController;
     [SerializeField] public Vector3 dropPosition;
 
     [Header("Auth")]
@@ -22,6 +24,15 @@ public class InventoryManager : Singleton<InventoryManager>
     [SerializeField] string pass;
 
     [SerializeField] public CraftManual craftManual;
+
+    [Header("TradeUserID")]
+    [SerializeField] public int tradeUserID;
+    [SerializeField] public int OpponentUserId;
+    [SerializeField] public int MyUserID;
+
+    [Header("Trade")]
+    [SerializeField] public bool MyTradeOk = false;
+    [SerializeField] public bool TradeUserTradeOk = false;
 
     [Header("Firebase")]
     private InvenData invenData;
@@ -176,20 +187,20 @@ public class InventoryManager : Singleton<InventoryManager>
         FirebaseManager.Auth.SignOut();
         //StopSaveRoutine();
     }
-    
+
     public void DropPositioning()
     {
         Debug.Log("Repositioning");
-        if(HSHplayer == null)
+        if (playerController == null)
         {
             return;
         }
         else
         {
-            dropPosition = HSHplayer.transform.position + new Vector3(0, 0, 0);
+            dropPosition = playerController.transform.position + new Vector3(0, 0, 0);
         }
     }
-    
+
     //private void StartSaveRoutine()
     //{
     //    saveRoutine = StartCoroutine(SaveRoutine());

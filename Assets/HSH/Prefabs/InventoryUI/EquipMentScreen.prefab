@@ -101,6 +101,7 @@ MonoBehaviour:
   - {fileID: 3796120529088857868}
   - {fileID: 1056497425267992228}
   - {fileID: 1274260005793330418}
+  invenOrigin: {fileID: 11400000, guid: 073066803168bf84ca271e5d2cfd98d6, type: 2}
 --- !u!114 &8447469604999569794
 MonoBehaviour:
   m_ObjectHideFlags: 0

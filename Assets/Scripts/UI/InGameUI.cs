@@ -11,8 +11,16 @@ public class InGameUI : BaseUI
         {
             transform.position = Camera.main.WorldToScreenPoint(followTarget.position) + followOffset;
         }
+        return;
     }
-
+    public void SetTarget(Transform target)
+    {
+        followTarget = target;
+    }
+    public void SetOffset(Vector3 offset)
+    {
+        followOffset = offset;
+    }
     public void Close()
     {
         Manager.UI.CloseInGameUI();

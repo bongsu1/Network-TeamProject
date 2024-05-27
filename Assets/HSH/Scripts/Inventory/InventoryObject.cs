@@ -242,6 +242,16 @@ public class Inventory
     //private Inventory inven;
 
     public InventorySlot[] Items = new InventorySlot[24];
+    public void UpdateNum() // 데이터베이스에 들어있는 아이템에 ID 부여
+    {
+        for (int i = 0; i < Items.Length; i++)
+        {
+            if (Items[i].slotNumber != i)
+            {
+                Items[i].slotNumber = i;
+            }
+        }
+    }
     public void Clear()
     {
         for (int i = 0; i < Items.Length; i++)
@@ -261,6 +271,7 @@ public class Inventory
 public class InventorySlot
 {
     public ItemType[] AllowedItems = new ItemType[0];
+    public int slotNumber;
     [System.NonSerialized]
     public UserInterface parent;
     //public int ID = -1;
@@ -296,7 +307,6 @@ public class InventorySlot
     }
     public void UpdateSlot(Item _item, int _amount)
     {
-        Debug.Log("UpdateSlot");
         //ID = _id;
         item = _item;
         amount = _amount;

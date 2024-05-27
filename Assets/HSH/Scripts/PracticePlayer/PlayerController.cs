@@ -1,6 +1,7 @@
 using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviourPun
@@ -21,6 +22,13 @@ public class PlayerController : MonoBehaviourPun
     [SerializeField] DynamicInterface inventorySlots;
     [Header("Sound")]
     [SerializeField] AudioSource walkingSound;
+
+    [Header("Trade")]
+    [SerializeField] LayerMask OpponentLayer;
+    [SerializeField] LayerMask IgnoreLayer;
+    [SerializeField] InventoryObject myTradeInven;
+    [SerializeField] InventoryObject opponentTradeInven;
+    [SerializeField] public int tradeUserID;
 
     private Vector3 moveDir; // 입력받는 방향
     private bool isWalking; // 애니메이션 작동 변수
@@ -71,11 +79,13 @@ public class PlayerController : MonoBehaviourPun
     {
         if (photonView.IsMine)
         {
-            Manager.Inven.HSHplayer = this;
+            Manager.Inven.playerController = this;
         }
     }
     private void Update()
     {
+        CheckPhotonID();
+
         Turn();
         if (Input.GetKeyDown(KeyCode.B))
         {
@@ -210,14 +220,58 @@ public class PlayerController : MonoBehaviourPun
         //Debug.Log($"004. {id}");
         //Debug.Log($"005. {name}");
     }
+    private void CheckPhotonID()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //카메라에서 레이 쏘기
+        if (Physics.Raycast(ray, out hitInfo, range, IgnoreLayer | OpponentLayer)) //레이캐스트로 그라운드 체크(range로 범위 조정 가능)                      
+        {
+            Pointer = hitInfo.point;
 
+            if (hitInfo.transform.gameObject.layer == 3 && photonView.IsMine)
+            {
+                tradeUserID = hitInfo.transform.gameObject.GetComponent<PhotonView>().ViewID;
+                Manager.Inven.tradeUserID = hitInfo.transform.gameObject.GetComponent<PhotonView>().ViewID;
+                Manager.Inven.MyUserID = Manager.Inven.playerController.GetComponent<PhotonView>().ViewID;
+                PlayerClickUI ui = Manager.UI.ShowInGameUI(playerClickUI);
+                ui.SetTarget(hitInfo.transform);
+                ui.SetOffset(new Vector3(0, 150, 0));
+                //왜이래
+                return;
+            }
+        }
+    }
+    // 여기는 클릭시 머리위에 UI
+    [SerializeField] PlayerClickUI playerClickUI;
+    [SerializeField] PopUpUI tradeUIViewer;
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        PlayerClickUI ui = Manager.UI.ShowInGameUI(playerClickUI);
+        ui.SetTarget(transform);
+        ui.SetOffset(new Vector3(0, 0, 0));
+    }
 
+    [PunRPC]
+    public void RequestOpenTradeUI(int MyID, int opponentID)
+    {
+        tradeUIViewer.gameObject.SetActive(true);
+        if (opponentID == Manager.Inven.playerController.GetComponent<PhotonView>().ViewID)
+        {
+            Manager.Inven.tradeUserID = MyID;
+            tradeUIViewer.gameObject.SetActive(true);
+        }
+        else
+        {
+            return;
+        }
+    }
+    //
+    //
     private void OnDisable()
     {
         //Debug.Log("Clear slot");
         if (photonView.IsMine)
         {
-            Manager.Inven.HSHplayer = this;
+            Manager.Inven.playerController = this;
             inventory.Container.Clear();
             equipment.Container.Clear();
         }
@@ -246,6 +300,26 @@ public class PlayerController : MonoBehaviourPun
                 break;
         }
     }
+    // 이 아래 거래용
+
+    private void PointerUserID() // 마우스 레이 닿은곳이 플레이어면...인데 이게 맞나
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition); //카메라에서 레이 쏘기
+        if (Physics.Raycast(ray, out hitInfo, range, IgnoreLayer | OpponentLayer)) //레이캐스트로 그라운드 체크(range로 범위 조정 가능)                      
+        {
+            Pointer = hitInfo.point;
+
+            if (hitInfo.transform.gameObject.layer == 3) // 레이가 닿은 곳이 플레이어일 경우
+            {
+
+                return;
+            }
+
+
+        }
+    }
+    //
+
 
     // 이 아래 빌드용
 

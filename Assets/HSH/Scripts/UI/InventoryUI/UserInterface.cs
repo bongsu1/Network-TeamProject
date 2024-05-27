@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-public abstract class UserInterface : MonoBehaviour
+public abstract class UserInterface : MonoBehaviourPun
 {
     //public MouseItem mouseItem = new MouseItem();
 
@@ -25,6 +25,7 @@ public abstract class UserInterface : MonoBehaviour
 
     private void Start()
     {
+        inventory.Container.UpdateNum();
         for (int i = 0; i < inventory.Container.Items.Length; i++)
         {
             inventory.Container.Items[i].parent = this;
@@ -33,6 +34,7 @@ public abstract class UserInterface : MonoBehaviour
         AddEvent(gameObject, EventTriggerType.PointerEnter, delegate { OnEnterInterface(gameObject); });
         AddEvent(gameObject, EventTriggerType.PointerExit, delegate { OnExitInterface(gameObject); });
         //CreateDisplay();
+        //
     }
     public void Update()
     {
@@ -42,65 +44,6 @@ public abstract class UserInterface : MonoBehaviour
     }
     public abstract void CreateSlots();
 
-    //public void CreateDisplay()
-    //{
-
-    //for (int i = 0; i < inventory.Container.Items.Count; i++)
-    //{
-    //    InventorySlot slot = inventory.Container.Items[i];
-
-    //    var obj = Instantiate(inventoryPrefab, Vector3.zero, Quaternion.identity, transform);
-    //    obj.transform.GetChild(0).GetComponentInChildren<Image>().sprite = inventory.database.GetItem[slot.item.Id].uiDisplay;
-    //    obj.GetComponent<RectTransform>().localPosition = GetPositon(i);
-    //    obj.GetComponentInChildren<TextMeshProUGUI>().text = slot.amount.ToString("n0");
-
-    //    itemsDisplayed.Add(slot, obj);
-    //}
-    //}
-    //public void UpdateSlots() // 슬롯 이미지를 여기서 바꿈
-    //{
-    //    foreach (KeyValuePair<GameObject, InventorySlot> _slot in slotsOnInterface)
-    //    {
-    //        Debug.Log($"1. {_slot}");
-    //        Debug.Log($"2. {_slot.Value}");
-    //        Debug.Log($"3. {_slot.Value.item.Id}");
-    //        Debug.Log($"위 버그는 유니티 엔진 내에서 플레이어 인벤토리 인스펙터창을 고정하고 재실행하면 해결됨");
-    //        if (_slot.Value.item.Id >= 0)
-    //        {
-    //            _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = _slot.Value.ItemObject.uiDisplay;//inventory.database.GetItem[_slot.Value.item.Id].uiDisplay;
-    //            _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 1);
-    //            _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = _slot.Value.amount == 1 ? "" : _slot.Value.amount.ToString("n0");
-    //        }
-    //        else
-    //        {
-    //            _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().sprite = null;
-    //            _slot.Key.transform.GetChild(0).GetComponentInChildren<Image>().color = new Color(1, 1, 1, 0);
-    //            _slot.Key.GetComponentInChildren<TextMeshProUGUI>().text = "";
-    //        }
-    //    }
-    //}
-
-    //public void UpdateDisplay()
-    //{
-    //    for (int i = 0; i < inventory.Container.Items.Count; i++)
-    //    {
-    //        InventorySlot slot = inventory.Container.Items[i];
-
-    //        if (itemsDisplayed.ContainsKey(slot))
-    //        {
-    //            itemsDisplayed[slot].GetComponentInChildren<TextMeshProUGUI>().text = slot.amount.ToString("n0");
-    //        }
-    //        else
-    //        {
-    //            var obj = Instantiate(inventoryPrefab, Vector3.zero, Quaternion.identity, transform);
-    //            obj.transform.GetChild(0).GetComponentInChildren<Image>().sprite = inventory.database.GetItem[slot.item.Id].uiDisplay;
-    //            obj.GetComponent<RectTransform>().localPosition = GetPositon(i);
-    //            obj.GetComponentInChildren<TextMeshProUGUI>().text = slot.amount.ToString("n0");
-
-    //            itemsDisplayed.Add(slot, obj);
-    //        }
-    //    }
-    //}
     protected void AddEvent(GameObject obj, EventTriggerType type, UnityAction<BaseEventData> action)
     {
         EventTrigger trigger = obj.GetComponent<EventTrigger>();
@@ -112,31 +55,26 @@ public abstract class UserInterface : MonoBehaviour
     //여기부터
     public void OnEnter(GameObject obj)
     {
-        Debug.Log("Onenter");
         MouseData.slotHoveredOver = obj;
     }
 
     public void OnExit(GameObject obj) // 마우스가 위치를 벗어나면 null 값으로 초기화 해주는 부분
     {
-        Debug.Log("Onenter");
         MouseData.slotHoveredOver = null;
 
     }
     // 실수로 파괴되는 일 없도록
     public void OnEnterInterface(GameObject obj)
     {
-        Debug.Log("Onenter");
         MouseData.interfaceMouseIsOver = obj.GetComponent<UserInterface>();
     }
     public void OnExitInterface(GameObject obj)
     {
-        Debug.Log("Onenter");
         MouseData.interfaceMouseIsOver = null;
     }
     // 이 위 두개 수식 추가, 각 인벤토리에 event trigger 추가
     public void OnDragStart(GameObject obj)
     {
-        Debug.Log("Onenter");
         MouseData.tempItemBeingDragged = CreateTempItem(obj);
     }
     public GameObject CreateTempItem(GameObject obj) // 
@@ -162,16 +100,14 @@ public abstract class UserInterface : MonoBehaviour
 
     public void OnDragEnd(GameObject obj)
     {
-        Debug.Log("Onenter");
         Destroy(MouseData.tempItemBeingDragged);
         if (MouseData.interfaceMouseIsOver == null)
         {
             if (PhotonNetwork.IsMasterClient == false)
             {
-                Debug.Log("to guest");
                 Manager.Inven.DropPositioning();
                 //inventory.GuestDropItem(slotsOnInterface[obj]);
-                Manager.Inven.HSHplayer.GuestDropItem(slotsOnInterface[obj]);
+                Manager.Inven.playerController.GuestDropItem(slotsOnInterface[obj]);
                 slotsOnInterface[obj].RemoveItem();
             }
             else
@@ -180,7 +116,6 @@ public abstract class UserInterface : MonoBehaviour
                 inventory.MasterDropItem(slotsOnInterface[obj]);
                 slotsOnInterface[obj].RemoveItem();
             }
-
         }
         if (MouseData.slotHoveredOver)
         {
@@ -190,7 +125,6 @@ public abstract class UserInterface : MonoBehaviour
     }
     public void OnDrag(GameObject obj)
     {
-        Debug.Log("Onenter");
         if (MouseData.tempItemBeingDragged != null)
         {
             MouseData.tempItemBeingDragged.GetComponent<RectTransform>().position = Input.mousePosition;
@@ -208,7 +142,7 @@ public static class MouseData
 
 public static class ExtentionMethods // 이렇게 나눌 이유가 있나?
 {
-    // 하위 클래스에서 자동으로 스스로의 슬롯을 찾아서 업데이트하기 위해 this.
+    // 하위 클래스에서 자동으로 스스로의 슬롯을 찾아서 업데이트하기 위해
     public static void UpdateSlotDisplay(this Dictionary<GameObject, InventorySlot> _slotsOnInterface)
     {
         foreach (KeyValuePair<GameObject, InventorySlot> _slot in _slotsOnInterface)

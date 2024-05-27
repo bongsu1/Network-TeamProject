@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 7931869071560560039}
   - component: {fileID: 8081384724309080226}
   - component: {fileID: 2827611769594076056}
-  - component: {fileID: 4239392826112505345}
   m_Layer: 5
   m_Name: DynamicScreen
   m_TagString: Untagged
@@ -112,15 +111,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates: []
---- !u!114 &4239392826112505345
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1251264749188750230}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82c1633416a81e94aa3c1586c20425c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

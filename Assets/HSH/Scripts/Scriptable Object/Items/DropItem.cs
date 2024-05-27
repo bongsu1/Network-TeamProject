@@ -16,7 +16,6 @@ public class DropItem : MonoBehaviourPun, HSH_IInteractable<InventoryObject>
     //}
     public void Interact(InventoryObject inventory)
     {
-        Debug.Log("아이템에서 작동중");
         if (inventory.AddItem(new Item(itemObject), 1))
         {
             //PhotonNetwork.Destroy(gameObject);
