@@ -5,6 +5,7 @@ public class InterationTool : MonoBehaviour
     [SerializeField] float interactRadius;
     [SerializeField] float interactAngle;
     [SerializeField] InventoryObject inventory;
+    [SerializeField] AudioSource itemPickSound;
 
     private float cosRange;
 
@@ -32,6 +33,7 @@ public class InterationTool : MonoBehaviour
                 Vector3 toTargetDir = (collider.transform.position - transform.position).normalized; // 대상의 방향
                 if (Vector3.Dot(toTargetDir, transform.forward) < cosRange)
                     return;
+                itemPickSound.Play();
                 interactable.Interact(inventory);
                 break;
             }

@@ -975,7 +975,7 @@ MonoBehaviour:
   OnGreeting:
     m_PersistentCalls:
       m_Calls: []
-  ChatSound: {fileID: 0}
+  ChatSound: {fileID: 3819833162771362510}
 --- !u!114 &-8866939236604534016
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1019,8 +1019,8 @@ MonoBehaviour:
   ax: {fileID: 4337537868216749436}
   TargetMask:
     serializedVersion: 2
-    m_Bits: 0
-  ShottingSound: {fileID: 0}
+    m_Bits: 72
+  ShottingSound: {fileID: -7073747568174082649}
 --- !u!114 &1297998311972322796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1049,6 +1049,7 @@ MonoBehaviour:
   interactRadius: 1
   interactAngle: 90
   inventory: {fileID: 11400000, guid: 073066803168bf84ca271e5d2cfd98d6, type: 2}
+  itemPickSound: {fileID: -2650471223224320518}
   interactableLayer:
     serializedVersion: 2
     m_Bits: 268435456
@@ -1125,7 +1126,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 0.7
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1509,7 +1510,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 7992516606719032107, guid: 18a1ff0e3d1418f40bc2583b8bb5b16d,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 2dcecfb5039db2e468650489037e792f, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 7e4d0509ded20e44c87655c40bef4906, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

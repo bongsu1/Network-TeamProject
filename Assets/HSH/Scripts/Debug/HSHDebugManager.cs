@@ -52,7 +52,7 @@ public class HSHDebugManager : MonoBehaviourPunCallbacks
         // test..
         Vector3 spawnPosition = DebugDataManager.Instance == null ? Vector3.zero : DebugDataManager.Instance.RoomData.position;
 
-        GameObject player = PhotonNetwork.Instantiate("HSHPlayer", spawnPosition, Quaternion.identity);
+        GameObject player = PhotonNetwork.Instantiate("YDJ_Player_Test", spawnPosition, Quaternion.identity);
         if (playerFollowCamera != null)
         {
             playerFollowCamera.gameObject.SetActive(true);
