@@ -32,6 +32,6 @@ public class Tree : MonoBehaviourPun, IDamageble
     {
         TreeDiedSound.Play();
         yield return new WaitForSeconds(5f);
-        PhotonNetwork.Destroy(gameObject);
+        Destroy(gameObject);
     }
 }
