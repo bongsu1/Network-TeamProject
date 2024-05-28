@@ -87,10 +87,10 @@ public class PlayerController : MonoBehaviourPun
         CheckPhotonID();
 
         Turn();
-        //if (Input.GetKeyDown(KeyCode.Tab))
-        //{
-        //    Window();
-        //}
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            Window();
+        }
         if (Input.GetKeyDown(KeyCode.I))
         {
             //Debug.Log("Save");
@@ -139,10 +139,7 @@ public class PlayerController : MonoBehaviourPun
     {
         rigid.MovePosition(transform.position + moveDir * moveSpeed * Time.deltaTime);
     }
-    private void OnInventory()
-    {
-        Window();
-    }
+
     private void Turn()
     {
         if (action.TargetIn())
