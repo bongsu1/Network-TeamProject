@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -18,6 +19,7 @@ public class InvenInterface : UserInterface
     public int NUMBER_OF_COLUMN;
     public int Y_SPACE_BETWEEN_ITEMS;
 
+    private int actCost;
     public override void CreateSlots()
     {
         Debug.Log("dynamic createslots");
@@ -39,6 +41,7 @@ public class InvenInterface : UserInterface
     }
     public new void OnDragEnd(GameObject obj)
     {
+        actCost = 0;
         Destroy(MouseData.tempItemBeingDragged);
         if (MouseData.interfaceMouseIsOver == null)
         {
@@ -69,6 +72,7 @@ public class InvenInterface : UserInterface
             {
                 object[] instantiationData = { itemId, myViewId, slotId, itemamount };
                 photonView.RPC("RequestUpdateOpponent", RpcTarget.MasterClient, instantiationData);
+                StartCoroutine(CostReset());
             }
         }
     }
@@ -125,6 +129,7 @@ public class InvenInterface : UserInterface
 
     public void OnClickpointer(GameObject obj) // 인벤토리 슬롯 아이템 클릭 시 거래창에 넣기
     {
+        actCost = 0;
         tradePhotonHelper.MyViewID = Manager.Inven.playerController.GetComponent<PhotonView>().ViewID;
         tradePhotonHelper.OpponentID = Manager.Inven.tradeUserID;
         for (int i = 0; i < tradeInven.Container.Items.Length; i++)
@@ -142,11 +147,9 @@ public class InvenInterface : UserInterface
                 tradePhotonHelper.MyOkCancel();
 
                 inventory.SwapItems(slotsOnInterface[obj], tradeInven.Container.Items[i]);
-                //Manager.Inven.OpponentUserId = myViewId;
-                //Manager.Inven.tradeUserID = myViewId;
                 object[] instantiationData = { itemId, myViewId, slotNumber, itemAmount };
                 photonView.RPC("RequestUpdateOpponent", RpcTarget.All, instantiationData);
-
+                StartCoroutine(CostReset());
             }
             else
             {
@@ -162,6 +165,15 @@ public class InvenInterface : UserInterface
             //slotsOnInterface[obj].RemoveItem();
         }
     }
+
+    
+        IEnumerator CostReset()
+        {
+            yield return new WaitForSeconds(0.3f);
+            actCost = 1;
+        }
+
+    
     public Vector3 GetPositon(int i) // 인벤토리 슬롯 위치 잡는 부분
     {
         return new Vector3(X_START + (X_SPACE_BETWEEN_ITEM * (i % NUMBER_OF_COLUMN)), Y_START + (-Y_SPACE_BETWEEN_ITEMS * (i / NUMBER_OF_COLUMN)), 0f);

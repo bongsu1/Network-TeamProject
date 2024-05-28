@@ -1,4 +1,5 @@
 using Photon.Pun;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -17,6 +18,8 @@ public class MyTradeInterface : UserInterface
     public int X_SPACE_BETWEEN_ITEM;
     public int NUMBER_OF_COLUMN;
     public int Y_SPACE_BETWEEN_ITEMS;
+
+    private int actCost;
 
     public override void CreateSlots()
     {
@@ -39,6 +42,7 @@ public class MyTradeInterface : UserInterface
     }
     public new void OnDragEnd(GameObject obj)
     {
+        actCost = 0;
         Destroy(MouseData.tempItemBeingDragged);
         if (MouseData.interfaceMouseIsOver == null)
         {
@@ -72,12 +76,13 @@ public class MyTradeInterface : UserInterface
             Manager.Inven.OpponentUserId = myViewId;
             Manager.Inven.tradeUserID = myViewId;
 
-            photonView.RPC("RequestTrade", RpcTarget.MasterClient, instantiationData);
-
+            photonView.RPC("RequestTrade", RpcTarget.All, instantiationData);
+            StartCoroutine(CostReset());
         }
     }
     public void OnClickpointer(GameObject obj) // 거래창 슬롯 클릭 시 빈 칸 찾아서 복귀하고 상대 거래창 업뎃
     {
+        actCost = 0;
         for (int i = 0; i < invenOrigin.Container.Items.Length; i++)
         {
             if (invenOrigin.Container.Items[i].item.Id < 0)
@@ -93,10 +98,11 @@ public class MyTradeInterface : UserInterface
                 //Manager.Inven.OpponentUserId = myViewId;
                 tradePhotonHelper.MyViewID = Manager.Inven.playerController.GetComponent<PhotonView>().ViewID;
                 tradePhotonHelper.OpponentID = Manager.Inven.tradeUserID;
-                tradePhotonHelper.photonView.RPC("OpponentCheckCancel", RpcTarget.MasterClient, myViewId);
+                tradePhotonHelper.photonView.RPC("OpponentCheckCancel", RpcTarget.All, myViewId);
                 tradePhotonHelper.MyOkCancel();
 
-                photonView.RPC("RequestTrade", RpcTarget.MasterClient, instantiationData);
+                photonView.RPC("RequestTrade", RpcTarget.All, instantiationData);
+                StartCoroutine(CostReset());
             }
             else
             {
@@ -155,6 +161,12 @@ public class MyTradeInterface : UserInterface
     {
         inventory.Clear();
     }
+    IEnumerator CostReset()
+    {
+        yield return new WaitForSeconds(0.3f);
+        actCost = 1;
+    }
+
     [PunRPC]
     private void ReturnItem() // 이건 나중에
     {
