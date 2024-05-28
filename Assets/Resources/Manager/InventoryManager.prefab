@@ -46,10 +46,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inven: {fileID: 11400000, guid: 073066803168bf84ca271e5d2cfd98d6, type: 2}
   equip: {fileID: 11400000, guid: d6c623f3adeed934bb315cd88cf5b86e, type: 2}
+  myTrade: {fileID: 11400000, guid: a9d474e30b9c7764d853ab33e9946dd5, type: 2}
+  OpponentTradeSlot: {fileID: 11400000, guid: 1e45e1611e503f74f8c5f6f690b0ddd5, type: 2}
   database: {fileID: 11400000, guid: e5773ff066782d9478d6afd83b993c43, type: 2}
   inventory:
     Items:
     - AllowedItems: 
+      slotNumber: 0
       item:
         Name: 
         Id: -1
@@ -59,6 +62,7 @@ MonoBehaviour:
         go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
+      slotNumber: 0
       item:
         Name: 
         Id: -1
@@ -68,6 +72,7 @@ MonoBehaviour:
         go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
+      slotNumber: 0
       item:
         Name: 
         Id: -1
@@ -77,6 +82,7 @@ MonoBehaviour:
         go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
+      slotNumber: 0
       item:
         Name: 
         Id: -1
@@ -86,6 +92,7 @@ MonoBehaviour:
         go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
+      slotNumber: 0
       item:
         Name: 
         Id: -1
@@ -95,6 +102,7 @@ MonoBehaviour:
         go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
+      slotNumber: 0
       item:
         Name: 
         Id: -1
@@ -104,6 +112,7 @@ MonoBehaviour:
         go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
+      slotNumber: 0
       item:
         Name: 
         Id: -1
@@ -113,6 +122,7 @@ MonoBehaviour:
         go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
+      slotNumber: 0
       item:
         Name: 
         Id: -1
@@ -122,6 +132,7 @@ MonoBehaviour:
         go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
+      slotNumber: 0
       item:
         Name: 
         Id: -1
@@ -131,6 +142,7 @@ MonoBehaviour:
         go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
+      slotNumber: 0
       item:
         Name: 
         Id: -1
@@ -140,6 +152,7 @@ MonoBehaviour:
         go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
+      slotNumber: 0
       item:
         Name: 
         Id: -1
@@ -149,6 +162,7 @@ MonoBehaviour:
         go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
+      slotNumber: 0
       item:
         Name: 
         Id: -1
@@ -158,6 +172,7 @@ MonoBehaviour:
         go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
+      slotNumber: 0
       item:
         Name: 
         Id: -1
@@ -167,6 +182,7 @@ MonoBehaviour:
         go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
+      slotNumber: 0
       item:
         Name: 
         Id: -1
@@ -176,6 +192,7 @@ MonoBehaviour:
         go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
+      slotNumber: 0
       item:
         Name: 
         Id: -1
@@ -185,6 +202,7 @@ MonoBehaviour:
         go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
+      slotNumber: 0
       item:
         Name: 
         Id: -1
@@ -194,6 +212,7 @@ MonoBehaviour:
         go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
+      slotNumber: 0
       item:
         Name: 
         Id: -1
@@ -203,6 +222,7 @@ MonoBehaviour:
         go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
+      slotNumber: 0
       item:
         Name: 
         Id: -1
@@ -212,6 +232,7 @@ MonoBehaviour:
         go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
+      slotNumber: 0
       item:
         Name: 
         Id: -1
@@ -221,6 +242,7 @@ MonoBehaviour:
         go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
+      slotNumber: 0
       item:
         Name: 
         Id: -1
@@ -230,6 +252,7 @@ MonoBehaviour:
         go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
+      slotNumber: 0
       item:
         Name: 
         Id: -1
@@ -239,6 +262,7 @@ MonoBehaviour:
         go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
+      slotNumber: 0
       item:
         Name: 
         Id: -1
@@ -248,6 +272,7 @@ MonoBehaviour:
         go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
+      slotNumber: 0
       item:
         Name: 
         Id: -1
@@ -257,6 +282,7 @@ MonoBehaviour:
         go_PreviewPrefab: {fileID: 0}
       amount: 0
     - AllowedItems: 
+      slotNumber: 0
       item:
         Name: 
         Id: -1
@@ -265,8 +291,13 @@ MonoBehaviour:
         go_prefab: {fileID: 0}
         go_PreviewPrefab: {fileID: 0}
       amount: 0
-  HSHplayer: {fileID: 2293612343811189131, guid: f3e0a16e1a8c52541abcfd1208f25a17,
-    type: 3}
+  playerController: {fileID: 0}
   dropPosition: {x: 0, y: 0, z: 0}
   email: qwer24632@gmail.com
   pass: asdasd
+  craftManual: {fileID: 0}
+  tradeUserID: 0
+  OpponentUserId: 0
+  MyUserID: 0
+  MyTradeOk: 0
+  TradeUserTradeOk: 0
