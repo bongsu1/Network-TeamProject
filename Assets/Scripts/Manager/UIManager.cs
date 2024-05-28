@@ -39,9 +39,9 @@ public class UIManager : Singleton<UIManager>
         }
         else
         {
-            popUpBlocker.gameObject.SetActive(true);
-            prevTimeScale = Time.timeScale;
-            Time.timeScale = 0f;
+            //popUpBlocker.gameObject.SetActive(true);
+            //prevTimeScale = Time.timeScale;
+            //Time.timeScale = 0f;
         }
 
         T ui = Instantiate(popUpUI, popUpCanvas.transform);
@@ -62,7 +62,7 @@ public class UIManager : Singleton<UIManager>
         else
         {
             popUpBlocker.gameObject.SetActive(false);
-            Time.timeScale = prevTimeScale;
+            //Time.timeScale = prevTimeScale;
         }
     }
 

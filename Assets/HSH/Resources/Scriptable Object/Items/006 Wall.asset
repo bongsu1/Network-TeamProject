@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 193171459f484b840bf5daa82208e308, type: 3}
+  m_Name: 006 Wall
+  m_EditorClassIdentifier: 
+  uiDisplay: {fileID: 21300000, guid: 77f1b51ac96ce4f7da7cb4801f12d4eb, type: 3}
+  stackable: 0
+  type: 6
+  description: 
+  data:
+    Name: 
+    Id: 6
+    buffs: []
+    weaponType: 0
+    go_prefab: {fileID: 8833014857866130543, guid: 95106ce9f3f307f439e2ca4d1ea6a791,
+      type: 3}
+    go_PreviewPrefab: {fileID: 8833014857866130543, guid: 0f94bc934a5fc434b8e05704e34ad8f0,
+      type: 3}

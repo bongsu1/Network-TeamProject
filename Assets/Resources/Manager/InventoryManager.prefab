@@ -1,0 +1,303 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &891856492584461372
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3779448440794033385}
+  - component: {fileID: 2886900475580574485}
+  m_Layer: 0
+  m_Name: InventoryManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3779448440794033385
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 891856492584461372}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2886900475580574485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 891856492584461372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 699a80da30320c2428545b267f9065fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inven: {fileID: 11400000, guid: 073066803168bf84ca271e5d2cfd98d6, type: 2}
+  equip: {fileID: 11400000, guid: d6c623f3adeed934bb315cd88cf5b86e, type: 2}
+  myTrade: {fileID: 11400000, guid: a9d474e30b9c7764d853ab33e9946dd5, type: 2}
+  OpponentTradeSlot: {fileID: 11400000, guid: 1e45e1611e503f74f8c5f6f690b0ddd5, type: 2}
+  database: {fileID: 11400000, guid: e5773ff066782d9478d6afd83b993c43, type: 2}
+  inventory:
+    Items:
+    - AllowedItems: 
+      slotNumber: 0
+      item:
+        Name: 
+        Id: -1
+        buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
+      amount: 0
+    - AllowedItems: 
+      slotNumber: 0
+      item:
+        Name: 
+        Id: -1
+        buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
+      amount: 0
+    - AllowedItems: 
+      slotNumber: 0
+      item:
+        Name: 
+        Id: -1
+        buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
+      amount: 0
+    - AllowedItems: 
+      slotNumber: 0
+      item:
+        Name: 
+        Id: -1
+        buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
+      amount: 0
+    - AllowedItems: 
+      slotNumber: 0
+      item:
+        Name: 
+        Id: -1
+        buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
+      amount: 0
+    - AllowedItems: 
+      slotNumber: 0
+      item:
+        Name: 
+        Id: -1
+        buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
+      amount: 0
+    - AllowedItems: 
+      slotNumber: 0
+      item:
+        Name: 
+        Id: -1
+        buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
+      amount: 0
+    - AllowedItems: 
+      slotNumber: 0
+      item:
+        Name: 
+        Id: -1
+        buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
+      amount: 0
+    - AllowedItems: 
+      slotNumber: 0
+      item:
+        Name: 
+        Id: -1
+        buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
+      amount: 0
+    - AllowedItems: 
+      slotNumber: 0
+      item:
+        Name: 
+        Id: -1
+        buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
+      amount: 0
+    - AllowedItems: 
+      slotNumber: 0
+      item:
+        Name: 
+        Id: -1
+        buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
+      amount: 0
+    - AllowedItems: 
+      slotNumber: 0
+      item:
+        Name: 
+        Id: -1
+        buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
+      amount: 0
+    - AllowedItems: 
+      slotNumber: 0
+      item:
+        Name: 
+        Id: -1
+        buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
+      amount: 0
+    - AllowedItems: 
+      slotNumber: 0
+      item:
+        Name: 
+        Id: -1
+        buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
+      amount: 0
+    - AllowedItems: 
+      slotNumber: 0
+      item:
+        Name: 
+        Id: -1
+        buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
+      amount: 0
+    - AllowedItems: 
+      slotNumber: 0
+      item:
+        Name: 
+        Id: -1
+        buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
+      amount: 0
+    - AllowedItems: 
+      slotNumber: 0
+      item:
+        Name: 
+        Id: -1
+        buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
+      amount: 0
+    - AllowedItems: 
+      slotNumber: 0
+      item:
+        Name: 
+        Id: -1
+        buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
+      amount: 0
+    - AllowedItems: 
+      slotNumber: 0
+      item:
+        Name: 
+        Id: -1
+        buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
+      amount: 0
+    - AllowedItems: 
+      slotNumber: 0
+      item:
+        Name: 
+        Id: -1
+        buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
+      amount: 0
+    - AllowedItems: 
+      slotNumber: 0
+      item:
+        Name: 
+        Id: -1
+        buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
+      amount: 0
+    - AllowedItems: 
+      slotNumber: 0
+      item:
+        Name: 
+        Id: -1
+        buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
+      amount: 0
+    - AllowedItems: 
+      slotNumber: 0
+      item:
+        Name: 
+        Id: -1
+        buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
+      amount: 0
+    - AllowedItems: 
+      slotNumber: 0
+      item:
+        Name: 
+        Id: -1
+        buffs: []
+        weaponType: 0
+        go_prefab: {fileID: 0}
+        go_PreviewPrefab: {fileID: 0}
+      amount: 0
+  playerController: {fileID: 0}
+  dropPosition: {x: 0, y: 0, z: 0}
+  email: qwer24632@gmail.com
+  pass: asdasd
+  craftManual: {fileID: 0}
+  tradeUserID: 0
+  OpponentUserId: 0
+  MyUserID: 0
+  MyTradeOk: 0
+  TradeUserTradeOk: 0

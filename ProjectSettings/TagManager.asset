@@ -8,9 +8,10 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
+  - Animal
   - 
   - 
   - 
@@ -32,11 +33,10 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Tree
+  - MyPlayer
+  - Ignore
+  - Ground
   m_SortingLayers:
   - name: Default
     uniqueID: 0
