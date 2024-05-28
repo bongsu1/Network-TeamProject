@@ -1009,7 +1009,7 @@ MonoBehaviour:
   firePoint: {fileID: 3154212828855545463}
   bulletPrefab: {fileID: 704287225277590540, guid: 2929292fe4ce0a64ab742d32e3ed1fde,
     type: 3}
-  axCollider: {fileID: 0}
+  axCollider: {fileID: 7507437195707611154}
   fireCoolTime: 0.3
   gunRange: 7
   spinSpeed: 360
@@ -11203,6 +11203,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2673333488073824856}
     m_Modifications:
+    - target: {fileID: 2767101941061016047, guid: 21b5f54c11090354a8baf054cb816121,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2767101941061016047, guid: 21b5f54c11090354a8baf054cb816121,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2833991327606706598, guid: 21b5f54c11090354a8baf054cb816121,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11324,6 +11334,12 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &7507437195707611154 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 2767101941061016047, guid: 21b5f54c11090354a8baf054cb816121,
+    type: 3}
+  m_PrefabInstance: {fileID: 5641179472448758269}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &7574248422421672027 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2833991327606706598, guid: 21b5f54c11090354a8baf054cb816121,
