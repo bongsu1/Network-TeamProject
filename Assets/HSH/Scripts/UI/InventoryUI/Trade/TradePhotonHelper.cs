@@ -62,11 +62,17 @@ public class TradePhotonHelper : MonoBehaviourPun
     [PunRPC]
     public void OpponentCheckCancel(int ViewId)
     {
+        TradeUserTradeOk = false;
+        TradeUserOk.SetActive(true);
+        TradeUserCancel.SetActive(false);
         if (ViewId == Manager.Inven.tradeUserID)
         {
             TradeUserTradeOk = false;
             TradeUserOk.SetActive(true);
             TradeUserCancel.SetActive(false);
+            MyTradeOk = false;
+            MyOkButton.SetActive(true);
+            MyCancelButton.SetActive(false);
         }
         else
         {
