@@ -22,7 +22,8 @@ public class PlayerDataController : MonoBehaviourPun
         {
             healthUI = Instantiate(healthUI);
             OnChangeHealth.AddListener(healthUI.UpdateHealthBar);        // 생성하자 마자 이벤트에 추가
-            healthUI.UpdateHealthBar(Manager.Data.RoomData.health);      // 시작했을때 체력과 UI동기화
+            //healthUI.UpdateHealthBar(Manager.Data.RoomData.health);      // 시작했을때 체력과 UI동기화
+            healthUI.UpdateHealthBar(90);
 
             hSHPlayer.OnChangeWalking.AddListener(StartHealthConsumptionRoutine);
             hSHPlayer.OnChangeWalking.AddListener(StopHealthConsumptionRoutine);
@@ -45,7 +46,7 @@ public class PlayerDataController : MonoBehaviourPun
 
     private void Update()
     {
-        PositionUpdate(transform.position);
+        //PositionUpdate(transform.position);
     }
 
     // 체력 지속 소모
