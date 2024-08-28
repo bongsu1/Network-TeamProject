@@ -242,7 +242,7 @@ public class Inventory
     //private Inventory inven;
 
     public InventorySlot[] Items = new InventorySlot[24];
-    public void UpdateNum() // 데이터베이스에 들어있는 아이템에 ID 부여
+    public void UpdateNum() // 슬롯에 들어있는 아이템에 ID 부여
     {
         for (int i = 0; i < Items.Length; i++)
         {

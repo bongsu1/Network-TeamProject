@@ -17,7 +17,9 @@ MonoBehaviour:
   type: 2
   description: 
   data:
-    Name: 
+    Name: SMG
     Id: 4
     buffs: []
     weaponType: 1
+    go_prefab: {fileID: 0}
+    go_PreviewPrefab: {fileID: 0}

@@ -17,7 +17,7 @@ MonoBehaviour:
   type: 6
   description: 
   data:
-    Name: 
+    Name: Wall
     Id: 6
     buffs: []
     weaponType: 0

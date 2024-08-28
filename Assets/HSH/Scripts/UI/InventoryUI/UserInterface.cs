@@ -44,12 +44,20 @@ public abstract class UserInterface : MonoBehaviourPun
     }
     public abstract void CreateSlots();
 
+    //GameObject에 이벤트 트리거를 추가하는 메서드
     protected void AddEvent(GameObject obj, EventTriggerType type, UnityAction<BaseEventData> action)
     {
         EventTrigger trigger = obj.GetComponent<EventTrigger>();
+        //새로운 EventTrigger.Entry 객체를 생성
         var eventTrigger = new EventTrigger.Entry();
+
+        //이벤트의 종류를 설정 PointerClick, PointerEnter 등
         eventTrigger.eventID = type;
+
+        //이벤트가 발생했을 때 호출될 UnityAction 추가
         eventTrigger.callback.AddListener(action);
+
+        //EventTrigger 컴포넌트의 트리거 목록에 새로 생성된 EventTrigger.Entry를 추가
         trigger.triggers.Add(eventTrigger);
     }
     //여기부터
