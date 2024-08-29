@@ -50,25 +50,29 @@ public class DynamicInterface : UserInterface
         }
         else if (Manager.Inven.database.Items[slotsOnInterface[obj].item.Id].type == ItemType.Weapon)
         {
-            for (int i = 0; i < equipment.Container.Items.Length; i++)
-            {
-                for (int j = 0; j < equipment.Container.Items[i].AllowedItems.Length; j++)
-                {
-                    if (Manager.Inven.database.Items[slotsOnInterface[obj].item.Id].type != equipment.Container.Items[i].AllowedItems[j])
-                    {
-                        continue;
-                    }
-                    else
-                    {
-                        inventory.SwapItems(slotsOnInterface[obj], equipment.Container.Items[i]);
-                        return;
-                    }
-                }
-            }
+            EquipWeapon(obj);
         }
         else
         {
             return;
+        }
+    }
+    public void EquipWeapon(GameObject obj)
+    {
+        for (int i = 0; i < equipment.Container.Items.Length; i++)
+        {
+            for (int j = 0; j < equipment.Container.Items[i].AllowedItems.Length; j++)
+            {
+                if (Manager.Inven.database.Items[slotsOnInterface[obj].item.Id].type != equipment.Container.Items[i].AllowedItems[j])
+                {
+                    continue;
+                }
+                else
+                {
+                    inventory.SwapItems(slotsOnInterface[obj], equipment.Container.Items[i]);
+                    return;
+                }
+            }
         }
     }
     public Vector3 GetPositon(int i) // 인벤토리 슬롯 위치 잡는 부분

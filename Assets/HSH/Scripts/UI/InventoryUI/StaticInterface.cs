@@ -24,7 +24,7 @@ public class StaticInterface : UserInterface
             slotsOnInterface.Add(obj, inventory.Container.Items[i]);
         }
     }
-    public void OnClickpointer(GameObject obj) // 인벤토리 슬롯 클릭 시 ID 같은 칸 찾아서 장비칸에 자동 장착
+    public void OnClickpointer(GameObject obj) // 장비창 슬롯 클릭 시 빈칸 찾아서 착용 해제
     {
         for (int i = 0; i < invenOrigin.Container.Items.Length; i++)
         {

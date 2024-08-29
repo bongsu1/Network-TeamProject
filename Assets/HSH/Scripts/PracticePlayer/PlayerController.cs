@@ -187,8 +187,6 @@ public class PlayerController : MonoBehaviourPun
     public void GuestDropItem(InventorySlot item)
     {
         photonView.RPC("RequestGuestDropItem", RpcTarget.MasterClient, item.item.Id, Manager.Inven.database.Items[item.item.Id].name);
-        //Debug.Log($"000. {item.item.Id}");
-        //Debug.Log($"001. {Manager.Inven.database.Items[item.item.Id].name}");
     }
     [PunRPC]
     private void RequestGuestDropItem(int id, string name)
@@ -196,25 +194,11 @@ public class PlayerController : MonoBehaviourPun
         if (PhotonNetwork.InRoom)
         {
             object[] instantiationData = { id, name };
-            // Allbuffered로 해결 안되면 photonView.InstantiationData 
-            // 룸 오브젝트 프리팹 인스턴스화
+            // 생성된 오브젝트 아이템 세팅
             GameObject roomObject = PhotonNetwork.InstantiateRoomObject("dropItemPrefab", transform.position, Quaternion.identity);
 
             roomObject.GetComponent<DropItem>().photonView.RPC("SetItemObject", RpcTarget.AllBuffered, id, name);
         }
-        //photonView.RPC("ResultGuestDropItem", RpcTarget.AllViaServer, id, name);
-        /*else
-        {
-            Debug.Log("dropItem in offline");
-
-            // 룸 오브젝트 프리팹 인스턴스화
-            GameObject roomObject = PhotonNetwork.InstantiateRoomObject("dropItemPrefab", Manager.Inven.dropPosition, Quaternion.identity);
-
-
-            // 룸 오브젝트 내 DropItem 컴포넌트에 액세스해서 변경
-            //DropItem 에 MonoBehaviourPun 달면 바로 답나오는 문제를 이래 헤매면 어떡하니 나야
-            roomObject.GetComponent<DropItem>().photonView.RPC("SetItemObject", RpcTarget.All, item.item.Id, database.Items[item.item.Id].name);
-        }*/
     }
     [PunRPC]
     private void ResultGuestDropItem(int id, string name)
