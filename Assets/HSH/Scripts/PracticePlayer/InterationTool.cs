@@ -18,7 +18,7 @@ public class InterationTool : MonoBehaviour
     [SerializeField] LayerMask interactableLayer; // 필요하면 사용
     private void OnInteract()
     {
-        Debug.Log("상호작용함수 시작부분");
+        //Debug.Log("상호작용함수 시작부분");
         int size = Physics.OverlapSphereNonAlloc(transform.position, interactRadius, colliders, interactableLayer);
         if (size > 0)
         {

@@ -11,7 +11,7 @@ public class AxCollider : MonoBehaviour
             IDamageble damageble = other.gameObject.GetComponent<IDamageble>();
             if (damageble != null)
             {
-                Debug.Log("도끼에 닿음 HP 깍기");
+                //Debug.Log("도끼에 닿음 HP 깍기");
                 damageble.Damaged(1);
             }
         }

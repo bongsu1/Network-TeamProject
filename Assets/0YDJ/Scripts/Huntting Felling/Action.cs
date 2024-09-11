@@ -210,7 +210,7 @@ public class Action : MonoBehaviourPun //총쏘기, 벌목
     // 도끼 구역 *************************************************************************************************************************************************************************************
     private void SetAx() //도끼 조준
     {
-        Debug.Log("SetAx");
+        //Debug.Log("SetAx");
         photonView.RPC("SetAnimationParameter", RpcTarget.All, Parameter.SetBool, "AxIsSetReady", isSetReady);
 
         //ax.SetActive(isSetReady);

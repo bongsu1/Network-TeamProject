@@ -29,7 +29,7 @@ public class Bullet : MonoBehaviour
             IDamageble damageble = other.gameObject.GetComponent<IDamageble>();
             if (damageble != null) // 데미지 인터페이스가 있다면 데미지 함수 실행
             {
-                Debug.Log($" 총알에 {other.name} 맞음");
+                //Debug.Log($" 총알에 {other.name} 맞음");
                 damageble.Damaged(3);
             }
             //damageble?.Damaged(1); // 이렇게 쓸 수도 있다

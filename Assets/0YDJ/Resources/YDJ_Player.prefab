@@ -969,6 +969,7 @@ MonoBehaviour:
   OnGreeting:
     m_PersistentCalls:
       m_Calls: []
+  ChatSound: {fileID: 0}
 --- !u!114 &703846769590648160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1023,16 +1024,18 @@ MonoBehaviour:
   firePoint: {fileID: 3154212828855545463}
   bulletPrefab: {fileID: 704287225277590540, guid: 2929292fe4ce0a64ab742d32e3ed1fde,
     type: 3}
+  axCollider: {fileID: 0}
   fireCoolTime: 0.3
   gunRange: 7
   spinSpeed: 360
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 8
   holdingItem: 2
   Eqiupment: {fileID: 11400000, guid: 2b5bb1ec609809c4f912c4d035ecded9, type: 2}
   gun: {fileID: 1947625352534494409}
   ax: {fileID: 4337537868216749436}
+  TargetMask:
+    serializedVersion: 2
+    m_Bits: 0
+  ShottingSound: {fileID: 0}
 --- !u!114 &1297998311972322796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1061,6 +1064,7 @@ MonoBehaviour:
   interactRadius: 1
   interactAngle: 90
   inventory: {fileID: 11400000, guid: b39298cf4dc1d4240805c8cffeebe7e2, type: 2}
+  itemPickSound: {fileID: 0}
   interactableLayer:
     serializedVersion: 2
     m_Bits: 268435456

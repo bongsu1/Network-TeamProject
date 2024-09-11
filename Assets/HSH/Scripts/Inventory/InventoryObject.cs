@@ -100,7 +100,7 @@ public class InventoryObject : ScriptableObject/*, IPunObservable*/
     // 아이템 두개 위치 교환
     public void SwapItems(InventorySlot item1, InventorySlot item2) // 아이템 스왑하는 함수
     {
-        Debug.Log("SwapItems");
+        //Debug.Log("SwapItems");
         if (item2.CanPlaceInSlot(item1.ItemObject) && item1.CanPlaceInSlot(item2.ItemObject))  //
         {
             InventorySlot temp = new InventorySlot(item2.item, item2.amount);
@@ -113,7 +113,7 @@ public class InventoryObject : ScriptableObject/*, IPunObservable*/
     {
         if (PhotonNetwork.InRoom /*&& PhotonNetwork.IsMasterClient*/)
         {
-            Debug.Log("dropItem roomObject");
+            //Debug.Log("dropItem roomObject");
 
             // 룸 오브젝트 프리팹 인스턴스화
             GameObject roomObject = PhotonNetwork.InstantiateRoomObject("dropItemPrefab", Manager.Inven.dropPosition, Quaternion.identity);
@@ -163,7 +163,7 @@ public class InventoryObject : ScriptableObject/*, IPunObservable*/
     {
         if (PhotonNetwork.InRoom)
         {
-            Debug.Log("dropItem roomObject");
+            //Debug.Log("dropItem roomObject");
 
             // 룸 오브젝트 프리팹 인스턴스화
             GameObject roomObject = PhotonNetwork.InstantiateRoomObject("dropItemPrefab", Manager.Inven.dropPosition, Quaternion.identity);
@@ -185,7 +185,7 @@ public class InventoryObject : ScriptableObject/*, IPunObservable*/
     // 아이템 제거
     public void RemoveItem(Item _item)
     {
-        Debug.Log("RemoveItem");
+        //Debug.Log("RemoveItem");
         for (int i = 0; i < Container.Items.Length; i++)
         {
             if (Container.Items[i].item == _item)

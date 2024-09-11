@@ -62,16 +62,11 @@ public class Chat : MonoBehaviourPun
             playerInput.actions["Interact"].Enable();
             playerInput.actions["Greet"].Enable();
 
-            int empty = chatInput.textComponent.text.Trim().Length; // 입력필드가 활성화 되면 비어있어도 하나가 남는다? 이유 모름
-            if (empty <= 1) // 채팅입력창이 비어 있으면 취소
-                return;
-
             // IME때문에 한글입력이 완료되지 않았다고 판단되어 마지막 글자가 인풋필드에 입력되지 않는다
-            // 한글로 입력시 마지막 글자는 미완성 처리가 되어서 <u>'글자'</u> 로 전달되어서
-            // Replace로 앞에글자를 지워서 비속어 필터에서 사용할 수 있어진다.
-            string chat = chatInput.textComponent.text.Replace("<u>", "");
-
-            //string chat = chatInput.text;
+            // Input.compositionString을 통해 지금 IME에 입력중인 문자를 가져온다
+            string chat = $"{chatInput.text}{Input.compositionString}";
+            if (string.IsNullOrWhiteSpace(chat))
+                return;
 
             #region TextFilter addText
             // 명령어로 비속어 추가 하기 "/add 비속어,패턴,(대체될 단어 -선택사항-)"

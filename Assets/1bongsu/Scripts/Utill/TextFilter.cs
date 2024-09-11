@@ -15,9 +15,9 @@ public static class TextFilter
     // text를 필터링, 필터링할 글자를 replacement로 변경
     public static string Filtering(this string text)
     {
-        foreach (BadWord word in badWordList)
+        for (int i = 0; i < badWordList.Count; i++)
         {
-            text = regexDic[word.name].regex.Replace(text, word.replacement);
+            text = regexDic[badWordList[i].name].regex.Replace(text, badWordList[i].replacement);
         }
         return text;
     }
@@ -57,15 +57,15 @@ public static class TextFilter
     }
 
     // in runtime // isLoad 게임시작시 처음 로딩할 때만 true 적용할 것
-    public static void AddText(string input, string pattern, string replacement = "xx", bool isLoad = false)
+    public static void AddText(string name, string pattern, string replacement = "xx", bool isLoad = false)
     {
-        BadWord newBadWord = new BadWord(input, pattern, replacement);
+        BadWord newBadWord = new BadWord(name, pattern, replacement);
 
         // 이미 있는 단어 일때(수정)
-        if (regexDic.ContainsKey(input))
+        if (regexDic.ContainsKey(name))
         {
-            regexDic[input].regex = new Regex(pattern, RegexOptions.Compiled);
-            badWordList[regexDic[input].index] = newBadWord;
+            regexDic[name].regex = new Regex(pattern, RegexOptions.Compiled);
+            badWordList[regexDic[name].index] = newBadWord;
         }
         // 없는 단어를 추가 했을때
         else
@@ -82,9 +82,9 @@ public static class TextFilter
     // 데이터베이스에서 로딩후에 딕셔너리와 리스트에 데이터 추가
     private static void InsertData(BadWordList badWordList)
     {
-        foreach (BadWord badWord in badWordList.badWords)
+        for (int i = 0; i <badWordList.badWords.Count; i++)
         {
-            AddText(badWord.name, badWord.pattern, badWord.replacement, true);
+            AddText(badWordList.badWords[i].name, badWordList.badWords[i].pattern, badWordList.badWords[i].replacement, true);
         }
     }
 }

@@ -145,12 +145,12 @@ public class InventoryManager : Singleton<InventoryManager>
                     invenData = JsonUtility.FromJson<InvenData>(json);
                     for (int i = 0; i < inven.Container.Items.Length; i++) // 배열마다 분배
                     {
-                        Debug.Log(invenData.invenSave.Items[i]);
+                        //Debug.Log(invenData.invenSave.Items[i]);
                         inven.Container.Items[i].UpdateSlot(invenData.invenSave.Items[i].item, invenData.invenSave.Items[i].amount);
                     }
                     for (int i = 0; i < equip.Container.Items.Length; i++)
                     {
-                        Debug.Log(invenData.equipSave.Items[i]);
+                        //Debug.Log(invenData.equipSave.Items[i]);
                         equip.Container.Items[i].UpdateSlot(invenData.equipSave.Items[i].item, invenData.equipSave.Items[i].amount);
                     }
                 }

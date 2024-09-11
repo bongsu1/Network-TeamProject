@@ -16,7 +16,7 @@ public class DynamicInterface : UserInterface
 
     public override void CreateSlots()
     {
-        Debug.Log("dynamic createslots");
+        //Debug.Log("dynamic createslots");
         slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
         for (int i = 0; i < inventory.Container.Items.Length; i++)
         {
@@ -43,7 +43,7 @@ public class DynamicInterface : UserInterface
         {
             Manager.Build.go_preview = Manager.Inven.database.Items[slotsOnInterface[obj].item.Id].data.go_PreviewPrefab;
             Manager.Build.go_prefab = Manager.Inven.database.Items[slotsOnInterface[obj].item.Id].data.go_prefab;
-            Debug.Log(Manager.Build.go_prefab);
+            //Debug.Log(Manager.Build.go_prefab);
             Manager.Inven.playerController.SlotClick(slotsOnInterface[obj]);
             Manager.UI.ClosePopUpUI();
             return;

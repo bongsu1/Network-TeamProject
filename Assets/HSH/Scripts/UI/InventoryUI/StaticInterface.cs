@@ -8,7 +8,7 @@ public class StaticInterface : UserInterface
     public InventoryObject invenOrigin;
     public override void CreateSlots()
     {
-        Debug.Log("static createslots");
+        //Debug.Log("static createslots");
         slotsOnInterface = new Dictionary<GameObject, InventorySlot>();
         for (int i = 0; i < inventory.Container.Items.Length; i++)
         {

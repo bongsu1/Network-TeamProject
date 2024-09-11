@@ -34,7 +34,7 @@ public class ChatBubble : MonoBehaviour
     Coroutine chatActiveRoutine;
     IEnumerator ChatActiveRoutine()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
         chatActiveRoutine = null;
         queue.Dequeue();
         gameObject.SetActive(false);
