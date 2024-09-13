@@ -61,6 +61,9 @@ public static class AnimatorRPC
             case Parameter.SetTrigger:
                 animator.SetTrigger(parameterName);
                 break;
+
+            default:
+                break;
         }
     }
 }

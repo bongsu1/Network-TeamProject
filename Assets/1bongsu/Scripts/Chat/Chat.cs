@@ -62,9 +62,10 @@ public class Chat : MonoBehaviourPun
             playerInput.actions["Interact"].Enable();
             playerInput.actions["Greet"].Enable();
 
-            // IME때문에 한글입력이 완료되지 않았다고 판단되어 마지막 글자가 인풋필드에 입력되지 않는다
+            // IME에서 입력이 완료되지 않았다고 판단되어 마지막 글자가 인풋필드의 텍스트에 입력되지 않는다
             // Input.compositionString을 통해 지금 IME에 입력중인 문자를 가져온다
             string chat = $"{chatInput.text}{Input.compositionString}";
+
             if (string.IsNullOrWhiteSpace(chat))
                 return;
 

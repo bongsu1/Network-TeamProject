@@ -26,6 +26,8 @@ public class Spawner : MonoBehaviour
                 newAnimal?.OnDie.AddListener(CountDown);
                 count++;
                 break;
+            default:
+                break;
         }
     }
 
